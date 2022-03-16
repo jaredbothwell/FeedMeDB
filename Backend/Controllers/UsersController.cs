@@ -15,8 +15,11 @@ public class UsersController : ControllerBase
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
-            string connectionString = "Server=tcp:cis560team3.database.windows.net,1433;Initial Catalog=CIS560Project;Persist Security Info=False;User ID=SQLMan;Password=JohnKellerP3n1$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            //string? connectionString = "Server=tcp:cis560team3.database.windows.net,1433;Initial Catalog=CIS560Project;Persist Security Info=False;User ID=SQLMan;Password=JohnKellerP3n1$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             //string connectionString = "Data Source=.;Initial Catalog=FeedMeDB;Persist Security Info=False;User ID=sa;Password=Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;";
+
+            string? connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
