@@ -1,49 +1,21 @@
 import React from "react";
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import Navbar from './components/Navbar';
 import './App.css';
-class App extends React.Component {
+import Test from "./pages/Test";
+import Home from "./pages/Home";
 
-  // Constructor 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      items: [],
-      DataisLoaded: false
-    };
-  }
-
-  // ComponentDidMount is used to
-  // execute the code 
-  componentDidMount() {
-    fetch(
-      "http://localhost:8000/api/users")
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          items: json,
-          DataisLoaded: true
-        });
-      })
-  }
-  render() {
-    const { DataisLoaded, items } = this.state;
-    if (!DataisLoaded) return <div>
-      <h1> Pleses wait some time.... </h1> </div>;
-
-    return (
-      <div className="App">
-        <h1> Fetch data from an api in react </h1>  {
-          items.map((item) => (
-            <ol key={item.id} >
-              id: {item.id},
-              name: {item.name},
-              hash: {item.passwordHash}
-            </ol>
-          ))
-        }
-      </div>
-    );
-  }
+export default function App(){
+  return (
+    <>
+      <Router>
+        <Navbar/>
+          <Routes>
+            <Route path='/' exact element={<Home/>}/>
+            <Route path='/test' exact element={<Test/>}/>
+          </Routes>
+      </Router>
+    </>
+  )
 }
 
-export default App;
