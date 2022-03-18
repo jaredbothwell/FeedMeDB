@@ -1,13 +1,3 @@
-
-create SCHEMA Data AUTHORIZATION [dbo];
-
-go
-
-select * from sys.schemas
-select * from sys.tables
-
-go
-
 Drop Table IF EXISTS Data.[User];
 
 go
