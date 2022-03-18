@@ -14,17 +14,17 @@ go
 
 CREATE TABLE Data.[User]
 (
-    UserID int primary key,
-    UserName varchar(20) not null,
-    PasswordHash varchar(100) not null,
+    UserID int primary key identity(0,1),
+    UserName varchar(20) not null unique,
+    PasswordHash varbinary(256) not null,
     IsRemoved bit default 0,
-    CreatedOn datetimeoffset,
+    CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,
 )
 
-insert Data.[User] ( UserID, UserName, PasswordHash, CreatedOn)
+insert Data.[User] (UserName, PasswordHash)
 values 
-    (1, N'testuser', N'abcdefg', SYSDATETIMEOFFSET())
+    (N'testuser2', HASHBYTES('SHA2_256','abcdefg'))
 
 select * from Data.[User]
