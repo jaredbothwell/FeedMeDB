@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AnimatedPage from "./AnimatedPage";
 
 export default function Test ()
 {
@@ -19,7 +20,7 @@ export default function Test ()
       })
   }, [])
     return(
-      <>
+      <AnimatedPage>
         {/* using ternery operator as an if statement */}
         { dataIsLoaded ? <div className="App">
         <h1 style={{textAlign: 'center'}}> Fetch data from an api in react </h1>  {
@@ -34,6 +35,6 @@ export default function Test ()
         }
       </div>:<h1>data did not load</h1>
         }
-      </>
+      </AnimatedPage>
     )
 }

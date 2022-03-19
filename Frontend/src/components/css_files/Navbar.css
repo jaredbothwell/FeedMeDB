@@ -1,5 +1,5 @@
 .navbar {
-    background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+    background: #18181f;
     height: 80px;
     display: flex;
     justify-content: center;
@@ -27,6 +27,17 @@
     font-size: 2rem;
     display: flex;
     align-items: center;
+  }
+  .navbar-logo:hover {
+    color: #e1cfa9;
+    justify-self: start;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease-out;
   }
   
   .fa-typo3 {
@@ -59,7 +70,7 @@
   }
   
   .nav-links:hover {
-    border-bottom: 4px solid #fff;
+    border-bottom: 4px solid #e1cfa9;
     transition: all 0.2s ease-out;
   }
   
@@ -94,7 +105,7 @@
     }
   
     .nav-links:hover {
-      background-color: #fff;
+      background-color: #e1cfa9;
       color: #242424;
       border-radius: 0;
     }

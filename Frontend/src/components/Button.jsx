@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 const STYLES = ['btn--primary', 'btn--outline'];
 const SIZES = ['btn--medium', 'btn--large'];
 
+// this is same as exporting a function, but const is using arrow function
 export const Button = ({
     children, // children is passed in through <Button> children </Button>, it sets the text of button
     buttonStyle,

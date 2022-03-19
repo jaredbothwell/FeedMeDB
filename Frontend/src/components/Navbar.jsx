@@ -7,7 +7,7 @@ import { Button } from './Button';
 import './css_files/Navbar.css';
 
 
-export default function NavBar() {
+export default function NavBar(props) {
 
   
     return (
@@ -32,7 +32,7 @@ export default function NavBar() {
                         </Link>
                     </li>
                 </ul>
-                <Button buttonStyle='btn--outline' link={''}>SIGN UP</Button>
+                <Button buttonStyle='btn--outline' link={props.loggedIn?'account':'login'}>{props.loggedIn? 'Account':'Login'}</Button>
             </div>
         </nav>
       </>
