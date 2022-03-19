@@ -31,8 +31,8 @@ class JawbreakerInput extends React.Component {
   }
   
   export class LoginForm extends React.Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
         submitting: false,
         error: false,
@@ -49,12 +49,26 @@ class JawbreakerInput extends React.Component {
           }
         ]
       };
-      
+
+
+
+      this.verifyCreds = this.verifyCreds.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleFocus = this.handleFocus.bind(this);
       this.handleBlur = this.handleBlur.bind(this);
     }
+
+    verifyCreds(user,pass)
+    {
+      if(user === 'user1' && pass === 'pass1')
+      {
+        this.props.updateStatus([user,true])
+      }
+
+      // add some fail code here
+    }
+
     handleChange(id, value) {
       // immutable array
       let newInputs = this.state.inputs.concat();
@@ -91,7 +105,9 @@ class JawbreakerInput extends React.Component {
           });
         }, 2000);
       }
+      
       event.preventDefault();
+      this.verifyCreds(this.state.inputs[0].value, this.state.inputs[1].value);
     }
     handleFocus(id) {
       // immutable array
