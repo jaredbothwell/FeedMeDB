@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import AnimatedPage from './AnimatedPage'
 import './css_files/Home.css'
 import Search from '../components/SearchBar'
+import SmoothList from 'react-smooth-list';
 
 export default function Home() {
 
@@ -18,20 +19,16 @@ export default function Home() {
         <div style={{marginTop: '20px'}} className='row justify-content-center'>
           <div>
             <Search/>
-            {/* 
-            <Form >
-              <Form.Group>
-                <Form.Control type="search" placeholder='Search...' onChange={e=>setLabel(e.target.value)}/>
-              </Form.Group>
-            </Form>
-            */}
           </div>
         </div >
         <div className='row justify-content-center'>
           <label>{testLabel}</label>
         </div>
-        
        </div>
+    </section>
+
+    <section className='home--recipes'>
+
     </section>
 
     </AnimatedPage>

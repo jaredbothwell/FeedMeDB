@@ -1,11 +1,8 @@
-
-
 .home--recipes
 {
-  background-color: #aaabb8;
-  height: 0;
-  padding-bottom: 100%; /* 16:9 */
-  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .label
