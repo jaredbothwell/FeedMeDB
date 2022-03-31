@@ -12,12 +12,12 @@ CREATE TABLE Data.Recipe(
 )
 CREATE TABLE Data.UserRecipe(
     UserRecipeID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    UserID INT FOREIGN KEY REFERENCES Data.[User](UserID),
-    RecipeID INT FOREIGN KEY REFERENCES Data.Recipe(RecipeID),
+    UserID INT FOREIGN KEY REFERENCES Data.[User](UserID) NOT NULL,
+    RecipeID INT FOREIGN KEY REFERENCES Data.Recipe(RecipeID) NOT NULL,
     IsBookmarked BIT DEFAULT 0 NOT NULL,
     Rating INT,
-    IsRemoved bit default 0,
-    CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
+    IsRemoved bit default 0 NOT NULL,
+    CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset
 )
