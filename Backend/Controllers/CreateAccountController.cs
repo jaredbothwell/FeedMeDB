@@ -9,17 +9,14 @@ namespace FeedMeDB.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CreateAccountController : ControllerBase
+public class CreateAccountController : FeedMeDBController
 {
     [HttpPost(Name = "CreateAccount")]
     public OkResult Post(string userName, string password)
     {
-
         try
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            string? connectionString = "Server=tcp:cis560team3.database.windows.net,1433;Initial Catalog=CIS560Project;Persist Security Info=False;User ID=SQLMan;Password=BigB@dRecipeB00k;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -45,17 +42,6 @@ public class CreateAccountController : ControllerBase
             Console.WriteLine(e.ToString());
         }
         return new OkResult();
-    }
-
-
-    // !!! WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !!! NOT SECURE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // Only for testing
-    // TODO: Add actual hashing and salting later
-    private byte[] HashPassword(string password)
-    {
-        byte[] bytes = UnicodeEncoding.ASCII.GetBytes(password);
-        return bytes;
     }
 }
 

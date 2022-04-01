@@ -1,36 +1,32 @@
-## Setup
-
-install .net core 6
-install node.js
-
-clone repo
-
 ### Backend
-cd into Backend/
-run `dotnet restore` in terminal
+```sh
+$ cd Backend
+$ dotnet restore
+```
 
 ### Frontend
 
-cd into Frontend/
-create .env with
+```sh
+$ cd Frontend
+$ npm i react-scripts
 ```
-BROWSWER=None
-```
-run `npm i react-scripts` in terminal
 
 ## Run
-```
-cd Backend
-dotnet run
+
+```sh
+$ cd Backend
+$ dotnet run
 ```
 new terminal window
 
+```sh
+$ cd Frontend
+$ npm install
+$ npm start
 ```
-cd Frontend
-npm install
-npm start
-```
-go to `localhost:3000` for react server
 
-backend apis are at `localhost:8000`
+react server at `localhost:3000` 
+
+backend apis are at `localhost:8000/api`
+
 swagger api docs at `localhost:8000/swagger`
