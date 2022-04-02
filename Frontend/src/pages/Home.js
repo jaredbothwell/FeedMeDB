@@ -44,7 +44,7 @@ export default function Home() {
       <SmoothList className='home--recipes' delay={100}>
         {
           recipes.map((recipe) => (
-          <RecipeCard name={recipe.name} key={recipe.recipeID}/>
+          <RecipeCard data={recipe} key={recipe.recipeID}/>
           ))
         }
       </SmoothList>

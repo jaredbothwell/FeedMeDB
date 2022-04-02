@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 const bull = (
   <Box
@@ -17,17 +18,25 @@ const bull = (
 );
 
 export default function BasicCard(props) {
+  const navigate = useNavigate();
+  //TODO - bring data in here json
+  const recipe_data = props.data
+
+  function handleCardClick()
+  {
+    navigate("/recipe/?recipeId=" + recipe_data.recipeID + "&name=" + recipe_data.name);
+  }
+
+
   return (
     <Card sx={{ minWidth: 275, maxWidth: 200, margin: 2 }}>
-        <CardActionArea>
+        <CardActionArea onClick={handleCardClick}>
             <CardContent>
             <Typography variant="h6" gutterBottom component="div">
-                {props.name}
+                {recipe_data.name}
             </Typography>
             <Typography variant="body1" color="text">
-                This impressive paella is a perfect party dish and a fun meal to cook
-                together with your guests. Add 1 cup of frozen peas along with the mussels,
-                if you like.
+              wefwefewfwefewfewfewfewfwef
             </Typography>
 
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
