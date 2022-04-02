@@ -70,17 +70,21 @@ export class JawbreakerInput extends React.Component {
         body: JSON.stringify({ title: 'React POST Request Example' })
     };
 
-    let isSubscribed = true
+
 
     fetch(http_string, requestOptions)
         .then(response => response.json().then((u)=>{
-          if (isSubscribed)
+          if (u != null)
           {
             this.props.updateStatus([u,true])
           }
+          else
+          {
+            this.props.updateStatus([null,false])
+          }
           
         }))
-        return () => isSubscribed = false;
+
       // add some fail code here
     }
     

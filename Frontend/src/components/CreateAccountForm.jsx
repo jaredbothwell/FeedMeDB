@@ -48,7 +48,6 @@ export class CreateAccountForm extends React.Component {
     };
     fetch(http_string, requestOptions)
         .then(response => console.log(response))
-        .then();
 
 
       // handle if create account worked or not

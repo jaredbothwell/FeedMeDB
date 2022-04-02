@@ -9,11 +9,20 @@ export default function Login(props) {
 
   const [loggedIn,setLoggedIn] = useState(false);
   const [newAccount,setNewAccount] = useState(false);
-
+  const [wrong_login_flag,setWrongLogin] = useState(false);
   function handleLogin(input)
   {
-    props.userLoggedIn(input);
-    setLoggedIn(true);
+    //console.log(input)
+    if(input[0].id != null)
+    {
+      props.userLoggedIn(input);
+      setLoggedIn(true);
+      
+    }
+    else
+    {
+      setWrongLogin(true);
+    }
   }
 
   return (
@@ -36,6 +45,11 @@ export default function Login(props) {
                       <>
                         <h1 style={{color:'white'}}>Login with your credentials</h1>
                         <LoginForm updateStatus={input => handleLogin(input)}/>
+                        {wrong_login_flag&&
+                        <>
+                        <p style={{color: 'red', marginTop:'5%'}}>Username or password is incorrect, try again</p>
+
+                        </>}
                         <p style={{color:'white', marginTop:'10%'}}>Don't have an account yet? <a style={{cursor:'pointer', color:'Wheat'}} onClick={()=>{setNewAccount(true)}}>Create one</a></p>
                       </>
                     }
