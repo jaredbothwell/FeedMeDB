@@ -23,16 +23,20 @@ export default function Test ()
       <AnimatedPage>
         {/* using ternery operator as an if statement */}
         { dataIsLoaded ? <div className="App">
-        <h1 style={{textAlign: 'center'}}> Fetch data from an api in react </h1>  {
+        <h1 style={{textAlign: 'center'}}> Fetch data from an api in react </h1>  
+        <ol style={{textAlign: 'center'}}  >{
           items.map((item) => (
-            <ol style={{textAlign: 'center'}} key={item.id} >
-              id: {item.id},
-              name: {item.name},
-              hash: {item.passwordHash}
-            </ol>
+            
+              <li key={item.id} >
+                id: {item.id},
+                name: {item.name},
+                hash: {item.passwordHash}
+              </li>
+            
           ))
         
         }
+        </ol>
       </div>:<h1>data did not load</h1>
         }
       </AnimatedPage>

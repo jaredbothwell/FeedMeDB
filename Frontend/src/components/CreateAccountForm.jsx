@@ -28,21 +28,30 @@ export class CreateAccountForm extends React.Component {
 
 
 
-      this.verifyCreds = this.verifyCreds.bind(this);
+      this.createAccount = this.createAccount.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleFocus = this.handleFocus.bind(this);
       this.handleBlur = this.handleBlur.bind(this);
     }
 
-    verifyCreds(user,pass)
+    createAccount(user,pass)
     {
-      if(user === 'user1' && pass === 'pass1')
-      {
-        this.props.updateStatus([user,true])
-      }
 
-      // add some fail code here
+      // need to add checks for if user exists already, and if two passwords match
+      let http_string = "http://localhost:8000/api/CreateAccount?userName=" + user +"&password=" + pass 
+      console.log(http_string)
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'React POST Request Example' })
+    };
+    fetch(http_string, requestOptions)
+        .then(response => console.log(response))
+        .then();
+
+
+      // handle if create account worked or not
     }
 
 
@@ -75,6 +84,8 @@ export class CreateAccountForm extends React.Component {
             inputs: newInputs
           });
         }, 2000);
+
+        this.createAccount(this.state.inputs[0].value, this.state.inputs[1].value);
       }
       
       event.preventDefault();
