@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
+
+@green: #7BB350;
+@white: #BABABC;
+@darkBlue: #1C1A22;
+@red: #FF4D4D;
+
+* {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.form {
+  background: @darkBlue;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.jawbreakerInput {
+  margin-bottom: 10px;
+}
+
+.iconButton {
+  width: 150px;
+  height: 45px;
+  border: 2px @green solid;
+  background: transparent;
+  color: @white;
+  font-size: 18px;
+  font-weight: 500;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  margin: 25px auto 0 0;
+  user-select: none;
+  &.error {
+    border-color: @red;
+    color: @red;
+    pointer-events: none;
+    &:before {
+      background: @red;
+    }
+  }
+  span.label {
+    position: absolute;
+    width: 150px;
+    height: 45px;
+    line-height: 45px;
+    top: -2px;
+    left: -2px;
+    transition: transform 250ms;
+  }
+  span.loader {
+    color: @green;
+    font-size: 12px;
+    position: absolute;
+  }
+  &:before {
+    position: absolute;
+    width: 150px;
+    height: 45px;
+    line-height: 45px;
+    top: -2px;
+    left: -2px;
+    transition: all 250ms;
+    background: @green;
+    content: "\f090";
+    color: @darkBlue;
+    font-family: FontAwesome;
+    font-size: 26px;
+    transform: translate(0, -100%);
+    pointer-events: none;
+  }
+  &:after {
+    content: "\f021";
+    color: @darkBlue;
+    font-family: FontAwesome;
+    position: absolute;
+	  width: 26px;
+	  height: 26px;
+    text-align: center;
+    line-height: 26px;
+    top: calc(~"50% - 13px");
+    left: calc(~"50% - 13px");
+    background: @green;
+    font-size: 26px;
+    opacity: 0;
+    animation: spin 2s infinite linear;
+    pointer-events: none;
+  }
+  &:hover, &[disabled] {
+    span {
+      transform: translate(0, 100%);
+    }
+    &:before {
+      transform: translate(0, 0);
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+  &[disabled] {
+    pointer-events: none;
+    cursor: wait;
+    &:before {
+      color: @green;
+    }
+    &:after {
+      transition: all 250ms;
+      transition-delay: 250ms;
+      opacity: 1;
+    }
+  }
+}
+
+span.input {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  &.filled {
+    label.label:after {
+      transform: translate3d(0, 0, 0);
+    }
+    span.content {
+      animation: movelabel 0.3s forwards;
+    }
+  }
+}
+
+input.field {
+  background: transparent;
+  display: block;
+  border: none;
+  color: @white;
+  width: 100%;
+  font-size: 30px;
+  padding: 10px 0 30px;
+  margin-top: 40px;
+  &:focus {
+    outline: none;
+  }
+}
+
+label.label {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: @white;
+  user-select: none;
+  pointer-events: none;
+  &:before, &:after {
+    content: '';
+    position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: calc(100% - 10px);
+	  border-bottom: 1px solid @white;
+  }
+  &:after {
+    border-bottom: 4px @green solid;
+    transform: translate(-100%, 0);
+    transition: transform 250ms;
+  }
+  &.error {
+    &:before, &:after {
+      border-color: @red;
+    }
+  }
+}
+
+span.content {
+  position: absolute;
+  color: @white;
+  font-size: 26px;
+  font-weight: 500;
+  padding-top: 12px;
+  left: 0;
+  bottom: 15px;
+}
+
+span.errorMessage {
+  color: @red;
+  font-size: 14px;
+  font-style: italic;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translate3d(-5px, 0, 0);
+  transition: all 250ms;
+  opacity: 0;
+  &.visible {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes movelabel {
+	50% {
+		opacity: 0;
+		transform: translate3d(5px, 0, 0);
+	}
+	51% {
+		opacity: 0;
+		transform: translate3d(-10px, -40px, 0);
+	}
+	100% {
+		opacity: 1;
+		transform: translate3d(0, -40px, 0);
+    color: fade(@white, 35);
+	}
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes errorbounce {
+	25% {
+		left: 15px;
+	}
+	75% {
+		left: -15px;
+	}
+}
+
+span.note {
+  color: fade(@white, 35);
+  font-style: italic;
+  font-size: 12px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
