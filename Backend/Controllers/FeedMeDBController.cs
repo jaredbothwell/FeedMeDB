@@ -9,7 +9,6 @@ namespace FeedMeDB.Controllers;
 /// <summary>
 /// Base class for all controllers
 /// Inherits from Microsoft.AspNetCore.Mvc.ControllerBase
-/// 
 /// </summary>
 public class FeedMeDBController : ControllerBase
 {
@@ -19,14 +18,10 @@ public class FeedMeDBController : ControllerBase
 
     public string? connectionString => useLocal ? local : azure;
 
-    /// <summary>
-    /// null fields from the database are returned as a DBNull object.
-    /// These cannot be casted with (DateTimeOffset?) so use this method to get the correct value for DateTimeOffsets
-    /// from the database. 
-    /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
-    public DateTimeOffset? GetNullableDTO(object obj)
+    // null fields from the database are returned as a DBNull object.
+    // These cannot be casted with (DateTimeOffset?) so use this method to get the correct value for DateTimeOffsets
+    // from the database. 
+    internal DateTimeOffset? GetNullableDTO(object obj)
     {
         if (Convert.IsDBNull(obj)) return null;
         else return (DateTimeOffset?)obj;

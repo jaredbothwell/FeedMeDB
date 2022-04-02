@@ -28,20 +28,13 @@ namespace FeedMeDB.Models
 
         public UserModel()
         {
-            ID = 2;
-            Name = null;
-            PasswordHash = Encoding.ASCII.GetBytes("password"); ;
-            IsRemoved = false;
-            CreatedOn = null;
-            ModifiedOn = null;
-            RemovedOn = null;
-
+            
         }
 
         public int ID { get; set; }
         public string? Name { get; set; } = null;
 
-        public byte[] PasswordHash { get; set; }
+        public byte[]? PasswordHash { get; set; }
         public bool IsRemoved { get; set; }
 
         public DateTimeOffset? CreatedOn { get; set; } = null;

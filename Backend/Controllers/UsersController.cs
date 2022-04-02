@@ -29,7 +29,14 @@ public class UsersController : FeedMeDBController
                         {
                             Object[] values = new Object[reader.FieldCount];
                             int fieldCount = reader.GetValues(values);
-                            UserModel user = new UserModel((int)values[0], values[1].ToString(), (byte[])values[2], (bool)values[3]);
+                            UserModel user = new UserModel(
+                                                (int)values[0],
+                                                values[1].ToString(),
+                                                (byte[])values[2],
+                                                (bool)values[3],
+                                                GetNullableDTO(values[4]),
+                                                GetNullableDTO(values[5]),
+                                                GetNullableDTO(values[6]));
                             data.Add(user);
                         }
                         return data;

@@ -12,7 +12,7 @@ namespace FeedMeDB.Controllers;
 public class CreateAccountController : FeedMeDBController
 {
     [HttpPost(Name = "CreateAccount")]
-    public OkResult Post(string userName, string password)
+    public IActionResult Post(string userName, string password)
     {
         try
         {
@@ -26,14 +26,8 @@ public class CreateAccountController : FeedMeDBController
                 {
                     command.Parameters.AddWithValue("@name", userName);
                     command.Parameters.AddWithValue("@pass", HashPassword(password));
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Object[] values = new Object[reader.FieldCount];
-                            int fieldCount = reader.GetValues(values);
-                        }
-                    }
+                    int rowsAffected = command.ExecuteNonQuery(); 
+                    if (rowsAffected == 1) return new OkObjectResult("account created"); // TODO: create JWT Token
                 }
             }
         }
@@ -41,7 +35,7 @@ public class CreateAccountController : FeedMeDBController
         {
             Console.WriteLine(e.ToString());
         }
-        return new OkResult();
+        return new StatusCodeResult(418);
     }
 }
 
