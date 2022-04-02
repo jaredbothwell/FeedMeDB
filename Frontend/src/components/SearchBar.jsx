@@ -11,8 +11,6 @@ class Search extends React.Component {
         {"recipeID":4, "name":"bigmac"},
         {"recipeID":5, "name":"omlete"},
         {"recipeID":6, "name":"poptart"},
-
-    
     ],
     search: "",
     recipe: ""
