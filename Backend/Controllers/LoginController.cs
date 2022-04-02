@@ -34,6 +34,7 @@ public class LoginController : FeedMeDBController
 
                             if (dbpassword.SequenceEqual(userpassword))
                             {
+                                Console.WriteLine(userName + ": Logged in");
                                 user = new UserModel((int)values[0], values[1].ToString(), (byte[])values[2], (bool)values[3],
                                                     GetNullableDTO(values[4]), GetNullableDTO(values[5]), GetNullableDTO(values[6]));
 

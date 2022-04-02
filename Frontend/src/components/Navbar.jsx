@@ -31,8 +31,17 @@ export default function NavBar(props) {
                             TestAPI
                         </Link>
                     </li>
+                    {props.loggedIn&&
+                    <li className='nav-item'>
+                        <Link to='/account' className='nav-links'>
+                            Account
+                        </Link>
+                    </li>
+                    }
                 </ul>
-                <Button buttonStyle='btn--outline' link={props.loggedIn?'account':'login'}>{props.loggedIn? 'Account':'Login'}</Button>
+                {!props.loggedIn&&
+                <Button buttonStyle='btn--outline' link='login'>Login</Button>
+                }
             </div>
         </nav>
       </>

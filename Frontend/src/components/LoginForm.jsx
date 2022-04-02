@@ -61,13 +61,29 @@ export class JawbreakerInput extends React.Component {
 
     verifyCreds(user,pass)
     {
-      if(user === 'user1' && pass === 'pass1')
-      {
-        this.props.updateStatus([user,true])
-      }
+      // need to add checks for if user exists already, and if two passwords match
+      let http_string = "http://localhost:8000/api/login?userName=" + user +"&password=" + pass 
+      console.log(http_string)
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'React POST Request Example' })
+    };
 
+    let isSubscribed = true
+
+    fetch(http_string, requestOptions)
+        .then(response => response.json().then((u)=>{
+          if (isSubscribed)
+          {
+            this.props.updateStatus([u,true])
+          }
+          
+        }))
+        return () => isSubscribed = false;
       // add some fail code here
     }
+    
 
     handleChange(id, value) {
       // immutable array

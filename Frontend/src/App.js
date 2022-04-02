@@ -10,15 +10,15 @@ import Account from "./pages/Account";
 
 export default function App(){
 
-  const [userID,SetUserID] = useState(null);
+  const [user,SetUserData] = useState(null);
   const [loggedIn,SetLoggedIn] = useState(false);
 
   function userLoggedIn(loginStatus)
   {
-    SetUserID(loginStatus[0]);
+    SetUserData(loginStatus[0]);
     SetLoggedIn(loginStatus[1]);
 
-    console.log(userID);
+    console.log(user);
   }
 
   const location = useLocation();
@@ -31,7 +31,7 @@ export default function App(){
             <Route path='/login' exact element={<Login userLoggedIn={loginStatus => userLoggedIn(loginStatus)}/>}/>
             <Route path='/' exact element={<Home/>}/>
             <Route path='/test' exact element={<Test/>}/>
-            <Route path='/account' exact element={<Account userID={userID}/>}/>
+            <Route path='/account' exact element={<Account user={user}/>}/>
 
           </Routes>
           </AnimatePresence>

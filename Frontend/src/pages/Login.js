@@ -34,7 +34,6 @@ export default function Login(props) {
                       </>
                       :
                       <>
-                        <h1 style={{color:'Wheat'}}>Hardcoded users:<br/> username=user1<br/> password=pass1</h1>
                         <h1 style={{color:'white'}}>Login with your credentials</h1>
                         <LoginForm updateStatus={input => handleLogin(input)}/>
                         <p style={{color:'white', marginTop:'10%'}}>Don't have an account yet? <a style={{cursor:'pointer', color:'Wheat'}} onClick={()=>{setNewAccount(true)}}>Create one</a></p>
