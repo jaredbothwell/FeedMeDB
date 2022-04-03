@@ -1,49 +1,42 @@
-import React from "react";
+import React,{useState} from "react";
+import { AnimatePresence } from "framer-motion";
+import {Route, Routes, useLocation} from 'react-router'
+import Navbar from './components/Navbar';
 import './App.css';
-class App extends React.Component {
+import Test from "./pages/Test";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Account from "./pages/Account";
 
-  // Constructor 
-  constructor(props) {
-    super(props);
+export default function App(){
 
-    this.state = {
-      items: [],
-      DataisLoaded: false
-    };
+  const [user,SetUserData] = useState(null);
+  const [loggedIn,SetLoggedIn] = useState(false);
+
+  function userLoggedIn(loginStatus)
+  {
+    SetUserData(loginStatus[0]);
+    SetLoggedIn(loginStatus[1]);
+
+    console.log(user);
   }
 
-  // ComponentDidMount is used to
-  // execute the code 
-  componentDidMount() {
-    fetch(
-      "http://localhost:8000/api/users")
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          items: json,
-          DataisLoaded: true
-        });
-      })
-  }
-  render() {
-    const { DataisLoaded, items } = this.state;
-    if (!DataisLoaded) return <div>
-      <h1> Pleses wait some time.... </h1> </div>;
+  const location = useLocation();
+  return (
+    <>
 
-    return (
-      <div className="App">
-        <h1> Fetch data from an api in react </h1>  {
-          items.map((item) => (
-            <ol key={item.id} >
-              id: {item.id},
-              name: {item.name},
-              hash: {item.passwordHash}
-            </ol>
-          ))
-        }
-      </div>
-    );
-  }
+        <Navbar loggedIn={loggedIn}/>
+        <AnimatePresence exitBeforeEnter>
+          <Routes key={location.pathname} location={location}>
+            <Route path='/login' exact element={<Login userLoggedIn={loginStatus => userLoggedIn(loginStatus)}/>}/>
+            <Route path='/' exact element={<Home/>}/>
+            <Route path='/test' exact element={<Test/>}/>
+            <Route path='/account' exact element={<Account user={user}/>}/>
+
+          </Routes>
+          </AnimatePresence>
+
+    </>
+  )
 }
 
-export default App;
