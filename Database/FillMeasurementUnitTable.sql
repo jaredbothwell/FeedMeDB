@@ -12,4 +12,6 @@ VALUES
     ('dash'),
     ('gram'),
     ('kilogram'),
+    ('can'),
+    ('box'),
     ('fluid ounce');
