@@ -14,4 +14,4 @@ VALUES
     ('kg.'),
     ('can'),
     ('box'),
-    ('pkg.'),
+    ('pkg.')
