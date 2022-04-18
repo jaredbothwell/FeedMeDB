@@ -1,9 +1,9 @@
 -- RESET ENTIRE DB
+DROP TABLE IF EXISTS Data.RecipeIngredient
 DROP TABLE IF EXISTS Data.MeasurementUnit
 DROP TABLE IF EXISTS Data.Ingredient
 DROP TABLE IF EXISTS Data.UserRecipe
 DROP TABLE IF EXISTS Data.Recipe
-DROP TABLE IF EXISTS Data.RecipeIngredient
 DROP TABLE IF EXISTS Data.[User]
 
 GO
