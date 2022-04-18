@@ -14,4 +14,5 @@ VALUES
     ('kilogram'),
     ('can'),
     ('box'),
+    ('package'),
     ('fluid ounce');
