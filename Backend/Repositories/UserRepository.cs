@@ -46,10 +46,30 @@ namespace FeedMeDB.Repositories
             return null;
         }
 
-        public int CreateAccount(string userName, string passwordHash)
+        public UserModel? GetUserByID(int id)
+        {
+            String sql = "select U.UserID, U.UserName, U.PasswordHash, U.IsRemoved, U.CreatedOn, U.ModifiedOn, U.RemovedOn from Data.[User] U where U.UserID = @id";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                            return TranslateUser(reader);
+                    }
+                }
+            }
+            return null;
+        }
+
+
+        public UserModel? CreateAccount(string userName, string passwordHash)
         {
             if (GetUserByName(userName) is not null)
-                return 0; // User already exists. Don't create new account
+                return null; // User already exists. Don't create new account
             String sql = "insert into Data.[User] (UserName, PasswordHash) values (@name, @pass)";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -58,7 +78,10 @@ namespace FeedMeDB.Repositories
                 {
                     command.Parameters.AddWithValue("@name", userName);
                     command.Parameters.AddWithValue("@pass", passwordHash);
-                    return command.ExecuteNonQuery();
+                    int numrows = command.ExecuteNonQuery();
+                    if (numrows == 1)
+                        return GetUserByName(userName);
+                    return null; // user was not inserted correctly
                 }
             }
         }
