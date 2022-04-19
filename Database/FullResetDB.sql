@@ -10,7 +10,7 @@ GO
 
 CREATE TABLE Data.[User]
 (
-    UserID int primary key identity(0,1),
+    UserID int primary key identity(1,1),
     UserName varchar(20) not null unique,
     PasswordHash varbinary(256) not null,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
