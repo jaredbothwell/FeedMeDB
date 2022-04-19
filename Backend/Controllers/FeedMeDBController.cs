@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using FeedMeDB.Models;
 using System.Data.SqlClient;
 using System.Text;
+using System.Security.Cryptography;
 
 
 namespace FeedMeDB.Controllers;
@@ -18,22 +19,19 @@ public class FeedMeDBController : ControllerBase
 
     public string? connectionString => useLocal ? local : azure;
 
-    // null fields from the database are returned as a DBNull object.
-    // These cannot be casted with (DateTimeOffset?) so use this method to get the correct value for DateTimeOffsets
-    // from the database. 
-    internal DateTimeOffset? GetNullableDTO(object obj)
-    {
-        if (Convert.IsDBNull(obj)) return null;
-        else return (DateTimeOffset?)obj;
-    }
 
-    // !!! WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !!! NOT SECURE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // Only for testing
     // TODO: Add actual hashing and salting later
-    protected byte[] HashPassword(string password)
+    protected string HashPassword(string password)
     {
-        byte[] bytes = UnicodeEncoding.ASCII.GetBytes(password);
-        return bytes;
+        using (SHA256 sha256Hash = SHA256.Create())
+        {
+            byte[] bytes = sha256Hash.ComputeHash(Encoding.Unicode.GetBytes(password));
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                builder.Append(bytes[i].ToString("x2"));
+            }
+            return builder.ToString();
+        }
     }
 }
