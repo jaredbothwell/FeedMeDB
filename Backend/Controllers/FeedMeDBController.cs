@@ -20,7 +20,7 @@ public class FeedMeDBController : ControllerBase
     public string? connectionString => useLocal ? local : azure;
 
 
-    // TODO: Add actual hashing and salting later
+    // TODO: Add salting later
     protected string HashPassword(string password)
     {
         using (SHA256 sha256Hash = SHA256.Create())

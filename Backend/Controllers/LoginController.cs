@@ -10,7 +10,7 @@ namespace FeedMeDB.Controllers;
 [Route("api/[controller]")]
 public class LoginController : FeedMeDBController
 {
-    [HttpPost(Name = "PostLogin")]
+    [HttpPost]
     public IActionResult Post(string userName, string password)
     {
         var repo = new UserRepository();
