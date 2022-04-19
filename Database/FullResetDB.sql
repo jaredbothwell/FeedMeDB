@@ -13,7 +13,6 @@ CREATE TABLE Data.[User]
     UserID int primary key identity(0,1),
     UserName varchar(20) not null unique,
     PasswordHash varbinary(256) not null,
-    IsRemoved bit default 0,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,
@@ -24,7 +23,6 @@ GO
 CREATE TABLE Data.MeasurementUnit(
     MeasurementUnitID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [Name] VARCHAR(32) NOT NULL UNIQUE,
-    IsRemoved bit default 0 NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset
@@ -35,7 +33,6 @@ GO
 CREATE TABLE Data.Ingredient(
     IngredientID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [Name] NVARCHAR(128) NOT NULL UNIQUE,
-    IsRemoved bit default 0 NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,
@@ -50,7 +47,6 @@ CREATE TABLE Data.Recipe(
     PrepTime INT,
     Difficulty VARCHAR(32) NOT NULL,
     Directions VARCHAR(2048) NOT NULL,
-    IsRemoved bit default 0,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset
@@ -63,7 +59,6 @@ CREATE TABLE Data.RecipeIngredient(
     RecipeID INT FOREIGN KEY REFERENCES Data.Recipe(RecipeID) NOT NULL,
     IngredientID INT FOREIGN KEY REFERENCES Data.Ingredient(IngredientID) NOT NULL,
     MeasurementQuantity INT NOT NULL,
-    IsRemoved bit default 0 NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,
@@ -78,7 +73,6 @@ CREATE TABLE Data.UserRecipe(
     RecipeID INT FOREIGN KEY REFERENCES Data.Recipe(RecipeID) NOT NULL,
     IsBookmarked BIT DEFAULT 0 NOT NULL,
     Rating INT,
-    IsRemoved bit default 0 NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset
