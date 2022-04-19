@@ -76,4 +76,5 @@ CREATE TABLE Data.UserRecipe(
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset
+    UNIQUE(UserID, RecipeID)
 )
