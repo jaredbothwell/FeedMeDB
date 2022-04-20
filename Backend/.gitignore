@@ -6,6 +6,8 @@
 .env
 obj/
 bin/
+Properties/
+.DS_Store
 
 # User-specific files
 *.rsuser
