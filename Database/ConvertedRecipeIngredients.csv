@@ -473,7 +473,7 @@ RecipeID,Quantity,Unit,Ingredient
 111,2,c.,brown sugar
 111,1,c.,salad oil
 111,1,tsp.,almond extract
-112,0.75,"c""",water
+112,0.75,c.,water
 112,1,can,Campbells cream of mushroom soup
 112,1,c.,cashews or peanuts
 74,0.667,c.,white corn syrup (Karo)
