@@ -18,6 +18,9 @@ CREATE TABLE Data.[User]
     RemovedOn datetimeoffset,
 )
 
+INSERT INTO Data.[User](UserName,PasswordHash)
+VALUES('feedmeDB',HASHBYTES('SHA2_256','S3cur3P@ssw0rd!'))
+
 GO
 
 CREATE TABLE Data.MeasurementUnit(
