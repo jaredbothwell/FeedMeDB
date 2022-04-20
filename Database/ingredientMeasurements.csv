@@ -1,23 +1,23 @@
 ,0,1,2
-0,1,2 Tbsp.,butter or margarine
+0,1,2 Tbsp.,butter
 1,1,3.5 c.,bite size shredded rice biscuits
 2,3,.333 c.,butter
 3,3,.25 tsp.,pepper
 4,4,21 oz.,cans chicken gravy
 5,4,4 oz.,shredded cheese
 6,5,1 c.,melted butter
-7,5,1 lb.,(3.5 c.) powdered sugar
+7,5,3.5 c.,powdered sugar
 8,5,1 pkg.,chocolate chips
-9,6,8 oz.,carton sour cream (optional)
+9,6,8 oz.,carton sour cream
 10,7,1 c.,buttermilk
 11,7,1 tsp.,soda
 12,7,1 c.,buttermilk
 13,7,2 c.,rhubarb
 14,7,1 tsp.,vanilla
-,8,1 can ,"whole kernel corn,"
-15,8,.5 pkg.,(approximately 20) saltine crackers
+,8,1 can ,whole kernel corn
+15,8,.5 pkg.,saltine crackers
 16,8,6 tsp.,butter
-17,9,1.5 lb.,round steak (1-inch thick)
+17,9,1.5 lb.,round steak
 18,9,1.5 Tbsp.,Worcestershire sauce
 19,10,1 c.,pecans
 20,11,6 pkg.,Jell-O cherry flavor gelatin
@@ -50,7 +50,7 @@
 47,19,1 pt.,sour cream
 48,20,1.5 c.,applesauce
 49,20,3 tsp.,soda
-50,20,1 tsp.,each: cinnamon
+50,20,1 tsp.,cinnamon
 51,20,2 c.,sifted flour
 52,20,1 c.,raisins
 53,20,1 c.,nuts
@@ -58,9 +58,9 @@
 55,21,2 tsp.,soda
 56,21,2 c.,flour
 57,22,1 pkg.,devil's food cake mix
-58,22,1 pkg.,chocolate fudge pudding mix (instant)
+58,22,1 pkg.,chocolate fudge pudding mix
 59,22,6 oz.,chopped Frango mints
-60,23,2 c.,7-Up or Sprite
+60,23,2 c.,7-Up
 61,23,1 c.,vegetable oil
 62,23,1 c.,Kikkoman soy sauce
 63,24,1 c.,oil
@@ -69,7 +69,7 @@
 66,24,1 tsp.,Italian seasoning
 67,25,1.5 lb.,ground beef
 68,25,1.5 tsp.,salt
-69,26,1 c.,beef stock or water
+69,26,1 c.,beef stock
 70,26,2 tsp.,salt
 71,26,1 tsp.,ground red pepper
 72,27,2 lb.,round steak
@@ -79,8 +79,8 @@
 76,27,1 Tbsp.,prepared mustard
 77,27,1 tbsp.,Worcestershire sauce
 78,28,12 pkg.,semi-sweet chocolate chips
-79,28,1 sq.,unsweetened chocolate (if desired)
-80,28,1.5 c.,chopped nuts (if desired)
+79,28,1 sq.,unsweetened chocolate
+80,28,1.5 c.,chopped nuts
 81,28,1 tsp.,vanilla
 82,29,1 lb.,Ground Beef
 83,29,1 pkg.,taco seasoning
@@ -108,7 +108,7 @@
 105,37,16 oz.,sour cream
 106,37,1 pkg.,dry vegetable soup mix
 107,37, 6 oz.,Cheddar cheese
-108,38,1 lb.,"very thin spaghetti,.5 bottle McCormick Salad Supreme (seasoning)"
+108,38,1 lb.,very thin spaghetti.5 bottle McCormick Salad Supreme
 109,39,16 oz.,can pear halves
 110,39,8 oz.,carton lemon yogurt
 111,40,7 lb.,watermelon rind
@@ -129,18 +129,20 @@
 126,42,.333 c.,milk
 127,42,.25 tsp.,vanilla
 128,42,.333 c.,brown sugar
-129,42,2 Tbsp.,butter or margarine
+129,42,2 Tbsp.,butter
 130,43,5 c.,flour
 131,43,3 Tbsp.,sugar
 132,43,4 tsp.,baking powder
 133,43,1.5 pkg.,dry yeast
 134,43,2 c.,buttermilk
 135,43,1 tsp.,soda
-136,43,"1.5 sticks margarine,.5 c.",warm water
+,43,1.5 sticks ,margarine
+136,43,.5 c.,warm water
 137,44,2 Tbsp.,margarine
 138,44,.25 c.,crushed peppermint candy
 139,45,.25 c.,water
-140,45,"2 eggs,.5 c.",chopped nuts
+,45,2 whole,eggs
+140,45,.5 c.,chopped nuts
 141,46,1 c.,flour
 142,47,3 c.,self rising flour
 143,47,1 - 12 oz.,can beer
@@ -150,7 +152,7 @@
 147,49,1 tsp.,vanilla
 148,50,2 c.,water
 149,50,1 tsp.,sugar
-150,50,1 pkg.,Cup-a-Soup onion soup mix (dry)
+150,50,1 pkg.,Cup-a-Soup onion soup mix
 151,50,1 lb.,can stewed tomatoes
 152,50,8 oz.,can tomato sauce
 153,51,1 c.,milk
@@ -160,7 +162,7 @@
 157,52,2 tsp.,sugar
 158,52,1 tsp.,celery seed
 159,52,.25 tsp.,salt
-160,53,2 lb.,flounder or pollack fillets
+160,53,2 lb.,flounder
 161,53,.333 c.,lemon juice
 162,53,1 Tbsp.,salad oil
 163,53,2 tsp.,salt
@@ -187,17 +189,19 @@
 184,62,1 c.,chopped nuts
 185,62,8 oz.,softened cream cheese
 186,62,1 lb.,powdered sugar
-187,64,"1 cut up chicken,.5 c.",melted butter or margarine
+,64,1 whole,cut up chicken
+187,64,.5 c.,melted butter
 188,64,1.5 c.,uncooked rice
-189,65,"1 can sweetened condensed milk,.5 c.",crushed pineapple
+,65,1 can,sweetened condensed milk
+189,65,.5 c.,crushed pineapple
 190,65,.333 c.,chopped nuts
 191,65,.333 c.,lemon juice
-192,66,8 oz.,Jell-O sugar-free vanilla or French vanilla pudding (put in dry)
+192,66,8 oz.,Jell-O sugar-free vanilla
 193,66,8 oz.,Philadelphia light cream cheese
 194,66,2 Tbsp.,butter
-195,66,2 Tbsp.,peanut butter or more if you would like
+195,66,2 Tbsp.,peanut butter
 196,67, 1.25 c.,sugar
-197,67,1.25 c.,sour cream (use light)
+197,67,1.25 c.,sour cream
 198,68,16 oz.,Cool Whip
 199,68,2 pkg.,frozen strawberries *
 200,68,1.75 c.,sugar
@@ -260,36 +264,40 @@
 257,85,2 Tbsp.,sugar
 258,85,1 c.,whipping cream
 259,86,2 lb.,Velveeta cheese
-260,86,"3 cloves garlic,.5 tsp.",salt
+,86,3 cloves,garlic
+260,86,.5 tsp.,salt
 261,87,1.333 c.,flour
 262,88,4 lb.,confectioners sugar
 263,88,1 c.,cocoa
 264,88,1 c.,chopped nuts
-265,88,1 lb.,margarine (not whipped)
+265,88,1 lb.,margarine
 266,88,1 lb.,Velveeta
 267,88,1 Tbsp.,vanilla
 268,89,3 lb.,squash
 269,89,1 pt.,sour cream
 270,89,1 pkg.,Pepperidge Farm stuffing mix
 271,90,2 pkg.,cream cheese
-272,90,2 c.,shredded Cheddar cheese (8 
+272,90,2 c.,shredded Cheddar cheese
 273,90,1 Tbsp.,chopped pimento
 274,90,1 Tbsp.,chopped green pepper
 275,90,1 Tbsp.,chopped onion
 276,90,1 tsp.,lemon juice
 277,90,2 tsp.,Worcestershire sauce
-278,91,20 oz.,can crushed pineapple 
-279,92,3 c.,plain flour (cake flour may be substituted for plain flour)
-280,92,"2 sticks margarine,.5 c.",butter flavor Crisco
+278,91,20 oz.,can crushed pineapple
+279,92,3 c.,plain flour
+,92,2 sticks,margarine
+280,92,.5 c.,butter flavor Crisco
 281,92,1 c.,sweet milk
 282,92, 2 Tbsp.,flavoring (lemon
 283,93,1 c.,brown sugar
 284,93,2 Tbsp.,milk
 285,94,8 oz.,can crescent rolls
-286,94,1.5 c.,grated medium or sharp cheese
+286,94,1.5 c.,grated medium
 287,94,1.5 c.,milk
-288,95,"1 diced onion,.5 c.",grated Cheddar cheese
-289,96,"3 (1 lb.) cans pork and beans,.5 c.",bell pepper
+,95,1 whole,diced onion
+288,95,.5 c.,grated Cheddar cheese
+,96,3 lb. ,pork and beans
+289,96,.5 c.,bell pepper
 290,96,.333 c.,brown sugar
 291,96,1 tsp.,salt
 292,96,.333 tsp.,black pepper
@@ -301,7 +309,7 @@
 298,97,2 Tbsp.,cornstarch
 299,97,2 Tbsp.,vinegar
 300,97,1 Tbsp.,soy sauce
-301,97,1 c.,green pepper (large chunks)
+301,97,1 c.,green pepper
 302,97,8 oz.,pineapple chunks
 303,98,.25 c.,sugar
 304,98,1 c.,orange juice
@@ -331,12 +339,12 @@
 328,104,1 c.,cider vinegar
 329,104,1 c.,water
 330,105,2 Tbsp.,butter
-331,105,1 lb.,ground beef or turkey
-332,105,3 c.,beef or chicken broth
+331,105,1 lb.,ground beef
+332,105,3 c.,beef
 333,105,1 c.,diced potatoes
 334,105,1 c.,celery
 335,105,1 c.,frozen green beans
-336,106,1 lb.,2  jar Tang
+336,106,1 lb.,2 jar Tang
 337,106,1 pkg.,lemonade Kool Aid with sugar added
 338,106,2 c.,sugar
 339,106,1 tsp.,ground cloves
@@ -355,11 +363,12 @@
 352,111,2 c.,brown sugar
 353,111,1 c.,salad oil
 354,111,1 tsp.,almond extract
-355,112,"1 can Campbell's cream of mushroom soup,.75 c.",water
-356,112,1 c.,cashews or peanuts
+,112,1 can ,Campbell's cream of mushroom soup
+355,112,.75 c.,water
+356,112,1 c.,cashews
 357,113,1 Tbsp.,pimiento
-358,114,16 oz.,"cream cheese,.667 can chopped black olives"
-359,115,3.5 c.,large shells (uncooked)
+358,114,16 oz.,cream cheese.667 can chopped black olives
+359,115,3.5 c.,large shells
 360,115,2 c.,cubed
 361,115,2 c.,fresh
 362,115,2 c.,fresh
@@ -367,7 +376,7 @@
 364,116,2 Tbsp.,water
 365,116,2 c.,fresh mushrooms
 366,116,2 Tbsp.,finely chopped green onion
-367,116,1 Tbsp.,margarine or butter
+367,116,1 Tbsp.,margarine
 368,117,1 lb.,ground chuck
 369,117,1 tsp.,shortening
 370,117,16 oz.,can tomatoes
@@ -404,9 +413,10 @@
 401,123,1 tsp.,Worcestershire sauce
 402,123,.125 tsp.,garlic salt
 403,123,.125 tsp.,celery salt
-404,124,1 c.,"miniature marshmallows,.5 container Cool Whip (small)"
-405,125,"1 egg,.5 c.",milk
-406,125,1 c.,blueberries (optional)
+404,124,1 c.,miniature marshmallows.5 container Cool Whip
+,125,1 whole,egg
+405,125,.5 c.,milk
+406,125,1 c.,blueberries
 407,126,1 c.,flour
 408,126,1 pkg.,cream cheese
 409,126,1 pkg.,Cool Whip
@@ -415,7 +425,8 @@
 412,126,3 c.,milk
 413,127,1 tsp.,sugar
 414,127,1 c.,all-purpose flour
-415,128,"2 eggs,.5 tsp.",grated onion
+,128,2 whole,eggs
+415,128,.5 tsp.,grated onion
 416,129,2 lb.,ground beef
 417,129,1 pkg.,dry onion mix
 418,129,No.,3) can B & M beans
@@ -428,13 +439,13 @@
 425,130,1 c.,chopped walnuts
 426,131, 4 oz.,sliced almonds
 427,133,1 c.,mayonnaise
-428,133,1 c.,grated Parmesan or Romano cheese
+428,133,1 c.,grated Parmesan
 429,134,2.5 lb.,onions
-430,134,1 qt.,beef stock (3 cans Campbell's beef stock)
-431,134,1 qt.,chicken stock (3 cans Campbell's chicken stock)
+430,134,1 qt.,beef stock
+431,134,1 qt.,chicken stock
 432,134,2 Tbsp.,Worcestershire sauce
 433,134,1.5 tsp.,garlic salt
-434,134,1 tsp.,black pepper (you may wish to use less)
+434,134,1 tsp.,black pepper
 435,135,1 c.,sugar
 436,135,2 Tbsp.,flour
 437,135,1 tsp.,cinnamon
@@ -461,16 +472,17 @@
 458,141,3.5 Tbsp.,blackberry flavored gelatin
 459,141,4 c.,fresh blackberries
 460,142,16 oz.,Cool Whip
-461,142,2 c.,"coconut,.75 margarine"
+461,142,2 c.,coconut
+,142,.75 c.,margarine
 462,142,1 c.,slivered almonds
 463,142,8 oz.,cream cheese
 464,144,1 Tbsp.,oil
-465,144,5 oz.,"frozen broccoli,.5 stick margarine"
+465,144,5 oz.,frozen broccoli.5 stick margarine
 466,144,1 pkg.,Jiffy cornbread mix
 467,144,6 oz.,cottage cheese
 468,145,1 c.,diced carrots
 469,145,1 c.,small macaroni
-470,145,1.5 lb.,ground turkey or beef
+470,145,1.5 lb.,ground turkey
 471,145,14 oz.,can French green beans
 472,145,1 tsp.,Italian seasoning
 473,145,1 c.,sweet peas
@@ -484,13 +496,13 @@
 481,147,1 c.,chopped nuts
 482,148,1 c.,sugar
 483,148,1 c.,packed brown sugar
-484,148,.333 c.,"evaporated milk,.5 stick butter or margarine"
+484,148,.333 c.,evaporated milk.5 stick butter
 485,148,1.5 c.,pecans
 486,148,1.5 c.,coconut
-487,149,1 pkg.,chopped pecans (about.5 c.)
+487,149,1 pkg.,chopped pecans
 488,150,1.333 c.,white sugar
 489,150,6 Tbsp.,butter
-490,151,16 oz.,can pumpkin (not pumpkin mix)
+490,151,16 oz.,can pumpkin
 491,152,.25 c.,sugar
 492,153,9 c.,Chex cereal
 493,153,1 c.,chocolate chips
@@ -504,28 +516,30 @@
 501,155,1 pkg.,taco seasoning
 502,155,1 c.,Mozzarella cheese
 503,155,1 c.,cheddar cheese
-504,156,4 c.,water or potato water
+504,156,4 c.,water
 505,156,1 cake yeast or 3 pkg.,dry yeast
 506,156,2 Tbsp.,salt
-507,156,1 c.,sugar or more
+507,156,1 c.,sugar
 508,157,2 c.,chicken
 509,157,3 c.,chicken broth
-510,157,"1 chopped onion,.75 c.",oleo
+,157,1 whole,chopped onion
+510,157,.75 c.,oleo
 511,157,1.5 c.,milk
 512,157,1.5 tsp.,baking powder
 513,157,1.5 c.,self-rising flour
-514,158,3 c.,chicken stock or vegetable stock
-515,158,1 pkg.,(10  frozen artichoke hearts
-516,158,2 t.,olive or canola oil
+514,158,3 c.,chicken stock
+515,158,1 pkg.,(10 frozen artichoke hearts
+516,158,2 t.,olive
 517,158,1 c.,arborio
 518,158,4 oz.,spinach
 519,158,3 T.,grated parmesan cheese
 520,159,1 tsp.,dried basil
 521,159,1 tsp.,oregano
-522,159,1 c.,dry red or white wine
+522,159,1 c.,dry red
 523,160,1 pkg.,pistachio instant pudding mix
 524,160,1 c.,ginger ale
-525,160,"3 eggs,.5 c.",chopped pecans
+,160,3 whole,eggs
+525,160,.5 c.,chopped pecans
 526,160,1 pkg.,of pistachio instant pudding mix
 527,161,2 c.,self-rising flour
 528,161,1 c.,crushed walnuts
@@ -549,9 +563,9 @@
 546,165,8 oz.,can crushed pineapple
 547,165,1 c.,vegetable oil
 548,165,2 tsp.,vanilla
-549,166,1.75 c.,quick cooking long grain and wild rice or plain rice
-550,166,10.75 oz.,can French onion soup (undiluted)
-551,166,2 Tbsp.,melted butter or margarine
+549,166,1.75 c.,quick cooking long grain and wild rice
+550,166,10.75 oz.,can French onion soup
+551,166,2 Tbsp.,melted butter
 552,167,2 Tbsp.,bacon drippings
 553,167,1 Tbsp.,flour
 554,167,1 tsp.,salt
@@ -560,15 +574,15 @@
 557,167,16 oz.,can green peas
 558,168,1 c.,sugar
 559,168,1.25 tsp.,cream of tartar
-560,168,1 c.,chopped nuts (optional)
+560,168,1 c.,chopped nuts
 561,170,2 lb.,bag hash browns
 562,170,1 pt.,sour cream
 563,171,3 c.,flour
 564,171,4.5 tsp.,baking powder
 565,171,1 c.,milk
 566,172,1 lb.,lean hamburger
-567,172,1 pkg.,lasagne noodles (approximately 8 noodles)
-568,173,4 lb.,new potatoes (red skin)
+567,172,1 pkg.,lasagne noodles
+568,173,4 lb.,new potatoes
 569,174,2 c.,milk
 570,174,1 tsp.,vanilla
 571,174,.25 c.,melted butter
@@ -576,23 +590,25 @@
 573,176,1 c.,sifted all-purpose flour
 574,176,2 Tbsp.,sugar
 575,176,1 c.,milk
-576,176,3 Tbsp.,butter or margarine
-577,177,"1 egg white,.667 c.",light brown sugar
+576,176,3 Tbsp.,butter
+,177,1 whole,egg white
+577,177,.667 c.,light brown sugar
 578,177,1 tsp.,vanilla
 579,177,4 c.,whole pecans
 580,178,1 lb.,ground beef
 581,178,14 oz.,Pizza Quick sauce
 582,178,2 c.,shredded Mozzarella cheese
-583,178,"1 jar sliced mushrooms,.75 c.",biscuit mix
+,178,1 jar ,sliced mushrooms
+583,178,.75 c.,biscuit mix
 584,178,1.5 c.,milk
-585,179,12 pkg.,(2 c.) semi-sweet chocolate chips
+585,179,12 pkg.,semi-sweet chocolate chips
 586,179,14 oz.,can sweetened condensed milk
 587,179,8.5 pkg.,chocolate wafers
 588,179,1 c.,chopped nuts
 589,181,1.25 c.,all-purpose flour
 590,181,1 c.,sugar
 591,181,1 tsp.,salt
-592,181,1 c.,cut up dates or whole raisins
+592,181,1 c.,cut up dates
 593,181,6 pkg.,semi-sweet chocolate chips
 594,182,1 lb.,hamburger
 595,182,2 Tbsp.,oil
@@ -600,19 +616,22 @@
 597,182,1.5 c.,warm water
 598,182,.25 c.,soy sauce
 599,182,.25 tsp.,pepper
-600,183,1 lb.,butter (not margarine)
-601,185,"1 box yellow cake mix,.75 c.",water
-602,186,"1 egg,.5 tsp.",vanilla
+600,183,1 lb.,butter
+,185,1 box, yellow cake mix
+601,185,.75 c.,water
+,186,1 whole,egg
+602,186,.5 tsp.,vanilla
 603,186,10 oz.,bag miniature Reese's peanut butter cups
 604,187,.125 tsp.,onion powder
-605,187,2 c.,croutons (cheese)
+605,187,2 c.,croutons
 606,187,1 c.,grated Velveeta
 607,188,1 c.,brown sugar
 608,188,1.75 c.,flour
 609,188,1 c.,raisins
 610,188,1.25 c.,applesauce
 611,189,3 c.,flour
-612,189,"3 eggs,.5 c.",water
+,189,3 whole,eggs
+612,189,.5 c.,water
 613,190,4 c.,sugar
 614,190,4 sq.,baking chocolate
 615,190,9 oz.,bar milk chocolate
@@ -626,7 +645,8 @@
 623,192,1 tsp.,grated orange peel
 624,193,.25 c.,cocoa
 625,193,1 c.,sugar
-626,193,"2 eggs,.5 c.",margarine at room temperature
+,193,2 whole,eggs
+626,193,.5 c.,margarine at room temperature
 627,193,.125 tsp.,salt
 628,194,1 c.,water
 629,194,1 c.,flour
@@ -658,11 +678,11 @@
 655,200,2.5 tsp.,vanilla
 656,201, 5 c.,chicken broth
 657,201,1 c.,chopped chicken
-658,201,3 Tbsp.,flour (self-rising)
+658,201,3 Tbsp.,flour
 659,201,2 Tbsp.,water
 660,202,4 lb.,beef brisket
 661,202,1 c.,catsup
-662,202,1 c.,"water,.5 onion"
+662,202,1 c.,water.5 onion
 663,202,2 Tbsp.,cider vinegar
 664,202,1 Tbsp.,prepared horseradish
 665,202,1 Tbsp.,prepared mustard
@@ -691,11 +711,11 @@
 688,208,1 Tbsp.,milk
 689,208,2 Tbsp.,vanilla
 690,208,1 c.,cornflakes
-691,208,12 pkg.,chocolate pieces (semi-sweet)
+691,208,12 pkg.,chocolate pieces
 692,208,1 c.,granulated sugar
 693,208,1 c.,vegetable oil
 694,208,1 c.,quick oats
-695,209,2 Tbsp.,lemon juice or wine vinegar
+695,209,2 Tbsp.,lemon juice
 696,209,1 Tbsp.,honey
 697,209,1 Tbsp.,rosemary
 698,209,2 Tbsp.,water
@@ -703,14 +723,15 @@
 700,209,1 tsp.,parsley
 701,210,1 pt.,Cool Whip
 702,211,2.5 c.,milk
-703,211,"2 egg yolks,.667 c.",sugar
+,211,2 whole,egg yolks
+703,211,.667 c.,sugar
 704,211,4 Tbsp.,cornstarch
 705,211,2 tsp.,vanilla
-706,211,3 Tbsp.,butter (room temperature)
+706,211,3 Tbsp.,butter
 707,212,2 tsp.,lemon juice
 708,212,1 tsp.,salt
 709,212,.25 c.,crumbled Blue cheese
-710,212,2 c.,sliced red or yellow onions
+710,212,2 c.,sliced red
 711,213,.25 tsp.,cinnamon
 712,213,.25 c.,sugar
 713,213,4 Tbsp.,lemon juice
@@ -718,9 +739,10 @@
 715,214,1 tsp.,baking soda
 716,214,1 tsp.,baking powder
 717,214,1 tsp.,cinnamon
-718,214,"1 jar junior strained carrots (baby food),.5 c.",nuts
+,214,1 jar,junior strained carrots (baby food)
+718,214,.5 c.,nuts
 719,215,6 oz.,can frozen lemonade concentrate
-720,215,6 c.,"water,.5 ??? grenadine syrup"
+720,215,6 c.,water.5 ??? grenadine syrup
 721,215,1 qt.,ginger ale
 722,217,1 lb.,ground beef
 723,217,.125 c.,chopped onion
@@ -738,15 +760,16 @@
 735,219,1.5 lb.,sharp Cheddar cheese
 736,219,1.5 tsp.,salt
 737,219,1.5 tsp.,paprika
-738,220,1 lb.,American cheese (shredded)
+738,220,1 lb.,American cheese
 739,221,1 c.,flour
-740,221,"1 stick butter or oleo,.5 c.",chopped pecans (optional)
+,221,1 stick ,butter
+740,221,.5 c.,chopped pecans
 741,221,1 Tbsp.,sugar
 742,221,1 c.,powdered sugar
 743,221,2 pkg.,instant pudding
 744,221,3 c.,milk
 745,222,1 lb.,ground beef
-746,222,12 oz.,can pet milk (can use fat free)
+746,222,12 oz.,can pet milk
 747,223,2 c.,flour
 748,223,1 c.,sugar
 749,223,1 tsp.,vanilla
@@ -762,7 +785,8 @@
 759,226,1 tsp.,salt
 760,226,1 tsp.,chili powder
 761,227,1 c.,sour cream
-762,228,"1 egg,.667 c.",water
+,228,1 whole,egg
+762,228,.667 c.,water
 763,228,1 Tbsp.,vegetable oil
 764,228,1 tsp.,lemon juice
 765,228,1 c.,all-purpose flour
@@ -772,7 +796,7 @@
 769,230,1 c.,cracker crumbs
 770,230,1.5 lb.,ground chuck
 771,230,4 Tbsp.,finely chopped onion
-772,230,1.5 tsp.,salt or to taste
+772,230,1.5 tsp.,salt
 773,230,1 tsp.,dry mustard
 774,230,1 Tbsp.,ketchup
 775,230,1 c.,grated American cheese
@@ -799,7 +823,7 @@
 796,235,1 lb.,ground beef
 797,235,12 oz.,spaghetti
 798,235,16 oz.,shredded Cheddar cheese
-799,235,10.75 oz.,can condensed cream of mushroom soup (undiluted)
+799,235,10.75 oz.,can condensed cream of mushroom soup
 800,236,1.5 c.,water
 801,236,1 tsp.,apple pie spice
 802,236,1 tsp.,vanilla
@@ -836,7 +860,7 @@
 833,244,3 c.,water
 834,244,1.5 tsp.,salt
 835,244,10 oz.,box frozen limas
-836,244,1 c.,frozen or 1 can corn
+836,244,1 c.,frozen
 837,245,2 Tbsp.,mayonnaise
 838,245,1 tsp.,lemon juice
 839,246,2 lb.,carrots
@@ -852,5 +876,6 @@
 849,248,8 oz.,sour cream
 850,250,4 c.,sifted flour
 851,250,1.5 c.,shortening
-852,250,"1 egg,.5 c.",ice cold water
+,250,1 whole,egg
+852,250,.5 c.,ice cold water
 853,250,1 Tbsp.,vinegar
