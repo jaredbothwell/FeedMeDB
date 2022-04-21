@@ -10,7 +10,7 @@ GO
 
 CREATE TABLE Data.[User]
 (
-    UserID int primary key identity(0,1),
+    UserID int primary key identity(1,1),
     UserName varchar(20) not null unique,
     PasswordHash varchar(256) not null,
     IsRemoved bit default 0,
@@ -19,13 +19,15 @@ CREATE TABLE Data.[User]
     RemovedOn datetimeoffset,
 )
 
+INSERT INTO Data.[User](UserName,PasswordHash)
+VALUES('feedmeDB',HASHBYTES('SHA2_256','S3cur3P@ssw0rd!'))
+
 GO
 
 CREATE TABLE Data.MeasurementUnit
 (
     MeasurementUnitID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [Name] VARCHAR(32) NOT NULL UNIQUE,
-    IsRemoved bit default 0 NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset
@@ -36,8 +38,7 @@ GO
 CREATE TABLE Data.Ingredient
 (
     IngredientID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    [Name] NVARCHAR(32) NOT NULL UNIQUE,
-    IsRemoved bit default 0 NOT NULL,
+    [Name] NVARCHAR(128) NOT NULL UNIQUE,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,
@@ -53,7 +54,6 @@ CREATE TABLE Data.Recipe
     PrepTime INT,
     Difficulty VARCHAR(32) NOT NULL,
     Directions VARCHAR(2048) NOT NULL,
-    IsRemoved bit default 0,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset
@@ -66,8 +66,7 @@ CREATE TABLE Data.RecipeIngredient
     RecipeIngredientID INT IDENTITY(1,1) PRIMARY KEY,
     RecipeID INT FOREIGN KEY REFERENCES Data.Recipe(RecipeID) NOT NULL,
     IngredientID INT FOREIGN KEY REFERENCES Data.Ingredient(IngredientID) NOT NULL,
-    MeasurementQuantity INT NOT NULL,
-    IsRemoved bit default 0 NOT NULL,
+    MeasurementQuantity NUMERIC(5,3) NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,
@@ -83,8 +82,8 @@ CREATE TABLE Data.UserRecipe
     RecipeID INT FOREIGN KEY REFERENCES Data.Recipe(RecipeID) NOT NULL,
     IsBookmarked BIT DEFAULT 0 NOT NULL,
     Rating INT,
-    IsRemoved bit default 0 NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset
+    UNIQUE(UserID, RecipeID)
 )
