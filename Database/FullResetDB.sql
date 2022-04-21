@@ -61,7 +61,7 @@ CREATE TABLE Data.RecipeIngredient(
     RecipeIngredientID INT IDENTITY(1,1) PRIMARY KEY,
     RecipeID INT FOREIGN KEY REFERENCES Data.Recipe(RecipeID) NOT NULL,
     IngredientID INT FOREIGN KEY REFERENCES Data.Ingredient(IngredientID) NOT NULL,
-    MeasurementQuantity DECIMAL(5,3) NOT NULL,
+    MeasurementQuantity NUMERIC(5,3) NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,

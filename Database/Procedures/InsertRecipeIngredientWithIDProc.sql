@@ -1,8 +1,10 @@
+DROP PROCEDURE IF EXISTS Data.InsertRecipeIngredientWithID;
+GO
 CREATE PROCEDURE Data.InsertRecipeIngredientWithID
     @RecipeID INT, 
     @IngredientName nvarchar(60), 
     @MeasurementUnitName nvarchar(10), 
-    @MeasurementQuantity int
+    @MeasurementQuantity numeric(5,3)
 AS
 INSERT INTO Data.RecipeIngredient
     (RecipeID,IngredientID,MeasurementUnitID,MeasurementQuantity)
