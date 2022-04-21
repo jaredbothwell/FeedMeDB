@@ -19,7 +19,7 @@ CREATE TABLE Data.[User]
 )
 
 INSERT INTO Data.[User](UserName,PasswordHash)
-VALUES('feedmeDB',HASHBYTES('SHA2_256','S3cur3P@ssw0rd!'))
+VALUES('feedmeDB','637042e4cd8c8e87c1933126e603f9ed86a1fa92b9502dccbfc5a2eea4ffab1b')
 
 GO
 

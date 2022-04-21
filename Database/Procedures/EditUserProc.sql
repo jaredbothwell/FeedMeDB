@@ -8,3 +8,5 @@ ModifiedOn = SYSDATETIMEOFFSET(),
 UserName = @NewUserName
 WHERE UserID = @UserID
 GO
+
+--EXECUTE Data.EditUser 1,N'Ahren'
