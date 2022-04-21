@@ -13,7 +13,6 @@ CREATE TABLE Data.[User]
     UserID int primary key identity(1,1),
     UserName varchar(20) not null unique,
     PasswordHash varchar(256) not null,
-    IsRemoved bit default 0,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,
