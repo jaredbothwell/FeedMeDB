@@ -6,6 +6,7 @@ using System.Text;
 
 namespace FeedMeDB.Controllers;
 
+
 /// <summary>
 /// Base class for all controllers
 /// Inherits from Microsoft.AspNetCore.Mvc.ControllerBase
