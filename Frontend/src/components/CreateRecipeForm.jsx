@@ -7,8 +7,35 @@ import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 export default function CreateRecipeForm({closeHandler}) {
 
-  const closeForm = () =>
+  const inputRef = React.useRef(null)
+
+  const submitHandler = () =>
   {
+    console.log(values.description)
+    console.log(values.difficulty)
+    console.log(values.prepTime)
+    console.log(values.recipeName)
+
+    resetState()
+    closeHandler()
+  }
+
+  const cancel = () =>
+  {
+    resetState()
+    closeHandler()
+  }
+
+  const resetState = () => 
+  {
+    setValues({
+      ...values,
+      recipeName: '',
+      prepTime: '',
+      difficulty: 1,
+      description: ''
+    }
+    )
 
   }
 
@@ -103,6 +130,7 @@ export default function CreateRecipeForm({closeHandler}) {
               variant="standard"
               name='recipeName'
               onChange={handleChange}
+              value={values.recipeName}
               />
           </div>
           <h3 className='input_field' style={{color:'black'}}>difficulty</h3>
@@ -117,6 +145,7 @@ export default function CreateRecipeForm({closeHandler}) {
         valueLabelDisplay="auto"
         marks={marks}
         onChange={handleChange}
+        value={values.difficulty}
       />
             <TextField
         label="Prep Time (in minutes)"
@@ -137,18 +166,19 @@ export default function CreateRecipeForm({closeHandler}) {
             onChange={handleChange}
             multiline
             maxRows={4}
+            value={values.description}
           />
         </div>
 
 
 
         <div className='input_field'>
-        <Fab style={{backgroundColor: 'gray'}} variant="extended" color="primary" aria-label="add" onClick={closeHandler}>
+        <Fab style={{backgroundColor: 'gray'}} variant="extended" color="primary" aria-label="add" onClick={cancel}>
                 Cancel
         </Fab>
         </div>
         <div className='input_field'>
-        <Fab disabled={!submitEnabled} variant="extended" color="primary" aria-label="add" onClick={closeForm}>
+        <Fab disabled={!submitEnabled} variant="extended" color="primary" aria-label="add" onClick={submitHandler}>
                 Add Recipe
         </Fab>
         </div>
