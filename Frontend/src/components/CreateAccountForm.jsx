@@ -39,7 +39,7 @@ export class CreateAccountForm extends React.Component {
     {
 
       // need to add checks for if user exists already, and if two passwords match
-      let http_string = "http://localhost:8000/api/CreateAccount?userName=" + user +"&password=" + pass 
+      let http_string = "http://localhost:8000/api/users/add?userName=" + user +"&password=" + pass 
       console.log(http_string)
       const requestOptions = {
         method: 'POST',
@@ -48,9 +48,7 @@ export class CreateAccountForm extends React.Component {
     };
     fetch(http_string, requestOptions)
         .then(response => console.log(response))
-
-
-      // handle if create account worked or not
+      // TODO handle if create account worked or not
     }
 
 

@@ -1,14 +1,23 @@
-import React from 'react'
+import React,{useState} from 'react'
 import AnimatedPage from './AnimatedPage'
-
+import Backdrop from '@mui/material/Backdrop';
 import ListBox from '../components/ListBox';
-
-import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import CreateRecipeForm from '../components/CreateRecipeForm';
 
 export default function Account(props) {
-  console.log(props.user)
+  //console.log(props.user)
+
+  const [backDropOpen, setBackDrop] = useState(false);
+  const handleClose = () => {
+    setBackDrop(false);
+  };
+  const handleToggle = () => {
+    setBackDrop(!backDropOpen);
+  };
+
+
   return (
     <AnimatedPage>
       {props.user != null?<>
@@ -24,9 +33,9 @@ export default function Account(props) {
               marginRight: '1%'}}>
                 <h1 style={{textAlign: "center"}}>Recipes that {props.user.name} has contributed</h1>
                 <ListBox/>
-                <Fab className='col-m-1' variant="extended" color="primary" aria-label="add">
-            <AddIcon sx={{ mr: 1 }} />
-              Create new recipe
+            <Fab className='col-m-1' variant="extended" color="primary" aria-label="add" onClick={handleToggle}>
+              <AddIcon sx={{ mr: 1 }} />
+                Create new recipe
             </Fab>
             </div>
             <div class="col"
@@ -51,14 +60,18 @@ export default function Account(props) {
                 <ListBox/>
             </div>
           </div>
-        
-      </>
-      
-      
-      :
-      <h1 style={{color:'white', textAlign:'center'}}>please log in</h1> }
 
-  
+          <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backDropOpen}
+        
+      >
+        <CreateRecipeForm closeHandler={()=>setBackDrop(false)}/>
+      </Backdrop>
+      </>
+      :
+      <h1 style={{color:'white', textAlign:'center'}}>please log in</h1> 
+      }
     </AnimatedPage>
   )
 }
