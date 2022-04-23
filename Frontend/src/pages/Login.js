@@ -17,7 +17,6 @@ export default function Login(props) {
     {
       props.userLoggedIn(input);
       setLoggedIn(true);
-      
     }
     else
     {
