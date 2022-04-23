@@ -9,6 +9,8 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@mui/material/IconButton';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterIngredientsSearch from '../components/FilterIngredientsSearch';
+import recipes from '../mock_data/recipes';
+
 export default function Home() {
 
   const CssTextField = withStyles({
@@ -36,28 +38,11 @@ export default function Home() {
     },
   })(TextField);
 
-
-  const [recipes,setRecipes] = useState([
-    {"recipeID":1, "name":"eggs on toast"},
-    {"recipeID":2, "name":"bacon"},
-    {"recipeID":3, "name":"torbens appeaaatizers"},
-    {"recipeID":4, "name":"bigmac"},
-    {"recipeID":5, "name":"omlete"},
-    {"recipeID":6, "name":"poptart"},
-    {"recipeID":7, "name":"eggs on toast"},
-    {"recipeID":8, "name":"bacon"},
-    {"recipeID":9, "name":"torbens appeaaatizers"},
-    {"recipeID":10, "name":"bigmac"},
-    {"recipeID":11, "name":"omlete"},
-    {"recipeID":12, "name":"poptart"},
-]);
-
   const [filterBackdrop,setFilterBackdrop] = useState(false);
   const [ingredientsToFilterBy,setIngredientsFilter] = useState([]);
 
   const closeFilter = (filteredIngredients) => 
   {
-    
     setIngredientsFilter(filteredIngredients)
     setFilterBackdrop(false);
   }
