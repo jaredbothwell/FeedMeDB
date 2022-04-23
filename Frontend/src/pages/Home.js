@@ -4,8 +4,39 @@ import './css_files/Home.css'
 import Search from '../components/SearchBar'
 import SmoothList from 'react-smooth-list';
 import RecipeCard from '../components/Card' 
+import { Backdrop, TextField } from '@mui/material';
+import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@mui/material/IconButton';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterIngredientsSearch from '../components/FilterIngredientsSearch';
 export default function Home() {
-  const [testLabel,setLabel] = useState('')
+
+  const CssTextField = withStyles({
+    root: {
+      '& label.Mui-focused': {
+        color: '#e1cfa9',
+      },
+      '& label': {
+        color: 'white',
+      },
+      '& .MuiInput-underline:after': {
+        borderBottomColor: 'yellow',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: 'white',
+        },
+        '&:hover fieldset': {
+          borderColor: 'white',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#e1cfa9',
+        },
+      },
+    },
+  })(TextField);
+
+
   const [recipes,setRecipes] = useState([
     {"recipeID":1, "name":"eggs on toast"},
     {"recipeID":2, "name":"bacon"},
@@ -19,10 +50,25 @@ export default function Home() {
     {"recipeID":10, "name":"bigmac"},
     {"recipeID":11, "name":"omlete"},
     {"recipeID":12, "name":"poptart"},
-])
+]);
+
+  const [filterBackdrop,setFilterBackdrop] = useState(false);
+  const [ingredientsToFilterBy,setIngredientsFilter] = useState([]);
+
+  const closeFilter = (filteredIngredients) => 
+  {
+    
+    setIngredientsFilter(filteredIngredients)
+    setFilterBackdrop(false);
+  }
 
   return (
     <AnimatedPage>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={filterBackdrop}>
+            <FilterIngredientsSearch SendIngredientsToHomePage={closeFilter}/>
+        </Backdrop>
 
     <section className='home--search'>
       <div className='container'>
@@ -31,11 +77,13 @@ export default function Home() {
         </div>
         <div style={{marginTop: '20px'}} className='row justify-content-center'>
           <div>
-            <Search/>
+            <CssTextField inputProps={{ style: { color: "white" } }} label='Search'/>
+            <IconButton onClick={()=>setFilterBackdrop(true)}>
+              <FilterAltIcon fontSize='large' sx={{ color: 'white'}}/>
+            </IconButton>
           </div>
         </div >
         <div className='row justify-content-center'>
-          <label>{testLabel}</label>
         </div>
        </div>
     </section>

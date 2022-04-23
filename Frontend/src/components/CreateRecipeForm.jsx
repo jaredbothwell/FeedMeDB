@@ -169,7 +169,16 @@ export default function CreateRecipeForm({closeHandler}) {
             value={values.description}
           />
         </div>
-
+        <hr
+        style={{
+            color: 'gray',
+            backgroundColor: 'gray',
+            height: 2,
+            marginTop: 50
+        }}
+        
+        />
+        <h1 style={{color:'black'}}>Add ingredients</h1>
 
 
         <div className='input_field'>
