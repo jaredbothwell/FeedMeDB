@@ -4,6 +4,17 @@
 
 Create environment variables for connection strings.
 
+### PowerShell
+
+```powershell
+$Env:AZURE_DB_STRING = "connectionstring"
+
+$Env:ASPNETCORE_ENVIRONMENT = "Development"
+
+$Env:USE_LOCAL_DB = "0"
+```
+
+
 ### Windows
 
 Add environment variables to `FeedMeDB/.env`
