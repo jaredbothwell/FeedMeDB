@@ -17,4 +17,13 @@ public class RecipesController : ControllerBase
         var repo = new RecipeRepository();
         return repo.GetAllRecipes();
     }
+
+    /*
+    [Route("/user/{id:int}")]
+    [HttpGet]
+    public IEnumerable<RecipeModel> GetUserRecipes(int id) 
+    {
+        
+    }
+    */
 }

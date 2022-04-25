@@ -1,15 +1,77 @@
-import React from 'react'
+import React,{useState} from 'react'
 import AnimatedPage from './AnimatedPage'
+import Backdrop from '@mui/material/Backdrop';
+import ListBox from '../components/ListBox';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import CreateRecipeForm from '../components/CreateRecipeForm';
 
 export default function Account(props) {
-  console.log(props.user)
+  //console.log(props.user)
+
+  const [backDropOpen, setBackDrop] = useState(false);
+  const handleClose = () => {
+    setBackDrop(false);
+  };
+  const handleToggle = () => {
+    setBackDrop(!backDropOpen);
+  };
+
+
   return (
     <AnimatedPage>
-    <div>
-        {props.user != null?
-         <h1 style={{color:'white', textAlign:'center'}}>Hi {props.user.name}</h1>
-         :<h1 style={{color:'white', textAlign:'center'}}>please log in</h1> }
-    </div>
+      {props.user != null?<>
+          <div class="row"
+            style={{marginTop: "1%"}}>
+            <div class="col"
+            style={{
+              borderRadius: '40px',
+              backgroundColor: '#565c68',
+              opacity: '80%',
+              padding:'5%',
+              marginLeft: '1%',
+              marginRight: '1%'}}>
+                <h1 style={{textAlign: "center"}}>Recipes that {props.user.name} has contributed</h1>
+                <ListBox/>
+            <Fab className='col-m-1' variant="extended" color="primary" aria-label="add" onClick={handleToggle}>
+              <AddIcon sx={{ mr: 1 }} />
+                Create new recipe
+            </Fab>
+            </div>
+            <div class="col"
+            style={{
+              borderRadius: '40px',
+              backgroundColor: '#565c68',
+              opacity: '80%',
+              padding:'5%',
+              marginLeft: '1%',
+              marginRight: '1%'}}>
+                <h1 style={{color:'white', textAlign:'center'}}>{props.user.name} stats:</h1>
+            </div>
+            <div class="col"
+            style={{
+              borderRadius: '40px',
+              backgroundColor: '#565c68',
+              opacity: '80%',
+              padding:'5%',
+              marginLeft: '1%',
+              marginRight: '1%'}}>
+                <h1 style={{textAlign: "center"}}>Recipes that {props.user.name} has bookmarked/saved</h1>
+                <ListBox/>
+            </div>
+          </div>
+
+          <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backDropOpen}
+        
+      >
+        <CreateRecipeForm closeHandler={()=>setBackDrop(false)}/>
+      </Backdrop>
+      </>
+      :
+      <h1 style={{color:'white', textAlign:'center'}}>please log in</h1> 
+      }
     </AnimatedPage>
   )
 }

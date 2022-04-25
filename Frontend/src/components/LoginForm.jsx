@@ -62,7 +62,7 @@ export class JawbreakerInput extends React.Component {
     verifyCreds(user,pass)
     {
       // need to add checks for if user exists already, and if two passwords match
-      let http_string = "http://localhost:8000/api/login?userName=" + user +"&password=" + pass 
+      let http_string = "http://localhost:8000/api/users/login?userName=" + user +"&password=" + pass 
       console.log(http_string)
       const requestOptions = {
         method: 'POST',

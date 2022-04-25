@@ -29,7 +29,7 @@ public class UserRepository : BaseRepository
     public UserModel? GetUserByName(string userName)
     {
         // TODO: sql
-        String sql = "select U.UserID, U.UserName, U.PasswordHash, U.IsRemoved, U.CreatedOn, U.ModifiedOn, U.RemovedOn from Data.[User] U where U.UserName = @u";
+        String sql = "select U.UserID, U.UserName, U.PasswordHash, U.CreatedOn, U.ModifiedOn, U.RemovedOn from Data.[User] U where U.UserName = @u";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
