@@ -13,6 +13,7 @@ import recipes from '../mock_data/recipes';
 
 export default function Home() {
 
+  // turn this into a component
   const CssTextField = withStyles({
     root: {
       '& label.Mui-focused': {
@@ -38,14 +39,29 @@ export default function Home() {
     },
   })(TextField);
 
+  const [recipes, setRecipes] = useState([]);
+
+
   const [filterBackdrop,setFilterBackdrop] = useState(false);
   const [ingredientsToFilterBy,setIngredientsFilter] = useState([]);
+
 
   const closeFilter = (filteredIngredients) => 
   {
     setIngredientsFilter(filteredIngredients)
     setFilterBackdrop(false);
   }
+
+  useEffect(()=>
+  {
+    fetch(
+      "http://localhost:8000/api/recipes")
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json[0]);
+        setRecipes(json);
+      })
+  }, [])
 
   return (
     <AnimatedPage>
@@ -77,7 +93,7 @@ export default function Home() {
       <SmoothList className='home--recipes' delay={100}>
         {
           recipes.map((recipe) => (
-          <RecipeCard data={recipe} key={recipe.recipeID}/>
+          <RecipeCard data={recipe} key={recipe.id}/>
           ))
         }
       </SmoothList>
