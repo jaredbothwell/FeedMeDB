@@ -1,4 +1,4 @@
-CREATE PROCEDURE Data.InsertRecipeIngredient 
+CREATE OR ALTER PROCEDURE Data.InsertRecipeIngredient 
     @RecipeName nvarchar(30), 
     @IngredientName nvarchar(60), 
     @MeasurementUnitName nvarchar(10), 

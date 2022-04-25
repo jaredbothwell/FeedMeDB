@@ -13,14 +13,13 @@ CREATE TABLE Data.[User]
     UserID int primary key identity(1,1),
     UserName varchar(20) not null unique,
     PasswordHash varchar(256) not null,
-    IsRemoved bit default 0,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,
 )
 
 INSERT INTO Data.[User](UserName,PasswordHash)
-VALUES('feedmeDB',HASHBYTES('SHA2_256','S3cur3P@ssw0rd!'))
+VALUES('feedmeDB','26d6a8ad97c75ffc548f6873e5e93ce475479e3e1a1097381e54221fb53ec1d2')
 
 GO
 
@@ -52,7 +51,7 @@ CREATE TABLE Data.Recipe
     CreatedUserID INT FOREIGN KEY REFERENCES Data.[User](UserID),
     [Name] VARCHAR(512) NOT NULL,
     PrepTime INT,
-    Difficulty VARCHAR(32) NOT NULL,
+    Difficulty INT NOT NULL,
     Directions VARCHAR(2048) NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
