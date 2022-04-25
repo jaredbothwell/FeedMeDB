@@ -19,7 +19,7 @@ CREATE TABLE Data.[User]
 )
 
 INSERT INTO Data.[User](UserName,PasswordHash)
-VALUES('feedmeDB','637042e4cd8c8e87c1933126e603f9ed86a1fa92b9502dccbfc5a2eea4ffab1b')
+VALUES('feedmeDB','26d6a8ad97c75ffc548f6873e5e93ce475479e3e1a1097381e54221fb53ec1d2')
 
 GO
 
@@ -51,7 +51,7 @@ CREATE TABLE Data.Recipe
     CreatedUserID INT FOREIGN KEY REFERENCES Data.[User](UserID),
     [Name] VARCHAR(512) NOT NULL,
     PrepTime INT,
-    Difficulty VARCHAR(32) NOT NULL,
+    Difficulty INT NOT NULL,
     Directions VARCHAR(2048) NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
