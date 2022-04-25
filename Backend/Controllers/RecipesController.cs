@@ -19,7 +19,7 @@ public class RecipesController : ControllerBase
     }
 
 
-    [Route("/user/{id:int}")]
+    [Route("user/{id:int}")]
     [HttpGet]
     public IEnumerable<RecipeModel> GetUserRecipes(int id)
     {
@@ -27,7 +27,7 @@ public class RecipesController : ControllerBase
         return repo.GetAllUserRecipes(id);
     }
 
-    [Route("/createdby/{id:int}")]
+    [Route("createdby/{id:int}")]
     [HttpGet]
     public IEnumerable<RecipeModel> GetRecipesCreatedBy(int id)
     {
