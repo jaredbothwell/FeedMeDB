@@ -19,11 +19,12 @@ print('Ingredient load COMPLETE')
 df = pd.read_csv('./Database/DataSets/RecipeImport.csv')
 df = df.dropna()
 
+#import pymssql
 cnxn = pymssql.connect(server='cis560team3.database.windows.net', user='SQLMan', password='BigB@dRecipeB00k', database='CIS560Project')
 cursor = cnxn.cursor(as_dict=True)
 for index, row in df.iterrows():
      #print(row)
-     cursor.execute("INSERT INTO Data.Recipe (Name,CreatedUserID,PrepTime,Difficulty,Directions) values(%s,1,20,1,%s)", (row.title,row.directions))
+     cursor.execute("INSERT INTO Data.Recipe (Name,CreatedUserID,PrepTime,Difficulty,Directions) values(%s,1,%d,%d,%s)", (row.title,row.PrepTime,row.Difficulty,row.directions))
 cnxn.commit()
 cursor.close()
 cnxn.close()
