@@ -4,7 +4,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Fab, List, TextField } from '@mui/material';
-import ingredients from '../mock_data/ingredients';
 
 
 export default function FilterIngredientsSearch(props) {
@@ -25,20 +24,16 @@ export default function FilterIngredientsSearch(props) {
     const [searchQuery,setQuery] = useState('');
     const [filteredIngredients,filterIngredients] = useState([])
 
-    const handleQuery = (e) => 
-    {
-      setQuery(searchQuery)
-      filterIngredients(availableIngredients.filter(ingredient => ingredient.name.includes(e.target.value)))
-      console.log(e.target.value);
-    }
+    useEffect(() => {
+      const timeOutId = setTimeout(() => filterIngredients(availableIngredients.filter(ingredient => ingredient.name.includes(searchQuery))), 500);
+      return () => clearTimeout(timeOutId);
+    }, [searchQuery]);
 
 
     const addToSearchFilter = (ingredient) => 
     {
         setFilterIngredientsList(filterIngredientsList.concat(ingredient))
-        
         const newList = availableIngredients.filter((item) => item.Name !== ingredient.Name);
-
         setAvailable(newList);
     }
 
@@ -96,7 +91,7 @@ export default function FilterIngredientsSearch(props) {
               variant="standard"
               name='ingredient_search'
               style={{marginBottom: 20}}
-              onChange={handleQuery}
+              onChange={event => setQuery(event.target.value)}
               />
     <List
        sx={{

@@ -10,46 +10,37 @@ import IconButton from '@mui/material/IconButton';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterIngredientsSearch from '../components/FilterIngredientsSearch';
 import recipes from '../mock_data/recipes';
+import SearchBar from '../components/SearchBar';
 
 export default function Home() {
-
-  // turn this into a component
-  const CssTextField = withStyles({
-    root: {
-      '& label.Mui-focused': {
-        color: '#e1cfa9',
-      },
-      '& label': {
-        color: 'white',
-      },
-      '& .MuiInput-underline:after': {
-        borderBottomColor: 'yellow',
-      },
-      '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          borderColor: 'white',
-        },
-        '&:hover fieldset': {
-          borderColor: 'white',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: '#e1cfa9',
-        },
-      },
-    },
-  })(TextField);
+  const [filterBackdrop,setFilterBackdrop] = useState(false);
 
   const [recipes, setRecipes] = useState([]);
 
-
-  const [filterBackdrop,setFilterBackdrop] = useState(false);
   const [ingredientsToFilterBy,setIngredientsFilter] = useState([]);
+  const [query, setQuery] = useState("");
 
+  useEffect(() => {
+    const timeOutId = setTimeout(() => sendQuery(), 500);
+    return () => clearTimeout(timeOutId);
+  }, [query]);
 
+  //send filter ingredients to parent
   const closeFilter = (filteredIngredients) => 
   {
     setIngredientsFilter(filteredIngredients)
     setFilterBackdrop(false);
+  }
+
+  const handleIngredientChange = () =>
+  {
+
+  }
+
+  const sendQuery = () => 
+  {
+    console.log(query)
+    console.log('searchQuery')
   }
 
   useEffect(()=>
@@ -70,7 +61,6 @@ export default function Home() {
           open={filterBackdrop}>
             <FilterIngredientsSearch SendIngredientsToHomePage={closeFilter}/>
         </Backdrop>
-
     <section className='home--search'>
       <div className='container'>
         <div className='row justify-content-center'>
@@ -78,7 +68,11 @@ export default function Home() {
         </div>
         <div style={{marginTop: '20px'}} className='row justify-content-center'>
           <div>
-            <CssTextField inputProps={{ style: { color: "white" } }} label='Search'/>
+            <SearchBar
+              inputProps={{ style: { color: "white" } }}
+              label='Search'
+              value={query}
+              onChange={event => setQuery(event.target.value)}/>
             <IconButton onClick={()=>setFilterBackdrop(true)}>
               <FilterAltIcon fontSize='large' sx={{ color: 'white'}}/>
             </IconButton>
