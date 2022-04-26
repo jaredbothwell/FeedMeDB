@@ -1,0 +1,8 @@
+CREATE OR ALTER PROCEDURE Data.GetUserByID
+@UserID INT
+AS
+SELECT *
+FROM Data.[User]
+WHERE UserID = @UserID AND RemovedOn IS NULL
+
+--EXECUTE Data.GetUserByID 1

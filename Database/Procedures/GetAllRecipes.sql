@@ -1,4 +1,4 @@
-CREATE PROCEDURE Data.GetAllRecipes
+CREATE OR ALTER PROCEDURE Data.GetAllRecipes
 AS
 SELECT *
 FROM Data.Recipe
