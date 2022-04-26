@@ -1,4 +1,4 @@
-CREATE PROCEDURE Data.GetAllUsers
+CREATE OR ALTER PROCEDURE Data.GetAllUsers
 AS
 SELECT * 
 FROM Data.[User] U

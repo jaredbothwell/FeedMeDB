@@ -1,6 +1,4 @@
-DROP PROCEDURE IF EXISTS Data.InsertRecipeIngredientWithID;
-GO
-CREATE PROCEDURE Data.InsertRecipeIngredientWithID
+CREATE OR ALTER PROCEDURE Data.InsertRecipeIngredientWithID
     @RecipeID INT, 
     @IngredientName nvarchar(60), 
     @MeasurementUnitName nvarchar(10), 
