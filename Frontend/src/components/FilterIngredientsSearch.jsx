@@ -22,12 +22,15 @@ export default function FilterIngredientsSearch(props) {
     const [filteredIngredients,filterIngredients] = useState([])
     const [queryIngredients,setQueryIngredientsList] = useState([])
     const [availableIngredients,setAvailable] = useState([])
-    const [searchQuery,setQuery] = useState('');
+    const [searchQuery,setQuery] = useState(null);
     
 
     useEffect(() => {
-      const timeOutId = setTimeout(() => filterIngredients(availableIngredients.filter(ingredient => ingredient.name.includes(searchQuery))), 500);
-      return () => clearTimeout(timeOutId);
+      if(searchQuery != null)
+      {
+        const timeOutId = setTimeout(() => filterIngredients(availableIngredients.filter(ingredient => ingredient.name.includes(searchQuery))), 1000);
+        return () => clearTimeout(timeOutId);
+      }
     }, [searchQuery]);
     
     const addToSearchFilter = (ingredient) => 
