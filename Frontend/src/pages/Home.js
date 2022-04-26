@@ -39,8 +39,30 @@ export default function Home() {
 
   const sendQuery = () => 
   {
-    console.log(query)
-    console.log('searchQuery')
+    if(query === '')
+    {
+      fetch(
+        "http://localhost:8000/api/recipes")
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json[0]);
+          setRecipes(json);
+        })
+    }
+    else if(ingredientsToFilterBy.length === 0)
+    {
+      fetch(
+        "http://localhost:8000/api/recipes/query/" + query)
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json[0]);
+          setRecipes(json);
+        })
+    }
+    else{
+
+    }
+
   }
 
   useEffect(()=>
@@ -84,13 +106,13 @@ export default function Home() {
     </section>
 
     <section>
-      <SmoothList className='home--recipes' delay={100}>
+      <div className='home--recipes' delay={100}>
         {
           recipes.map((recipe) => (
           <RecipeCard data={recipe} key={recipe.id}/>
           ))
         }
-      </SmoothList>
+      </div>
 
     </section>
     </AnimatedPage>
