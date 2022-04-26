@@ -1,30 +1,50 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './css_files/CreateRecipeForm.css'
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { Fab, List } from '@mui/material';
+import { Fab, List, TextField } from '@mui/material';
 import ingredients from '../mock_data/ingredients';
 
 
 export default function FilterIngredientsSearch(props) {
 
+
+  useEffect(()=>
+  {
+    fetch(
+      "http://localhost:8000/api/ingredients")
+      .then((res) => res.json())
+      .then((json) => {
+        setAvailable(json);
+      })
+  }, [])
+
     const [filterIngredientsList,setFilterIngredientsList] = useState([])
-    const [availableIngrdients,setAvailable] = useState(ingredients)
+    const [availableIngredients,setAvailable] = useState([])
+    const [searchQuery,setQuery] = useState('');
+    const [filteredIngredients,filterIngredients] = useState([])
+
+    const handleQuery = (e) => 
+    {
+      setQuery(searchQuery)
+      filterIngredients(availableIngredients.filter(ingredient => ingredient.name.includes(e.target.value)))
+      console.log(e.target.value);
+    }
 
 
     const addToSearchFilter = (ingredient) => 
     {
         setFilterIngredientsList(filterIngredientsList.concat(ingredient))
         
-        const newList = availableIngrdients.filter((item) => item.Name !== ingredient.Name);
+        const newList = availableIngredients.filter((item) => item.Name !== ingredient.Name);
 
         setAvailable(newList);
     }
 
     const removeFromSearchFilter = (ingredient) =>
     {
-        setAvailable(availableIngrdients.concat(ingredient))
+        setAvailable(availableIngredients.concat(ingredient))
         const newList = filterIngredientsList.filter((item) => item.Name !== ingredient.Name);
         setFilterIngredientsList(newList);
     }
@@ -53,7 +73,7 @@ export default function FilterIngredientsSearch(props) {
             filterIngredientsList.map((ingredient) => (
                 <ListItem key={ingredient.IngredientID} component="div" disablePadding>
                     <ListItemButton onClick={() => removeFromSearchFilter(ingredient)}>
-                        <ListItemText primary={ingredient.Name} primaryTypographyProps={{ style: {color:'black'} }} />
+                        <ListItemText primary={ingredient.name} primaryTypographyProps={{ style: {color:'black'} }} />
                     </ListItemButton>
             </ListItem>
             ))
@@ -71,6 +91,13 @@ export default function FilterIngredientsSearch(props) {
         
         />
       <h1>ingredients list</h1>
+      <TextField
+              label="Search"
+              variant="standard"
+              name='ingredient_search'
+              style={{marginBottom: 20}}
+              onChange={handleQuery}
+              />
     <List
        sx={{
         width: '100%',
@@ -83,10 +110,10 @@ export default function FilterIngredientsSearch(props) {
       }}
       >
                   {
-            availableIngrdients.map((ingredient) => (
+            filteredIngredients.map((ingredient) => (
                 <ListItem key={ingredient.IngredientID} component="div" disablePadding>
                 <ListItemButton onClick={() => addToSearchFilter(ingredient)}>
-                <ListItemText primary={ingredient.Name} primaryTypographyProps={{ style: {color:'black'} }} />
+                <ListItemText primary={ingredient.name} primaryTypographyProps={{ style: {color:'black'} }} />
                 </ListItemButton>
             </ListItem>
             ))

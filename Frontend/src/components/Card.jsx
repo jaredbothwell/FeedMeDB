@@ -29,16 +29,17 @@ export default function BasicCard(props) {
 
 
   return (
-    <Card sx={{ minWidth: 275, maxWidth: 200, maxHeight:200, margin: 2 }}>
+    <Card sx={{ minWidth: 275, maxWidth: 200, maxHeight:300, margin: 2 }}>
         <CardActionArea onClick={handleCardClick}>
             <CardContent>
             <Typography variant="h6" gutterBottom component="div">
                 {recipe_data.name}
             </Typography>
-            <Typography variant="body1" color="text">
-              {recipe_data.directions}
-            </Typography>
-
+            <div style={{ overflow: "auto", maxHeight: 75}}>
+              <Typography variant="body1" color="text">
+                {recipe_data.directions}
+              </Typography>
+            </div>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                 Creator: feedmeDB
             </Typography>
