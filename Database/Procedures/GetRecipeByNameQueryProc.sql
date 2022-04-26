@@ -5,4 +5,5 @@ SELECT *
 FROM Data.Recipe R
 WHERE R.Name LIKE '%' + @UserQuery + '%'
 
+
 --EXECUTE GetRecipeByNameQuery 'Cookie'

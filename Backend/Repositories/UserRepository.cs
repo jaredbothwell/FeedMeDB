@@ -48,7 +48,7 @@ public class UserRepository : BaseRepository
 
     public UserModel? GetUserByID(int id)
     {
-        String sql = "select U.UserID, U.UserName, U.PasswordHash, U.IsRemoved, U.CreatedOn, U.ModifiedOn, U.RemovedOn from Data.[User] U where U.UserID = @id";
+        String sql = "select U.UserID, U.UserName, U.PasswordHash, U.CreatedOn, U.ModifiedOn, U.RemovedOn from Data.[User] U where U.UserID = @id";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
@@ -91,14 +91,14 @@ public class UserRepository : BaseRepository
         if (user is null)
             return false; // user does not exist
 
-        String sql = "update Data.[User] set UserName = @newName, ModifiedOn = SYSDATETIMEOFFSET() where UserID = @userID";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            connection.Open();
-            using (SqlCommand command = new SqlCommand(sql, connection))
+            using (SqlCommand command = new SqlCommand("Data.EditUser", connection))
             {
-                command.Parameters.AddWithValue("@newName", newUserName);
-                command.Parameters.AddWithValue("@userID", userID);
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@NewUserName", newUserName);
+                command.Parameters.AddWithValue("@UserID", userID);
                 int numrows = command.ExecuteNonQuery();
                 if (numrows == 1)
                     return true;

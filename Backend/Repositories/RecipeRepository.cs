@@ -41,17 +41,49 @@ public class RecipeRepository : BaseRepository
 
     public IEnumerable<RecipeModel> GetCreatedRecipes(int userID)
     {
-        String sql = "select * from Data.Recipe R where R.CreatedUserID = @userID";
         using (var connection = new SqlConnection(this.connectionString))
         {
-            using (var command = new SqlCommand(sql, connection))
+            using (var command = new SqlCommand("Data.GetRecipeByCreatedUserID", connection))
             {
-                command.Parameters.AddWithValue("@userID", userID);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserID", userID);
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                     return TranslateRecipes(reader);
             }
         }
+    }
+
+    public IEnumerable<RecipeModel> GetRecipesByName(string name)
+    {
+        using (var connection = new SqlConnection(this.connectionString))
+        {
+            using (var command = new SqlCommand("GetRecipeByNameQuery", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserQuery", name);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                    return TranslateRecipes(reader);
+            }
+        }
+    }
+
+    public IEnumerable<RecipeModel> GetRecipeModelsByNameAndIngredient(string name, string ingredients)
+    {
+        using (var connection = new SqlConnection(this.connectionString))
+        {
+            using (var command = new SqlCommand("GetRecipeByQueryAndIngredient", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserQuery", name);
+                command.Parameters.AddWithValue("@IngredientList", ingredients);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                    return TranslateRecipes(reader);
+            }
+        }
+
     }
 
     public RecipeModel TranslateRecipe(SqlDataReader reader)
