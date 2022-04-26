@@ -18,6 +18,17 @@ public class RecipesController : ControllerBase
         return repo.GetAllRecipes();
     }
 
+    [Route("{id:int}")]
+    [HttpGet]
+    public IActionResult GetRecipeByID(int id)
+    {
+        var repo = new RecipeRepository();
+        RecipeModel? recipe = repo.GetRecipeByID(id);
+        if (recipe is null)
+            return new StatusCodeResult(404);
+        return new OkObjectResult(repo.GetRecipeByID(id));
+    }
+
 
     [Route("user/{id:int}")]
     [HttpGet]
@@ -53,6 +64,6 @@ public class RecipesController : ControllerBase
         return repo.GetRecipeModelsByNameAndIngredient(name, ingredients);
     }
 
-
+    
 
 }
