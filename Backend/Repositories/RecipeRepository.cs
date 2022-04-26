@@ -39,6 +39,25 @@ public class RecipeRepository : BaseRepository
         }
     }
 
+    public RecipeModel? GetRecipeByID(int id)
+    {
+        String sql = "select * from Data.Recipe R where R.RecipeID = @id";
+        using (var connection = new SqlConnection(this.connectionString))
+        {
+            using (var command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@id", id);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                        return TranslateRecipe(reader);
+                    return null;
+                }
+            }
+        }
+    }
+
     public IEnumerable<RecipeModel> GetCreatedRecipes(int userID)
     {
         using (var connection = new SqlConnection(this.connectionString))
@@ -97,7 +116,8 @@ public class RecipeRepository : BaseRepository
         var createdOnOrdinal = reader.GetOrdinal("CreatedOn");
         var modifiedOnOrdinal = reader.GetOrdinal("ModifiedOn");
         var removedOnOrdinal = reader.GetOrdinal("RemovedOn");
-        return new RecipeModel(
+
+        var recipe = new RecipeModel(
             reader.GetInt32(recipeIDOrdinal),
             reader.GetInt32(createdUserIDOrdinal),
             reader.GetString(nameOrdinal),
@@ -108,6 +128,10 @@ public class RecipeRepository : BaseRepository
             reader.IsDBNull(modifiedOnOrdinal) ? null : reader.GetDateTimeOffset(modifiedOnOrdinal),
             reader.IsDBNull(removedOnOrdinal) ? null : reader.GetDateTimeOffset(removedOnOrdinal)
         );
+
+        var ingredientRepo = new IngredientRepository();
+        recipe.Ingredients = ingredientRepo.GetIngredientsForRecipe(recipe.ID) as List<IngredientModel> ?? new List<IngredientModel>();
+        return recipe;
     }
 
     public IEnumerable<RecipeModel> TranslateRecipes(SqlDataReader reader)
