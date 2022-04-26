@@ -97,7 +97,8 @@ public class RecipeRepository : BaseRepository
         var createdOnOrdinal = reader.GetOrdinal("CreatedOn");
         var modifiedOnOrdinal = reader.GetOrdinal("ModifiedOn");
         var removedOnOrdinal = reader.GetOrdinal("RemovedOn");
-        return new RecipeModel(
+
+        var recipe = new RecipeModel(
             reader.GetInt32(recipeIDOrdinal),
             reader.GetInt32(createdUserIDOrdinal),
             reader.GetString(nameOrdinal),
@@ -108,6 +109,10 @@ public class RecipeRepository : BaseRepository
             reader.IsDBNull(modifiedOnOrdinal) ? null : reader.GetDateTimeOffset(modifiedOnOrdinal),
             reader.IsDBNull(removedOnOrdinal) ? null : reader.GetDateTimeOffset(removedOnOrdinal)
         );
+
+        var ingredientRepo = new IngredientRepository();
+        recipe.Ingredients = ingredientRepo.GetIngredientsForRecipe(recipe.ID) as List<IngredientModel> ?? new List<IngredientModel>();
+        return recipe;
     }
 
     public IEnumerable<RecipeModel> TranslateRecipes(SqlDataReader reader)

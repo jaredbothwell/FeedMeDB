@@ -26,7 +26,6 @@ public class RecipeModel
     public DateTimeOffset? CreatedOn { get; set; }
     public DateTimeOffset? RemovedOn { get; set; }
     public DateTimeOffset? ModifiedOn { get; set; }
-    public List<UserModel> Users { get; set; } = new List<UserModel>();
 
-    public List<object> Ingredients { get; set; } = new List<object>();
+    public List<IngredientModel> Ingredients { get; set; } = new List<IngredientModel>();
 }
