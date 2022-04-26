@@ -58,7 +58,7 @@ public class RecipeRepository : BaseRepository
     {
         using (var connection = new SqlConnection(this.connectionString))
         {
-            using (var command = new SqlCommand("GetRecipeByNameQuery", connection))
+            using (var command = new SqlCommand("Data.GetRecipeByNameQuery", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@UserQuery", name);

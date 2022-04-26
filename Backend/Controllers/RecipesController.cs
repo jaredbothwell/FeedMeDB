@@ -36,7 +36,7 @@ public class RecipesController : ControllerBase
     }
 
 
-    [Route("{name}")]
+    [Route("query/{name}")]
     [HttpGet]
     public IEnumerable<RecipeModel> GetRecipesByName(string name)
     {
