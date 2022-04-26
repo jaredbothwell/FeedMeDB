@@ -1,7 +1,7 @@
-CREATE OR ALTER PROCEDURE GetRecipeByNameQuery
+CREATE OR ALTER PROCEDURE Data.GetRecipeByNameQuery
 @UserQuery NVARCHAR(256)
 AS
-SELECT R.RecipeID, R.Name, R.PrepTime, R.Directions, R.Difficulty, R.CreatedUserID, R.CreatedOn, R.ModifiedOn, R.RemovedOn
+SELECT *
 FROM Data.Recipe R
 WHERE R.Name LIKE '%' + @UserQuery + '%'
 
