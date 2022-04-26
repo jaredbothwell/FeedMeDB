@@ -1,4 +1,4 @@
-CREATE PROCEDURE Data.EditUser 
+CREATE OR ALTER PROCEDURE Data.EditUser 
     @UserID INT,
     @NewUserName NVARCHAR(128)
 AS
