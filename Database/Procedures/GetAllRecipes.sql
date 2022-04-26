@@ -1,0 +1,6 @@
+CREATE PROCEDURE Data.GetAllRecipes
+AS
+SELECT *
+FROM Data.Recipe
+WHERE RemovedOn IS NULL
+GO
