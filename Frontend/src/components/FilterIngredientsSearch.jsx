@@ -15,38 +15,55 @@ export default function FilterIngredientsSearch(props) {
       "http://localhost:8000/api/ingredients")
       .then((res) => res.json())
       .then((json) => {
+        filterIngredients(json);
         setAvailable(json);
       })
   }, [])
-
-    const [filterIngredientsList,setFilterIngredientsList] = useState([])
-    const [availableIngredients,setAvailable] = useState([])
-    const [searchQuery,setQuery] = useState('');
     const [filteredIngredients,filterIngredients] = useState([])
+    const [queryIngredients,setQueryIngredientsList] = useState([])
+    const [availableIngredients,setAvailable] = useState([])
+    const [searchQuery,setQuery] = useState(null);
+    
 
     useEffect(() => {
-      const timeOutId = setTimeout(() => filterIngredients(availableIngredients.filter(ingredient => ingredient.name.includes(searchQuery))), 500);
-      return () => clearTimeout(timeOutId);
+      if(searchQuery != null)
+      {
+        const timeOutId = setTimeout(() => filterIngredients(availableIngredients.filter(ingredient => ingredient.name.includes(searchQuery))), 1000);
+        return () => clearTimeout(timeOutId);
+      }
     }, [searchQuery]);
-
-
+    
     const addToSearchFilter = (ingredient) => 
     {
-        setFilterIngredientsList(filterIngredientsList.concat(ingredient))
-        const newList = availableIngredients.filter((item) => item.Name !== ingredient.Name);
-        setAvailable(newList);
+        if(!queryIngredients.includes(ingredient))
+        {
+          setQueryIngredientsList(queryIngredients.concat(ingredient))
+        }
     }
 
     const removeFromSearchFilter = (ingredient) =>
     {
-        setAvailable(availableIngredients.concat(ingredient))
-        const newList = filterIngredientsList.filter((item) => item.Name !== ingredient.Name);
-        setFilterIngredientsList(newList);
+        const newList = queryIngredients.filter((item) => item !== ingredient);
+        setQueryIngredientsList(newList);
     }
 
     const saveHandler = () =>
     {
-        props.SendIngredientsToHomePage(filterIngredientsList);
+        var ingredients_array = [];
+
+        queryIngredients.map((ingredient)=>
+        {
+          ingredients_array.push(ingredient.name)
+        })
+
+        if(ingredients_array.length === 0)
+        {
+          props.SendIngredientsToHomePage('');
+        }
+        else
+        {
+          props.SendIngredientsToHomePage(ingredients_array.join(','));
+        }
     }
     
 
@@ -65,7 +82,7 @@ export default function FilterIngredientsSearch(props) {
       }}
       >
           {
-            filterIngredientsList.map((ingredient) => (
+            queryIngredients.map((ingredient) => (
                 <ListItem key={ingredient.IngredientID} component="div" disablePadding>
                     <ListItemButton onClick={() => removeFromSearchFilter(ingredient)}>
                         <ListItemText primary={ingredient.name} primaryTypographyProps={{ style: {color:'black'} }} />

@@ -18,6 +18,17 @@ public class RecipesController : ControllerBase
         return repo.GetAllRecipes();
     }
 
+    [Route("{id:int}")]
+    [HttpGet]
+    public IActionResult GetRecipeByID(int id)
+    {
+        var repo = new RecipeRepository();
+        RecipeModel? recipe = repo.GetRecipeByID(id);
+        if (recipe is null)
+            return new StatusCodeResult(404);
+        return new OkObjectResult(repo.GetRecipeByID(id));
+    }
+
 
     [Route("user/{id:int}")]
     [HttpGet]
@@ -36,7 +47,7 @@ public class RecipesController : ControllerBase
     }
 
 
-    [Route("{name}")]
+    [Route("query/{name}")]
     [HttpGet]
     public IEnumerable<RecipeModel> GetRecipesByName(string name)
     {
@@ -47,12 +58,20 @@ public class RecipesController : ControllerBase
 
     [Route("search")]
     [HttpGet]
-    public IEnumerable<RecipeModel> GetRecipesByNameAndIngredient(string name, string ingredients)
+    public IEnumerable<RecipeModel> GetRecipesByNameAndIngredient(string ingredients, string name = "")
     {
         var repo = new RecipeRepository();
         return repo.GetRecipeModelsByNameAndIngredient(name, ingredients);
     }
 
+
+    [Route("add")]
+    [HttpPost]
+    public void Post([FromBody] RecipeModel recipe)
+    {
+        var repo = new RecipeRepository();
+        repo.CreateRecipe(recipe);
+    }
 
 
 }

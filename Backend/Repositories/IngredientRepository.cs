@@ -24,6 +24,22 @@ public class IngredientRepository : BaseRepository
         }
     }
 
+    public IEnumerable<IngredientModel> GetIngredientsForRecipe(int id)
+    {
+        String sql = "select I.IngredientID, I.Name, I.CreatedOn, I.ModifiedOn, I.RemovedOn from Data.Ingredient I inner join Data.RecipeIngredient RI on I.IngredientID = RI.IngredientID where RI.RecipeID = @id";
+
+        using (var connection = new SqlConnection(this.connectionString))
+        {
+            using (var command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@id", id);
+                using (var reader = command.ExecuteReader())
+                    return TranslateIngredients(reader);
+            }
+        }
+    }
+
     public IngredientModel TranslateIngredient(SqlDataReader reader)
     {
         var ingredientIDOrdinal = reader.GetOrdinal("IngredientID");
@@ -36,7 +52,7 @@ public class IngredientRepository : BaseRepository
             reader.GetString(nameOrdinal),
             reader.IsDBNull(createdOnOrdinal) ? null : reader.GetDateTimeOffset(createdOnOrdinal),
             reader.IsDBNull(modifiedOnOrdinal) ? null : reader.GetDateTimeOffset(modifiedOnOrdinal),
-            reader.IsDBNull(removedOnOrdinal) ? null : reader.GetDateTimeOffset(removedOnOrdinal)
+            reader.IsDBNull(removedOnOrdinal) ? null : reader.GetDateTimeOffset(removedOnOrdinal), null, null, null
         );
     }
 

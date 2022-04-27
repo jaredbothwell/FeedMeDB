@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@mui/material/IconButton';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterIngredientsSearch from '../components/FilterIngredientsSearch';
-import recipes from '../mock_data/recipes';
+import recipes1 from '../mock_data/recipes';
 import SearchBar from '../components/SearchBar';
 
 export default function Home() {
@@ -17,13 +17,13 @@ export default function Home() {
 
   const [recipes, setRecipes] = useState([]);
 
-  const [ingredientsToFilterBy,setIngredientsFilter] = useState([]);
+  const [ingredientsToFilterBy,setIngredientsFilter] = useState('');
   const [query, setQuery] = useState("");
 
   useEffect(() => {
     const timeOutId = setTimeout(() => sendQuery(), 500);
     return () => clearTimeout(timeOutId);
-  }, [query]);
+  }, [query,ingredientsToFilterBy]);
 
   //send filter ingredients to parent
   const closeFilter = (filteredIngredients) => 
@@ -32,15 +32,36 @@ export default function Home() {
     setFilterBackdrop(false);
   }
 
-  const handleIngredientChange = () =>
+  const sendQuery = () =>
   {
+    if(ingredientsToFilterBy !== '')
+    {
+      let lookUpString = '';
+      if(query === '')
+      {
+        lookUpString = '%00'
+      }
+      else
+      {
+        lookUpString = query
+      }
+      fetch(
+        "http://localhost:8000/api/recipes/search?ingredients=" + ingredientsToFilterBy + "&name=" + lookUpString )
+        .then((res) => res.json())
+        .then((json) => {
+          setRecipes(json);
+        })
+    }
+    else
+    {
+      fetch(
+        "http://localhost:8000/api/recipes/query/" + query)
+        .then((res) => res.json())
+        .then((json) => {
 
-  }
-
-  const sendQuery = () => 
-  {
-    console.log(query)
-    console.log('searchQuery')
+          setRecipes(json);
+        })
+    }
   }
 
   useEffect(()=>
@@ -84,13 +105,13 @@ export default function Home() {
     </section>
 
     <section>
-      <SmoothList className='home--recipes' delay={100}>
+      <div className='home--recipes' delay={100}>
         {
           recipes.map((recipe) => (
           <RecipeCard data={recipe} key={recipe.id}/>
           ))
         }
-      </SmoothList>
+      </div>
 
     </section>
     </AnimatedPage>
