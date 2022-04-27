@@ -26,14 +26,15 @@ public class IngredientRepository : BaseRepository
 
     public IEnumerable<IngredientModel> GetIngredientsForRecipe(int id)
     {
-        String sql = "select I.IngredientID, I.Name, I.CreatedOn, I.ModifiedOn, I.RemovedOn from Data.Ingredient I inner join Data.RecipeIngredient RI on I.IngredientID = RI.IngredientID where RI.RecipeID = @id";
-
+        String sql = "Data.GetRecipeIngredients";
         using (var connection = new SqlConnection(this.connectionString))
         {
             using (var command = new SqlCommand(sql, connection))
             {
+
                 connection.Open();
-                command.Parameters.AddWithValue("@id", id);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@RecipeID", id);
                 using (var reader = command.ExecuteReader())
                     return TranslateIngredients(reader);
             }
@@ -43,16 +44,17 @@ public class IngredientRepository : BaseRepository
     public IngredientModel TranslateIngredient(SqlDataReader reader)
     {
         var ingredientIDOrdinal = reader.GetOrdinal("IngredientID");
-        var nameOrdinal = reader.GetOrdinal("Name");
-        var createdOnOrdinal = reader.GetOrdinal("CreatedOn");
-        var modifiedOnOrdinal = reader.GetOrdinal("ModifiedOn");
-        var removedOnOrdinal = reader.GetOrdinal("RemovedOn");
+        var IngredientNameOrdinal = reader.GetOrdinal("IngredientName");
+        var MeasurementQuantityOrdinal = reader.GetOrdinal("MeasurementQuantity");
+        var MeasurementUnitIDOrdinal = reader.GetOrdinal("MeasurementUnitID");
+        var MeasurementUnitNameOrdinal = reader.GetOrdinal("MeasurementUnitName");
         return new IngredientModel(
             reader.GetInt32(ingredientIDOrdinal),
-            reader.GetString(nameOrdinal),
-            reader.IsDBNull(createdOnOrdinal) ? null : reader.GetDateTimeOffset(createdOnOrdinal),
-            reader.IsDBNull(modifiedOnOrdinal) ? null : reader.GetDateTimeOffset(modifiedOnOrdinal),
-            reader.IsDBNull(removedOnOrdinal) ? null : reader.GetDateTimeOffset(removedOnOrdinal), null, null, null
+            reader.GetString(IngredientNameOrdinal),
+            null, // don't need to return created on date
+            reader.GetInt32(MeasurementUnitIDOrdinal),
+            reader.GetString(MeasurementUnitNameOrdinal),
+            reader.GetDecimal(MeasurementQuantityOrdinal)
         );
     }
 

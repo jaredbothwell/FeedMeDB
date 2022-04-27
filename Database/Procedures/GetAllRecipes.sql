@@ -1,6 +1,13 @@
 CREATE OR ALTER PROCEDURE Data.GetAllRecipes
+@page int
 AS
+BEGIN
+
 SELECT *
-FROM Data.Recipe
+FROM Data.Recipe R
 WHERE RemovedOn IS NULL
-GO
+ORDER BY R.Name ASC
+OFFSET (@page-1) * 50 ROWS 
+FETCH NEXT 50 ROWS ONLY
+
+END
