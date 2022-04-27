@@ -4,6 +4,6 @@ AS
 SELECT *
 FROM Data.Recipe R
 WHERE R.Name LIKE '%' + @UserQuery + '%'
-
+ORDER BY R.Name ASC
 
 --EXECUTE GetRecipeByNameQuery 'Cookie'

@@ -1,7 +1,9 @@
-CREATE PROCEDURE Data.GetAllIngredients
+CREATE OR ALTER PROCEDURE Data.GetAllIngredients
 AS
-SELECT *
-FROM Data.Ingredient
-WHERE RemovedOn IS NULL
+SELECT 
+    I.IngredientID, 
+    I.Name as IngredientName,
+    I.CreatedOn
+FROM Data.Ingredient I
 GO
 --Execute Data.GetAllIngredients

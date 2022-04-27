@@ -22,3 +22,4 @@ FROM Data.Recipe R
         )
     ) AS D (RecipeID) on D.RecipeID = R.RecipeID
 WHERE R.Name LIKE '%' + @UserQuery + '%'
+ORDER BY R.Name ASC
