@@ -27,9 +27,6 @@ CREATE TABLE Data.MeasurementUnit
 (
     MeasurementUnitID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [Name] VARCHAR(32) NOT NULL UNIQUE,
-    CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
-    ModifiedOn datetimeoffset,
-    RemovedOn datetimeoffset
 )
 
 GO
@@ -39,8 +36,6 @@ CREATE TABLE Data.Ingredient
     IngredientID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [Name] NVARCHAR(128) NOT NULL UNIQUE,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET() NOT NULL,
-    ModifiedOn datetimeoffset,
-    RemovedOn datetimeoffset,
 )
 
 GO
