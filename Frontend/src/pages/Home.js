@@ -58,7 +58,6 @@ export default function Home() {
         "http://localhost:8000/api/recipes/query/" + query)
         .then((res) => res.json())
         .then((json) => {
-
           setRecipes(json);
         })
     }

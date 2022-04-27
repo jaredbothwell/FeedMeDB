@@ -24,7 +24,7 @@ export default function BasicCard(props) {
 
   function handleCardClick()
   {
-    navigate("/recipe/?recipeId=" + recipe_data.recipeID + "&name=" + recipe_data.name);
+    navigate("/recipe/?recipeId=" + recipe_data.id);
   }
 
 
