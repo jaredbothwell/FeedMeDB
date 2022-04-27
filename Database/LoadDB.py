@@ -3,7 +3,7 @@ import pandas as pd
 import _scproxy
 import pymssql
 
-df = pd.read_csv("./Database/DataSets/ingredientList.csv")
+df = pd.read_csv("./DataSets/ingredientList.csv")
 df
 
 #cnxn = pymssql.connect(server='localhost', user='sa', password='bigStrongPwd1107@', database='CIS560Project')
@@ -16,7 +16,7 @@ cnxn.commit()
 cursor.close()
 print('Ingredient load COMPLETE')
 
-df = pd.read_csv('./Database/DataSets/RecipeImport.csv')
+df = pd.read_csv('./DataSets/RecipeImport.csv')
 df = df.dropna()
 
 #import pymssql
@@ -32,7 +32,7 @@ print('Recipe load COMPLETE')
 
 cnxn = pymssql.connect(server='cis560team3.database.windows.net', user='SQLMan', password='BigB@dRecipeB00k', database='CIS560Project')
 cursor = cnxn.cursor(as_dict=True)
-df = pd.read_csv('./Database/DataSets/MeasurementUnits.csv')
+df = pd.read_csv('./DataSets/MeasurementUnits.csv')
 df = df.dropna()
 for index, row in df.iterrows():
      #print(row)
@@ -44,7 +44,7 @@ cnxn.close()
 print('MeasurementUnit load COMPLETE')
 
 #Used to parse ingredients to be input into RecipeIngredientDB
-ingMeas = pd.read_csv('./Database/DataSets/ConvertedRecipeIngredients.csv')
+ingMeas = pd.read_csv('./DataSets/ConvertedRecipeIngredients.csv')
 output = []
 
 for x,i in ingMeas.iterrows():
