@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@mui/material/IconButton';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterIngredientsSearch from '../components/FilterIngredientsSearch';
-import recipes from '../mock_data/recipes';
+import recipes1 from '../mock_data/recipes';
 import SearchBar from '../components/SearchBar';
 
 export default function Home() {
@@ -17,13 +17,13 @@ export default function Home() {
 
   const [recipes, setRecipes] = useState([]);
 
-  const [ingredientsToFilterBy,setIngredientsFilter] = useState([]);
+  const [ingredientsToFilterBy,setIngredientsFilter] = useState('');
   const [query, setQuery] = useState("");
 
   useEffect(() => {
     const timeOutId = setTimeout(() => sendQuery(), 500);
     return () => clearTimeout(timeOutId);
-  }, [query]);
+  }, [query,ingredientsToFilterBy]);
 
   //send filter ingredients to parent
   const closeFilter = (filteredIngredients) => 
@@ -32,37 +32,36 @@ export default function Home() {
     setFilterBackdrop(false);
   }
 
-  const handleIngredientChange = () =>
+  const sendQuery = () =>
   {
-
-  }
-
-  const sendQuery = () => 
-  {
-    if(query === '')
+    if(ingredientsToFilterBy !== '')
     {
+      let lookUpString = '';
+      if(query === '')
+      {
+        lookUpString = '%00'
+      }
+      else
+      {
+        lookUpString = query
+      }
       fetch(
-        "http://localhost:8000/api/recipes")
+        "http://localhost:8000/api/recipes/search?ingredients=" + ingredientsToFilterBy + "&name=" + lookUpString )
         .then((res) => res.json())
         .then((json) => {
-          console.log(json[0]);
           setRecipes(json);
         })
     }
-    else if(ingredientsToFilterBy.length === 0)
+    else
     {
       fetch(
         "http://localhost:8000/api/recipes/query/" + query)
         .then((res) => res.json())
         .then((json) => {
-          console.log(json[0]);
+
           setRecipes(json);
         })
     }
-    else{
-
-    }
-
   }
 
   useEffect(()=>

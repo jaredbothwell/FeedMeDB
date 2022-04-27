@@ -58,7 +58,7 @@ public class RecipesController : ControllerBase
 
     [Route("search")]
     [HttpGet]
-    public IEnumerable<RecipeModel> GetRecipesByNameAndIngredient(string name, string ingredients)
+    public IEnumerable<RecipeModel> GetRecipesByNameAndIngredient(string ingredients,string name ="")
     {
         var repo = new RecipeRepository();
         return repo.GetRecipeModelsByNameAndIngredient(name, ingredients);

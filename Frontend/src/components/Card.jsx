@@ -46,7 +46,7 @@ export default function BasicCard(props) {
 
             <div style={{ overflow: "auto", maxHeight: 75}}>
               {
-                recipe_data.ingredients.map((ingredient) => (<Chip style={{margin: 2}} label={ingredient} color="info" />))
+                recipe_data.ingredients.map((ingredient) => (<Chip style={{margin: 2}} label={ingredient.name} color="info" />))
               }
             </div>
 

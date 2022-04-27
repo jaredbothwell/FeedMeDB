@@ -49,7 +49,21 @@ export default function FilterIngredientsSearch(props) {
 
     const saveHandler = () =>
     {
-        props.SendIngredientsToHomePage(queryIngredients);
+        var ingredients_array = [];
+
+        queryIngredients.map((ingredient)=>
+        {
+          ingredients_array.push(ingredient.name)
+        })
+
+        if(ingredients_array.length === 0)
+        {
+          props.SendIngredientsToHomePage('');
+        }
+        else
+        {
+          props.SendIngredientsToHomePage(ingredients_array.join(','));
+        }
     }
     
 
