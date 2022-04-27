@@ -105,6 +105,45 @@ public class RecipeRepository : BaseRepository
 
     }
 
+    public bool CreateRecipe(RecipeModel recipe)
+    {
+        using (var connection = new SqlConnection(this.connectionString))
+        {
+            int recipeID = -1;
+            using (var command = new SqlCommand("Data.CreateRecipe", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@name", recipe.Name);
+                command.Parameters.AddWithValue("@prepTime", recipe.PrepTime);
+                command.Parameters.AddWithValue("@userID", recipe.CreatedByID);
+                command.Parameters.AddWithValue("@difficulty", recipe.Difficulty);
+                command.Parameters.AddWithValue("@directions", recipe.Directions);
+
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                        recipeID = Convert.ToInt32(reader.GetDecimal(0));
+
+                }
+            }
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                using (var command = new SqlCommand("Data.AddIngredientToRecipe", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@recipeID", recipeID);
+                    command.Parameters.AddWithValue("@ingredientName", ingredient.Name);
+                    command.Parameters.AddWithValue("@quantity", ingredient.MeasurementQuantity);
+                    command.Parameters.AddWithValue("@unitID", ingredient.MeasurementUnitID);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        return true;
+    }
+
     public RecipeModel TranslateRecipe(SqlDataReader reader)
     {
         var recipeIDOrdinal = reader.GetOrdinal("RecipeID");
@@ -126,7 +165,8 @@ public class RecipeRepository : BaseRepository
             reader.GetString(directionsOrdinal),
             reader.IsDBNull(createdOnOrdinal) ? null : reader.GetDateTimeOffset(createdOnOrdinal),
             reader.IsDBNull(modifiedOnOrdinal) ? null : reader.GetDateTimeOffset(modifiedOnOrdinal),
-            reader.IsDBNull(removedOnOrdinal) ? null : reader.GetDateTimeOffset(removedOnOrdinal)
+            reader.IsDBNull(removedOnOrdinal) ? null : reader.GetDateTimeOffset(removedOnOrdinal),
+            new List<IngredientModel>()
         );
 
         var ingredientRepo = new IngredientRepository();
