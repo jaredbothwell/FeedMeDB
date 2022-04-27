@@ -83,7 +83,7 @@ export default function FilterIngredientsSearch(props) {
       >
           {
             queryIngredients.map((ingredient) => (
-                <ListItem key={ingredient.IngredientID} component="div" disablePadding>
+            <ListItem key={ingredient.id} component="div" disablePadding>
                     <ListItemButton onClick={() => removeFromSearchFilter(ingredient)}>
                         <ListItemText primary={ingredient.name} primaryTypographyProps={{ style: {color:'black'} }} />
                     </ListItemButton>
@@ -123,7 +123,7 @@ export default function FilterIngredientsSearch(props) {
       >
                   {
             filteredIngredients.map((ingredient) => (
-                <ListItem key={ingredient.IngredientID} component="div" disablePadding>
+                <ListItem key={ingredient.id} component="div" disablePadding>
                 <ListItemButton onClick={() => addToSearchFilter(ingredient)}>
                 <ListItemText primary={ingredient.name} primaryTypographyProps={{ style: {color:'black'} }} />
                 </ListItemButton>
