@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import AnimatedPage from './AnimatedPage'
 import Backdrop from '@mui/material/Backdrop';
 import ListBox from '../components/ListBox';
@@ -10,6 +10,9 @@ export default function Account(props) {
   //console.log(props.user)
 
   const [backDropOpen, setBackDrop] = useState(false);
+
+  const [user,setUser] = useState(null);
+
   const handleClose = () => {
     setBackDrop(false);
   };
@@ -17,10 +20,24 @@ export default function Account(props) {
     setBackDrop(!backDropOpen);
   };
 
+  useEffect(()=>
+  {
+    const user_id = localStorage.getItem('user_id');
+    if(user_id != null)
+    {
+      fetch(
+        "http://localhost:8000/api/users/" + user_id)
+        .then((res) => res.json())
+        .then((json) => {
+          setUser(json);
+        })
+    }
+
+  })
 
   return (
     <AnimatedPage>
-      {props.user != null?<>
+      {user != null?<>
           <div class="row"
             style={{marginTop: "1%"}}>
             <div class="col"
@@ -31,7 +48,7 @@ export default function Account(props) {
               padding:'5%',
               marginLeft: '1%',
               marginRight: '1%'}}>
-                <h1 style={{textAlign: "center"}}>Recipes that {props.user.name} has contributed</h1>
+                <h1 style={{textAlign: "center"}}>Recipes that {user.name} has contributed</h1>
                 <ListBox/>
             <Fab className='col-m-1' variant="extended" color="primary" aria-label="add" onClick={handleToggle}>
               <AddIcon sx={{ mr: 1 }} />
@@ -46,7 +63,7 @@ export default function Account(props) {
               padding:'5%',
               marginLeft: '1%',
               marginRight: '1%'}}>
-                <h1 style={{color:'white', textAlign:'center'}}>{props.user.name} stats:</h1>
+                <h1 style={{color:'white', textAlign:'center'}}>{user.name} stats:</h1>
             </div>
             <div class="col"
             style={{
@@ -56,7 +73,7 @@ export default function Account(props) {
               padding:'5%',
               marginLeft: '1%',
               marginRight: '1%'}}>
-                <h1 style={{textAlign: "center"}}>Recipes that {props.user.name} has bookmarked/saved</h1>
+                <h1 style={{textAlign: "center"}}>Recipes that {user.name} has bookmarked/saved</h1>
                 <ListBox/>
             </div>
           </div>

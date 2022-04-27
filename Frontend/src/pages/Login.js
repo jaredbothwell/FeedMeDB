@@ -21,6 +21,7 @@ export default function Login(props) {
     if(input[0].id != null)
     {
       props.userLoggedIn(input);
+      localStorage.setItem('user_id',input[0].id);
       setLoggedIn(true);
       navigate("/account");
     }

@@ -1,23 +1,68 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import './css_files/CreateRecipeForm.css'
-import { Fab, Slider } from '@mui/material';
+import { Backdrop, Fab, Slider } from '@mui/material';
 import PropTypes from 'prop-types';
 
 import NumberFormat from 'react-number-format';
+import BasicTable from './Table';
+import AddIngredientForm from './AddIngredientForm';
 export default function CreateRecipeForm({closeHandler}) {
 
+  // ==== data grid stuff =====
+
+  const [ingredients,setIngredients] = useState([])
+  const [ingredientFormOpen, setIngredientForm] = useState(false);
+  const [uniqueKey,incrementKey] = useState(0);
+
+  const handleAddIngredient = (data) =>
+  {
+    data['key'] = uniqueKey;
+    incrementKey(uniqueKey+1);
+    setIngredients(ingredients.concat(data));
+    setIngredientForm(false);
+  }
+
+  const handleRemoveIngredient = (key) =>
+  {
+    setIngredients(ingredients.filter((item) => item.key !== key))
+  }
+
+  // =========================
+
+
+  
   const inputRef = React.useRef(null)
 
+  // ===== submit data ============
   const submitHandler = () =>
   {
-    console.log(values.description)
-    console.log(values.difficulty)
-    console.log(values.prepTime)
-    console.log(values.recipeName)
+    var temp_ingredients = []
 
-    resetState()
-    closeHandler()
+    for(var i = 0; i < ingredients.length;i++)
+    {
+      temp_ingredients.push(
+        {
+          name: ingredients[i].name,
+          measurementUnitID: ingredients[i].measurement.measurementUnitID,
+          measurementQuantity: ingredients[i].measurementQuantity
+        })
+    }
+
+    let data = 
+    {
+      createdByID:'f',
+      name: values.recipeName,
+      prepTime:values.prepTime,
+      difficulty:values.difficulty,
+      directions:values.directions,
+      ingredients: temp_ingredients
+    }
+
+    console.log(data);
+
+    //resetState()
+    //closeHandler()
   }
 
   const cancel = () =>
@@ -33,7 +78,7 @@ export default function CreateRecipeForm({closeHandler}) {
       recipeName: '',
       prepTime: '',
       difficulty: 1,
-      description: ''
+      directions: ''
     }
     )
 
@@ -96,7 +141,7 @@ export default function CreateRecipeForm({closeHandler}) {
     recipeName: '',
     prepTime: '',
     difficulty: 1,
-    description: ''
+    directions: ''
   });
 
   const [submitEnabled,setSubmit] = React.useState(false)
@@ -123,6 +168,9 @@ export default function CreateRecipeForm({closeHandler}) {
 
     
     <div className='form_container'>
+      <Backdrop open={ingredientFormOpen} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AddIngredientForm sendIngredientToParent={data => handleAddIngredient(data)}/>
+      </Backdrop>
           <h2 style={{color:'black'}}>Create a new recipe</h2>
           <div className='input_field'>
             <TextField
@@ -160,13 +208,13 @@ export default function CreateRecipeForm({closeHandler}) {
       />
           <div className='input_field'>
             <TextField
-            name='description'
+            name='directions'
             id="outlined-multiline-flexible"
-            label="Description"
+            label="directions"
             onChange={handleChange}
             multiline
             maxRows={4}
-            value={values.description}
+            value={values.directions}
           />
         </div>
         <hr
@@ -178,9 +226,13 @@ export default function CreateRecipeForm({closeHandler}) {
         }}
         
         />
-        <h1 style={{color:'black'}}>Add ingredients</h1>
+        <div className='input_field'>
+        <Fab variant="extended" color="primary" aria-label="add" onClick={()=>setIngredientForm(true)}>
+                + Ingredient
+        </Fab>
+        </div>
 
-
+        <BasicTable ingredientsList={ingredients} removeIngredient={prop=>handleRemoveIngredient(prop)}/>
         <div className='input_field'>
         <Fab style={{backgroundColor: 'gray'}} variant="extended" color="primary" aria-label="add" onClick={cancel}>
                 Cancel

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { AnimatePresence } from "framer-motion";
 import {Route, Routes, useLocation} from 'react-router'
 import Navbar from './components/Navbar';
@@ -18,9 +18,21 @@ export default function App(){
   {
     SetUserData(loginStatus[0]);
     SetLoggedIn(loginStatus[1]);
-
-    console.log(user);
   }
+
+  useEffect(()=>
+  {
+    const user_id = localStorage.getItem('user_id')
+    console.log(user_id)
+    if(user_id !== null)
+    {
+      SetLoggedIn(true);
+    }
+    else
+    {
+      SetLoggedIn(false);
+    }
+  })
 
   const location = useLocation();
   return (

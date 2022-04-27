@@ -1,0 +1,33 @@
+.form_container1
+{
+    display: flex;
+    flex-direction: column;
+    
+    background-color: white;
+    border-radius: 40px;
+    padding: 2%;
+}
+
+.vertical_row
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.input_field1
+{
+    margin-top: 1em;
+    align-self: center;
+}
+
+h1
+{
+    color: black;
+}
+
+.add-ingredient-h2
+{
+    color: black;
+    align-self: center;
+    margin-bottom: 5%;
+}
