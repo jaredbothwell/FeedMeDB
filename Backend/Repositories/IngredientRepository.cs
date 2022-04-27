@@ -11,7 +11,7 @@ public class IngredientRepository : BaseRepository
 {
     public IEnumerable<IngredientModel> GetAllIngredients()
     {
-        String sql = "Data.GetAlLIngredients";
+        String sql = "Data.GetAllIngredients";
         using (var connection = new SqlConnection(this.connectionString))
         {
             using (var command = new SqlCommand(sql, connection))
