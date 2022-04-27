@@ -58,12 +58,20 @@ public class RecipesController : ControllerBase
 
     [Route("search")]
     [HttpGet]
-    public IEnumerable<RecipeModel> GetRecipesByNameAndIngredient(string ingredients,string name ="")
+    public IEnumerable<RecipeModel> GetRecipesByNameAndIngredient(string ingredients, string name = "")
     {
         var repo = new RecipeRepository();
         return repo.GetRecipeModelsByNameAndIngredient(name, ingredients);
     }
 
-    
+
+    [Route("add")]
+    [HttpPost]
+    public void Post([FromBody] RecipeModel recipe)
+    {
+        var repo = new RecipeRepository();
+        repo.CreateRecipe(recipe);
+    }
+
 
 }
