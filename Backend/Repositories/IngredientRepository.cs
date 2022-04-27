@@ -11,12 +11,12 @@ public class IngredientRepository : BaseRepository
 {
     public IEnumerable<IngredientModel> GetAllIngredients()
     {
-        // TODO: use stored procedure
-        String sql = "select * from Data.Ingredient";
+        String sql = "Data.GetAlLIngredients";
         using (var connection = new SqlConnection(this.connectionString))
         {
             using (var command = new SqlCommand(sql, connection))
             {
+                command.CommandType = CommandType.StoredProcedure;
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                     return TranslateIngredients(reader);
@@ -26,16 +26,17 @@ public class IngredientRepository : BaseRepository
 
     public IEnumerable<IngredientModel> GetIngredientsForRecipe(int id)
     {
-        String sql = "select I.IngredientID, I.Name, I.CreatedOn, I.ModifiedOn, I.RemovedOn from Data.Ingredient I inner join Data.RecipeIngredient RI on I.IngredientID = RI.IngredientID where RI.RecipeID = @id";
-
+        String sql = "Data.GetRecipeIngredients";
         using (var connection = new SqlConnection(this.connectionString))
         {
             using (var command = new SqlCommand(sql, connection))
             {
+
                 connection.Open();
-                command.Parameters.AddWithValue("@id", id);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@RecipeID", id);
                 using (var reader = command.ExecuteReader())
-                    return TranslateIngredients(reader);
+                    return TranslateRecipeIngredients(reader);
             }
         }
     }
@@ -43,17 +44,32 @@ public class IngredientRepository : BaseRepository
     public IngredientModel TranslateIngredient(SqlDataReader reader)
     {
         var ingredientIDOrdinal = reader.GetOrdinal("IngredientID");
-        var nameOrdinal = reader.GetOrdinal("Name");
+        var IngredientNameOrdinal = reader.GetOrdinal("IngredientName");
         var createdOnOrdinal = reader.GetOrdinal("CreatedOn");
-        var modifiedOnOrdinal = reader.GetOrdinal("ModifiedOn");
-        var removedOnOrdinal = reader.GetOrdinal("RemovedOn");
-        return new IngredientModel(
-            reader.GetInt32(ingredientIDOrdinal),
-            reader.GetString(nameOrdinal),
-            reader.IsDBNull(createdOnOrdinal) ? null : reader.GetDateTimeOffset(createdOnOrdinal),
-            reader.IsDBNull(modifiedOnOrdinal) ? null : reader.GetDateTimeOffset(modifiedOnOrdinal),
-            reader.IsDBNull(removedOnOrdinal) ? null : reader.GetDateTimeOffset(removedOnOrdinal), null, null, null
-        );
+        return new IngredientModel()
+        {
+            IngredientID = reader.GetInt32(ingredientIDOrdinal),
+            Name = reader.GetString(IngredientNameOrdinal),
+            CreatedOn = reader.IsDBNull(createdOnOrdinal) ? null : reader.GetDateTimeOffset(createdOnOrdinal)
+        };
+    }
+
+
+    public IngredientModel TranslateRecipeIngredient(SqlDataReader reader)
+    {
+        var ingredientIDOrdinal = reader.GetOrdinal("IngredientID");
+        var IngredientNameOrdinal = reader.GetOrdinal("IngredientName");
+        var MeasurementQuantityOrdinal = reader.GetOrdinal("MeasurementQuantity");
+        var MeasurementUnitIDOrdinal = reader.GetOrdinal("MeasurementUnitID");
+        var MeasurementUnitNameOrdinal = reader.GetOrdinal("MeasurementUnitName");
+        return new IngredientModel()
+        {
+            IngredientID = reader.GetInt32(ingredientIDOrdinal),
+            Name = reader.GetString(IngredientNameOrdinal),
+            MeasurementUnitID = reader.GetInt32(MeasurementUnitIDOrdinal),
+            MeasurementUnitName = reader.GetString(MeasurementUnitNameOrdinal),
+            MeasurementQuantity = reader.GetDecimal(MeasurementQuantityOrdinal)
+        };
     }
 
     public IEnumerable<IngredientModel> TranslateIngredients(SqlDataReader reader)
@@ -61,6 +77,14 @@ public class IngredientRepository : BaseRepository
         var recipes = new List<IngredientModel>();
         while (reader.Read())
             recipes.Add(TranslateIngredient(reader));
+        return recipes;
+    }
+
+    public IEnumerable<IngredientModel> TranslateRecipeIngredients(SqlDataReader reader)
+    {
+        var recipes = new List<IngredientModel>();
+        while (reader.Read())
+            recipes.Add(TranslateRecipeIngredient(reader));
         return recipes;
     }
 }
