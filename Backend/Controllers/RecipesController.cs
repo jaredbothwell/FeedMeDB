@@ -15,8 +15,18 @@ public class RecipesController : ControllerBase
     public IEnumerable<RecipeModel> Get()
     {
         var repo = new RecipeRepository();
-        return repo.GetAllRecipes();
+        return repo.GetAllRecipes(1);
     }
+
+    // route: /api/recipes/
+    [Route("page/{page:int}")]
+    [HttpGet]
+    public IEnumerable<RecipeModel> Get(int page)
+    {
+        var repo = new RecipeRepository();
+        return repo.GetAllRecipes(page);
+    }
+
 
     [Route("{id:int}")]
     [HttpGet]

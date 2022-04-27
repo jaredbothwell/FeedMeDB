@@ -9,14 +9,14 @@ namespace FeedMeDB.Repositories;
 
 public class RecipeRepository : BaseRepository
 {
-    public IEnumerable<RecipeModel> GetAllRecipes()
+    public IEnumerable<RecipeModel> GetAllRecipes(int page)
     {
-        // TODO: use stored procedure
-        String sql = "select * from Data.Recipe";
         using (var connection = new SqlConnection(this.connectionString))
         {
-            using (var command = new SqlCommand(sql, connection))
+            using (var command = new SqlCommand("Data.GetAllRecipes", connection))
             {
+                command.Parameters.AddWithValue("@page", page);
+                command.CommandType = CommandType.StoredProcedure;
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                     return TranslateRecipes(reader);
@@ -141,6 +141,11 @@ public class RecipeRepository : BaseRepository
                 }
             }
         }
+        return true;
+    }
+
+    public bool EditRecipe(RecipeModel recipe)
+    {
         return true;
     }
 
