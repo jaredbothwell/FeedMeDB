@@ -11,13 +11,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Backdrop, Fab, IconButton } from '@mui/material';
 import CreateRecipeForm from './CreateRecipeForm';
+import EditRecipeForm from './EditRecipeForm';
 
 
 export default function MyRecipes({closeForm}) {
 
   const [recipes, setRecipes] = useState([]);
-
-  const [backDropOpen, setBackDrop] = useState(false);
+  const [recipeToEdit, setRecipeToEdit] = useState(null);
+  const [createRecipeBackdrop, setCreateRecipeBackdrop] = useState(false);
   const [uniqueKey,incrementKey] = useState(0);
 
   useEffect(()=>
@@ -30,7 +31,6 @@ export default function MyRecipes({closeForm}) {
         .then((res) => res.json())
         .then((json) => {
           setRecipes(json);
-          console.log(json)
         })
     }
   },[uniqueKey])
@@ -39,10 +39,15 @@ export default function MyRecipes({closeForm}) {
     <div className='form_container1'>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={backDropOpen}
+        open={createRecipeBackdrop}
         
       >
-        <CreateRecipeForm key={uniqueKey} closeHandler={()=>{setBackDrop(false); incrementKey(uniqueKey+1);}}/>
+        <CreateRecipeForm key={uniqueKey} closeHandler={()=>{setCreateRecipeBackdrop(false); incrementKey(uniqueKey+1);}}/>
+      </Backdrop>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={recipeToEdit !== null}>
+          <EditRecipeForm closeHandler={()=>{setRecipeToEdit(null); incrementKey(uniqueKey+1);}} recipeData={recipeToEdit}/>
       </Backdrop>
         <h1>
             My Recipes
@@ -71,7 +76,7 @@ export default function MyRecipes({closeForm}) {
                     <IconButton
                         aria-label="expand row"
                         size="small"
-
+                        onClick={()=>setRecipeToEdit(row)}
                         >
                         <EditIcon/>
                     </IconButton>
@@ -91,7 +96,7 @@ export default function MyRecipes({closeForm}) {
       </Table>
     </TableContainer>
     <div className='input_field'>
-    <Fab onClick={()=>setBackDrop(!backDropOpen)} variant="extended" color="primary" aria-label="add">
+    <Fab onClick={()=>setCreateRecipeBackdrop(!createRecipeBackdrop)} variant="extended" color="primary" aria-label="add">
                 Add Recipe
     </Fab>    
     <Fab sx={{width:120, backgroundColor: 'gray', marginLeft:2}} onClick={closeForm} variant="extended" color="primary" aria-label="add">

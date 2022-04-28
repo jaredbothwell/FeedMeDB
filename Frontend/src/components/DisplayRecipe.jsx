@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './css_files/CreateRecipeForm.css'
 import CloseIcon from '@mui/icons-material/Close';
-import { Fab, IconButton, Rating, Typography } from '@mui/material';
+import { CircularProgress, Fab, IconButton, Rating, Typography } from '@mui/material';
 
 export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
     
@@ -41,7 +41,7 @@ export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
                 Creator: {userName}
             </Typography>
             <h1>
-            Preparation Time: {recipe.prepTime}
+            Preparation Time: {recipe.prepTime} minutes
             </h1>
             <h1>
             {recipe.difficulty}
@@ -53,7 +53,7 @@ export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
         </Fab>
         </div>
       :
-      <h1>loading</h1>
+      <CircularProgress size="5rem"/> 
       }
       
 

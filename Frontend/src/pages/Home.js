@@ -79,7 +79,7 @@ export default function Home() {
       "http://localhost:8000/api/recipes")
       .then((res) => res.json())
       .then((json) => {
-        console.log(json[0]);
+        console.log('loading in home')
         setRecipes(json);
       })
   }, [])
