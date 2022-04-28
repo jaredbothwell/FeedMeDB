@@ -200,31 +200,33 @@ export default function CreateRecipeForm({closeHandler}) {
       />
           <div className='input_field'>
             <TextField
+            sx={{width:500}}
             name='directions'
             id="outlined-multiline-flexible"
             label="directions"
             onChange={handleChange}
             multiline
-            maxRows={4}
+            rows={4}
+
             value={values.directions}
           />
+        </div>
+
+        <div className='input_field'>
+          ingredients
         </div>
         <hr
         style={{
             color: 'gray',
             backgroundColor: 'gray',
             height: 2,
-            marginTop: 50
+            marginTop: 5,
+            marginBottom: 5
         }}
         
         />
-        <div className='input_field'>
-        <Fab variant="extended" color="primary" aria-label="add" onClick={()=>setIngredientForm(true)}>
-                + Ingredient
-        </Fab>
-        </div>
 
-        <BasicTable ingredientsList={ingredients} removeIngredient={prop=>handleRemoveIngredient(prop)}/>
+        <BasicTable ingredientsList={ingredients} removeIngredient={prop=>handleRemoveIngredient(prop)} addIngredient={()=>setIngredientForm(true)}/>
         <div className='input_field'>
         <Fab style={{backgroundColor: 'gray'}} variant="extended" color="primary" aria-label="add" onClick={()=>closeHandler()}>
                 Cancel

@@ -7,16 +7,30 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { IconButton } from '@mui/material';
 
-export default function BasicTable({ingredientsList, removeIngredient}) {
+export default function BasicTable({ingredientsList, removeIngredient,addIngredient}) {
 
   return (
     <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
       <Table sx={{ minWidth: 500 }} aria-label="simple table">
         <TableHead>
           <TableRow> 
-          <TableCell/>           
+          <TableCell>
+                    <IconButton
+                        aria-label="expand row"
+                        size="small"
+                        color='primary'
+                        onClick={()=>addIngredient()}
+                        >
+                          <div style={{display:'flex', flexDirection:'column'}}>
+                          <AddCircleIcon style={{alignSelf:'center'}}/>
+                            Add
+                          </div>
+
+                    </IconButton>
+            </TableCell>           
             <TableCell>Ingredient</TableCell>
             <TableCell align="right">Quantity</TableCell>
             <TableCell align="right">Unit</TableCell>
