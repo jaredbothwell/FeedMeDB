@@ -39,6 +39,8 @@ export default function CreateRecipeForm({closeHandler}) {
   {
     var temp_ingredients = []
 
+    const user_id = localStorage.getItem('user_id');
+
     for(var i = 0; i < ingredients.length;i++)
     {
       temp_ingredients.push(
@@ -51,7 +53,7 @@ export default function CreateRecipeForm({closeHandler}) {
 
     let data = 
     {
-      createdByID:'f',
+      createdByID:user_id,
       name: values.recipeName,
       prepTime:values.prepTime,
       difficulty:values.difficulty,
@@ -59,30 +61,20 @@ export default function CreateRecipeForm({closeHandler}) {
       ingredients: temp_ingredients
     }
 
-    console.log(data);
+    let http_string = "http://localhost:8000/api/recipes/add"
+    console.log(http_string)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    };
+    fetch(http_string, requestOptions)
+      .then(response => console.log(response))
 
-    //resetState()
-    //closeHandler()
-  }
 
-  const cancel = () =>
-  {
-    resetState()
     closeHandler()
   }
 
-  const resetState = () => 
-  {
-    setValues({
-      ...values,
-      recipeName: '',
-      prepTime: '',
-      difficulty: 1,
-      directions: ''
-    }
-    )
-
-  }
 
   const marks = [
     {
@@ -169,7 +161,7 @@ export default function CreateRecipeForm({closeHandler}) {
     
     <div className='form_container'>
       <Backdrop open={ingredientFormOpen} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <AddIngredientForm sendIngredientToParent={data => handleAddIngredient(data)}/>
+        <AddIngredientForm key={uniqueKey} sendIngredientToParent={data => handleAddIngredient(data)}/>
       </Backdrop>
           <h2 style={{color:'black'}}>Create a new recipe</h2>
           <div className='input_field'>
@@ -234,7 +226,7 @@ export default function CreateRecipeForm({closeHandler}) {
 
         <BasicTable ingredientsList={ingredients} removeIngredient={prop=>handleRemoveIngredient(prop)}/>
         <div className='input_field'>
-        <Fab style={{backgroundColor: 'gray'}} variant="extended" color="primary" aria-label="add" onClick={cancel}>
+        <Fab style={{backgroundColor: 'gray'}} variant="extended" color="primary" aria-label="add" onClick={()=>closeHandler()}>
                 Cancel
         </Fab>
         </div>

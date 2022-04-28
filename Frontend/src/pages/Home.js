@@ -14,7 +14,7 @@ import SearchBar from '../components/SearchBar';
 
 export default function Home() {
   const [filterBackdrop,setFilterBackdrop] = useState(false);
-
+  
   const [recipes, setRecipes] = useState([]);
 
   const [ingredientsToFilterBy,setIngredientsFilter] = useState('');
@@ -32,19 +32,20 @@ export default function Home() {
     setFilterBackdrop(false);
   }
 
+  let lookUpString = '';
+  if(query === '')
+  {
+    lookUpString = '%00'
+  }
+  else
+  {
+    lookUpString = query
+  }
+
   const sendQuery = () =>
   {
     if(ingredientsToFilterBy !== '')
     {
-      let lookUpString = '';
-      if(query === '')
-      {
-        lookUpString = '%00'
-      }
-      else
-      {
-        lookUpString = query
-      }
       fetch(
         "http://localhost:8000/api/recipes/search?ingredients=" + ingredientsToFilterBy + "&name=" + lookUpString )
         .then((res) => res.json())
@@ -55,7 +56,7 @@ export default function Home() {
     else
     {
       fetch(
-        "http://localhost:8000/api/recipes/query/" + query)
+        "http://localhost:8000/api/recipes/query/" + lookUpString)
         .then((res) => res.json())
         .then((json) => {
           setRecipes(json);

@@ -10,7 +10,7 @@ export default function Account(props) {
   //console.log(props.user)
 
   const [backDropOpen, setBackDrop] = useState(false);
-
+  const [uniqueKey,incrementKey] = useState(0);
   const [user,setUser] = useState(null);
 
   const handleClose = () => {
@@ -33,7 +33,7 @@ export default function Account(props) {
         })
     }
 
-  })
+  },[])
 
   return (
     <AnimatedPage>
@@ -83,7 +83,7 @@ export default function Account(props) {
         open={backDropOpen}
         
       >
-        <CreateRecipeForm closeHandler={()=>setBackDrop(false)}/>
+        <CreateRecipeForm key={uniqueKey} closeHandler={()=>{setBackDrop(false); incrementKey(uniqueKey+1);}}/>
       </Backdrop>
       </>
       :
