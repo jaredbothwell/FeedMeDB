@@ -3,6 +3,7 @@ This is a component for the navigation bar
 */
 import React from 'react'
 import {Link} from 'react-router-dom'
+import AccountMenu from './AccountMenu';
 import { Button } from './Button';
 import './css_files/Navbar.css';
 
@@ -31,16 +32,11 @@ export default function NavBar(props) {
                             TestAPI
                         </Link>
                     </li>
-                    {props.loggedIn&&
-                    <li className='nav-item'>
-                        <Link to='/account' className='nav-links'>
-                            Account
-                        </Link>
-                    </li>
-                    }
+
                 </ul>
-                {!props.loggedIn&&
-                <Button buttonStyle='btn--outline' link='login'>Login</Button>
+                {!props.loggedIn?
+                <Button buttonStyle='btn--outline' link='login'>Login</Button>:
+                <AccountMenu/>
                 }
             </div>
         </nav>

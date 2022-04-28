@@ -10,7 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { IconButton } from '@mui/material';
 
-export default function BasicTable({ingredientsList, removeIngredient,addIngredient}) {
+export default function IngredientTable({ingredientsList, removeIngredient,addIngredient}) {
 
   return (
     <TableContainer component={Paper} sx={{ maxHeight: 440 }}>

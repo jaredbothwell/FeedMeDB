@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import './css_files/CreateRecipeForm.css'
 import { Backdrop, Fab, Slider } from '@mui/material';
-import BasicTable from './Table';
+import IngredientTable from './IngredientTable';
 import AddIngredientForm from './AddIngredientForm';
 export default function CreateRecipeForm({closeHandler}) {
 
@@ -211,7 +211,7 @@ export default function CreateRecipeForm({closeHandler}) {
         
 
 
-        <BasicTable ingredientsList={ingredients} removeIngredient={prop=>handleRemoveIngredient(prop)} addIngredient={()=>setIngredientForm(true)}/>
+        <IngredientTable ingredientsList={ingredients} removeIngredient={prop=>handleRemoveIngredient(prop)} addIngredient={()=>setIngredientForm(true)}/>
         <div className='input_field'>
         <Fab style={{backgroundColor: 'gray'}} variant="extended" color="primary" aria-label="add" onClick={()=>closeHandler()}>
                 Cancel
