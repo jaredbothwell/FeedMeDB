@@ -3,6 +3,7 @@ using FeedMeDB.Models;
 using System.Data.SqlClient;
 using FeedMeDB;
 using FeedMeDB.Repositories;
+using System.Text.Json;
 
 namespace FeedMeDB.Controllers;
 
@@ -74,14 +75,6 @@ public class RecipesController : ControllerBase
         return repo.GetRecipeModelsByNameAndIngredient(name, ingredients);
     }
 
-    [Route("saved")]
-    [HttpGet]
-    public IEnumerable<UserRecipeModel> GetSavedRecipes(int userID)
-    {
-        var repo = new UserRecipeRepository();
-        return repo.GetSavedRecipes(userID);
-    }
-
     [Route("add")]
     [HttpPost]
     public void Post([FromBody] RecipeModel recipe)
@@ -89,6 +82,20 @@ public class RecipesController : ControllerBase
         var repo = new RecipeRepository();
         repo.CreateRecipe(recipe);
     }
+
+    [Route("edit")]
+    [HttpPut]
+    public void Edit([FromBody] JsonDocument body)
+    {
+        var repo = new RecipeRepository();
+
+        Dictionary<string, JsonElement> dict = body.Deserialize<Dictionary<string, JsonElement>>() ?? new Dictionary<string, JsonElement>();
+        
+        RecipeModel? newRecipe = JsonSerializer.Deserialize<RecipeModel>(dict["recipe"], options:null);
+        List<int>? oldIngredientIDs = JsonSerializer.Deserialize<List<int>>(dict["ingredientIDs"]);
+
+        repo.EditRecipe(newRecipe, oldIngredientIDs);
+    }   
 
 
 }

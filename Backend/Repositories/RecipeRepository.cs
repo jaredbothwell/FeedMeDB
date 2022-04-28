@@ -102,7 +102,6 @@ public class RecipeRepository : BaseRepository
                     return TranslateRecipes(reader);
             }
         }
-
     }
 
     public bool CreateRecipe(RecipeModel recipe)
@@ -124,7 +123,6 @@ public class RecipeRepository : BaseRepository
                 {
                     if (reader.Read())
                         recipeID = Convert.ToInt32(reader.GetDecimal(0));
-
                 }
             }
             foreach (var ingredient in recipe.Ingredients)
@@ -144,8 +142,62 @@ public class RecipeRepository : BaseRepository
         return true;
     }
 
-    public bool EditRecipe(RecipeModel recipe)
+    public bool EditRecipe(RecipeModel recipe, List<int> ingredientsToRemove)
     {
+        using (var connection = new SqlConnection(this.connectionString))
+        {
+            connection.Open();
+            SqlTransaction transaction = connection.BeginTransaction();
+
+            // remove recipe ingredients
+            foreach (var ingredientID in ingredientsToRemove)
+            {
+                using (var command = new SqlCommand("Data.RemoveRecipeIngredient", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@ingredientID", ingredientID);
+                    command.Parameters.AddWithValue("@recipeID", recipe.ID);
+                    command.Transaction = transaction;
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            // edit recipe fields
+            using (var command = new SqlCommand("Data.UpdateRecipe", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@recipeID", recipe.ID);
+                command.Parameters.AddWithValue("@recipeName", recipe.Name);
+                command.Parameters.AddWithValue("@prepTime", recipe.PrepTime);
+                command.Parameters.AddWithValue("@difficulty", recipe.Difficulty);
+                command.Parameters.AddWithValue("@directions", recipe.Directions);
+                command.Transaction = transaction;
+                command.ExecuteNonQuery();
+            }
+
+
+            // add/edit recipe ingredients
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                using (var command = new SqlCommand("Data.UpdateRecipeIngredient", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@ingredientName", ingredient.Name);
+                    command.Parameters.AddWithValue("@recipeID", recipe.ID);
+                    command.Parameters.AddWithValue("@quantity", ingredient.MeasurementQuantity);
+                    command.Parameters.AddWithValue("@unitID", ingredient.MeasurementUnitID);
+                    command.Transaction = transaction;
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            transaction.Commit();
+        }
+
+
+
+
+
         return true;
     }
 
