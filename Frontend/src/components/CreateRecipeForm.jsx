@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import './css_files/CreateRecipeForm.css'
 import { Backdrop, Fab, Slider } from '@mui/material';
-import PropTypes from 'prop-types';
-
-import NumberFormat from 'react-number-format';
 import BasicTable from './Table';
 import AddIngredientForm from './AddIngredientForm';
 export default function CreateRecipeForm({closeHandler}) {
@@ -104,31 +101,6 @@ export default function CreateRecipeForm({closeHandler}) {
     return `${value}`;
   }
 
-  // ========================= number formatting stuff =================================
-  const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
-    const { onChange, ...other } = props;
-  
-    return (
-      <NumberFormat
-        {...other}
-        getInputRef={ref}
-        onValueChange={(values) => {
-          onChange({
-            target: {
-              name: props.name,
-              value: values.value,
-            },
-          });
-        }}
-        isNumericString
-      />
-    );
-  });
-  
-  NumberFormatCustom.propTypes = {
-    name: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-  };
   const [values, setValues] = React.useState({
     recipeName: '',
     prepTime: '',
@@ -163,15 +135,45 @@ export default function CreateRecipeForm({closeHandler}) {
       <Backdrop open={ingredientFormOpen} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <AddIngredientForm key={uniqueKey} sendIngredientToParent={data => handleAddIngredient(data)}/>
       </Backdrop>
-          <h2 style={{color:'black'}}>Create a new recipe</h2>
-          <div className='input_field'>
+          <h2 style={{color:'black', alignSelf:'center'}}>Create a new recipe</h2>
+          <hr
+        style={{
+            color: 'lightgray',
+            backgroundColor: 'lightgray',
+            height: 1,
+            marginTop: 5,
+            marginBottom: 20
+
+        }}
+        
+        />
+          <div className='vertical_row'>
             <TextField
+              sx={{ width: 300}}
               label="Recipe Name"
               variant="standard"
               name='recipeName'
               onChange={handleChange}
               value={values.recipeName}
               />
+
+
+              
+            <TextField
+                      name="prepTime"
+                      sx={{ width: 100, marginLeft: 10}}
+                      onChange={handleChange}
+                      id="standard-number"
+                      label="Prep Time"
+                      type="number"
+                      helperText="(In minutes)"
+                      variant='standard'
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+
+
           </div>
           <h3 className='input_field' style={{color:'black'}}>difficulty</h3>
           <Slider
@@ -187,17 +189,7 @@ export default function CreateRecipeForm({closeHandler}) {
         onChange={handleChange}
         value={values.difficulty}
       />
-            <TextField
-        label="Prep Time (in minutes)"
-        value={values.prepTime}
-        onBlur={handleChange}
-        name="prepTime"
-        id="formatted-numberformat-input"
-        InputProps={{
-          inputComponent: NumberFormatCustom,
-        }}
-        variant="standard"
-      />
+
           <div className='input_field'>
             <TextField
             sx={{width:500}}
@@ -213,18 +205,11 @@ export default function CreateRecipeForm({closeHandler}) {
         </div>
 
         <div className='input_field'>
-          ingredients
+          Ingredients
         </div>
-        <hr
-        style={{
-            color: 'gray',
-            backgroundColor: 'gray',
-            height: 2,
-            marginTop: 5,
-            marginBottom: 5
-        }}
+
         
-        />
+
 
         <BasicTable ingredientsList={ingredients} removeIngredient={prop=>handleRemoveIngredient(prop)} addIngredient={()=>setIngredientForm(true)}/>
         <div className='input_field'>

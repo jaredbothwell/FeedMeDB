@@ -15,6 +15,12 @@
     color:black;
 }
 
+.vertical_row
+{
+    display: flex;
+    flex-direction: row;
+}
+
 h1
 {
     color: black;
