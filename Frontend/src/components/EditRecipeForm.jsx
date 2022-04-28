@@ -11,12 +11,13 @@ export default function EditRecipeForm({closeHandler, recipeData}) {
   const [ingredients,setIngredients] = useState([])
   const [ingredientFormOpen, setIngredientForm] = useState(false);
   const [uniqueKey,incrementKey] = useState(0);
-
+  const [idsToRemove,setIdsToRemove] = useState([]);
   const [uniqueIds,setUnqID] = useState([]);
 
   const handleAddIngredient = (data) =>
   {
     data['key'] = generateID();
+    data['tempDeleteID'] = -1;
     incrementKey(uniqueKey+1);
     setIngredients(ingredients.concat(data));
     setIngredientForm(false);
@@ -58,6 +59,15 @@ export default function EditRecipeForm({closeHandler, recipeData}) {
 
   const handleRemoveIngredient = (key) =>
   {
+    var temp = [...idsToRemove];
+    for(var i = 0; i < ingredients.length;i++)
+    {
+      if(ingredients[i].key === key && ingredients[i].tempDeleteID !== -1)
+      {
+        temp.push(ingredients[i].tempDeleteID);
+      }
+    }
+    setIdsToRemove(temp);
     setIngredients(ingredients.filter((item) => item.key !== key))
   }
 
@@ -70,6 +80,7 @@ export default function EditRecipeForm({closeHandler, recipeData}) {
 
     for(var i = 0; i < ingredients.length;i++)
     {
+
       temp_ingredients.push(
         {
           name: ingredients[i].name,
@@ -80,6 +91,7 @@ export default function EditRecipeForm({closeHandler, recipeData}) {
 
     let data = 
     {
+      ingredientIDs:idsToRemove,
       createdByID:user_id,
       name: values.recipeName,
       prepTime:values.prepTime,
@@ -147,6 +159,7 @@ export default function EditRecipeForm({closeHandler, recipeData}) {
     console.log(recipeData);
     if(recipeData !== null)
     {
+      
       setValues({
         ...values,
         recipeName: recipeData.name,
@@ -162,10 +175,15 @@ export default function EditRecipeForm({closeHandler, recipeData}) {
   const loadIngredients = () =>
   {
     var tempIngredients = [];
+    console.log("ingredients");
+
+    console.log(recipeData.ingredients);
     recipeData.ingredients.forEach(ingredient => 
+      
       {
         tempIngredients.push(
           {
+            tempDeleteID: ingredient.ingredientID,
             name: ingredient.name,
             measurementQuantity: ingredient.measurementQuantity,
             measurement: 

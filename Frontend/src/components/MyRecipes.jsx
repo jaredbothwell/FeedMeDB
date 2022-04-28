@@ -47,7 +47,7 @@ export default function MyRecipes({closeForm}) {
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={recipeToEdit !== null}>
-          <EditRecipeForm closeHandler={()=>{setRecipeToEdit(null); incrementKey(uniqueKey+1);}} recipeData={recipeToEdit}/>
+          <EditRecipeForm key={uniqueKey} closeHandler={()=>{setRecipeToEdit(null); incrementKey(uniqueKey+1);}} recipeData={recipeToEdit}/>
       </Backdrop>
         <h1>
             My Recipes
