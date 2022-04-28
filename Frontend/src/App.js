@@ -24,14 +24,16 @@ export default function App(){
   {
     const user_id = localStorage.getItem('user_id')
     console.log(user_id)
-    if(user_id !== null)
-    {
-      SetLoggedIn(true);
-    }
-    else
+    if(user_id === 'null')
     {
       SetLoggedIn(false);
     }
+    else
+    {
+      SetLoggedIn(true);
+    }
+
+    console.log(loggedIn);
   })
 
   const location = useLocation();
