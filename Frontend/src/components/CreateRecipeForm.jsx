@@ -131,7 +131,7 @@ export default function CreateRecipeForm({closeHandler}) {
   return (
 
     
-    <div className='form_container'>
+    <div className='form_container2'>
       <Backdrop open={ingredientFormOpen} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <AddIngredientForm key={uniqueKey} sendIngredientToParent={data => handleAddIngredient(data)}/>
       </Backdrop>

@@ -1,11 +1,11 @@
-.form_container
+.form_container2
 {
     display: flex;
     flex-direction: column;
     
     background-color: white;
     border-radius: 40px;
-    padding: 5%;
+    padding: 2%;
 }
 
 .input_field

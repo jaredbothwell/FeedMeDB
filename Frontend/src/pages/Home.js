@@ -1,16 +1,13 @@
 import React,{useState, useEffect} from 'react'
 import AnimatedPage from './AnimatedPage'
 import './css_files/Home.css'
-import Search from '../components/SearchBar'
-import SmoothList from 'react-smooth-list';
 import RecipeCard from '../components/Card' 
-import { Backdrop, TextField } from '@mui/material';
-import { withStyles } from '@material-ui/core/styles';
+import { Backdrop, CircularProgress } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterIngredientsSearch from '../components/FilterIngredientsSearch';
-import recipes1 from '../mock_data/recipes';
 import SearchBar from '../components/SearchBar';
+import DisplayRecipe from '../components/DisplayRecipe';
 
 export default function Home() {
   const [filterBackdrop,setFilterBackdrop] = useState(false);
@@ -32,18 +29,20 @@ export default function Home() {
     setFilterBackdrop(false);
   }
 
-  let lookUpString = '';
-  if(query === '')
-  {
-    lookUpString = '%00'
-  }
-  else
-  {
-    lookUpString = query
-  }
+
 
   const sendQuery = () =>
   {
+    var lookUpString = '';
+    if(query === '')
+    {
+      lookUpString = '%00'
+    }
+    else
+    {
+      lookUpString = query
+    }
+
     if(ingredientsToFilterBy !== '')
     {
       fetch(
@@ -53,10 +52,20 @@ export default function Home() {
           setRecipes(json);
         })
     }
+    else if(query === '')
+    {
+      fetch(
+        "http://localhost:8000/api/recipes")
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json[0]);
+          setRecipes(json);
+        })
+    }
     else
     {
       fetch(
-        "http://localhost:8000/api/recipes/query/" + lookUpString)
+        "http://localhost:8000/api/recipes/query/" + query)
         .then((res) => res.json())
         .then((json) => {
           setRecipes(json);
@@ -82,6 +91,7 @@ export default function Home() {
           open={filterBackdrop}>
             <FilterIngredientsSearch SendIngredientsToHomePage={closeFilter}/>
         </Backdrop>
+
     <section className='home--search'>
       <div className='container'>
         <div className='row justify-content-center'>
@@ -106,10 +116,12 @@ export default function Home() {
 
     <section>
       <div className='home--recipes' delay={100}>
-        {
+        {recipes.length > 0?
           recipes.map((recipe) => (
           <RecipeCard data={recipe} key={recipe.id}/>
           ))
+          :
+          <CircularProgress size="5rem"/> 
         }
       </div>
 

@@ -23,7 +23,7 @@ export default function Login(props) {
       props.userLoggedIn(input);
       localStorage.setItem('user_id',input[0].id);
       setLoggedIn(true);
-      navigate("/account");
+      navigate("/");
     }
     else
     {
