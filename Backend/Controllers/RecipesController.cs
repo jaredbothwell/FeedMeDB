@@ -74,6 +74,13 @@ public class RecipesController : ControllerBase
         return repo.GetRecipeModelsByNameAndIngredient(name, ingredients);
     }
 
+    [Route("saved")]
+    [HttpGet]
+    public IEnumerable<UserRecipeModel> GetSavedRecipes(int userID)
+    {
+        var repo = new UserRecipeRepository();
+        return repo.GetSavedRecipes(userID);
+    }
 
     [Route("add")]
     [HttpPost]
