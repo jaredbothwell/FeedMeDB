@@ -25,7 +25,7 @@ export default function AddIngredientForm({sendIngredientToParent}) {
         {
             name: values.ingredient,
             measurement: values.measurement,
-            measurementQuantity: values.quantity
+            measurementQuantity: parseInt(values.quantity)
         };
         sendIngredientToParent(d);
     }

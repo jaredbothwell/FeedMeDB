@@ -83,39 +83,42 @@ export default function EditRecipeForm({closeHandler, recipeData}) {
 
       temp_ingredients.push(
         {
-          name: ingredients[i].name,
-          measurementUnitID: ingredients[i].measurement.measurementUnitID,
-          measurementQuantity: ingredients[i].measurementQuantity
+          Name: ingredients[i].name,
+          MeasurementUnitID: ingredients[i].measurement.measurementUnitID,
+          MeasurementQuantity: ingredients[i].measurementQuantity
         })
     }
+    
 
     let data = 
     {
       ingredientIDs:idsToRemove,
-      createdByID:user_id,
-      name: values.recipeName,
-      prepTime:values.prepTime,
-      difficulty:values.difficulty,
-      directions:values.directions,
-      ingredients: temp_ingredients
+      recipe:
+      {
+        ID:recipeData.id,
+        CreatedByID:parseInt(user_id),
+        Name: values.recipeName,
+        PrepTime:parseInt(values.prepTime),
+        Difficulty:values.difficulty,
+        Directions:values.directions,
+        Ingredients: temp_ingredients
+      }
     }
-
     console.log(data);
 
-    /*
-    let http_string = "http://localhost:8000/api/recipes/add"
+   
+    let http_string = "http://localhost:8000/api/recipes/edit"
     console.log(http_string)
     const requestOptions = {
-      method: 'POST',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     };
     fetch(http_string, requestOptions)
       .then(response => console.log(response))
-    */
+  
 
-
-    //closeHandler()
+    closeHandler()
   }
 
 
