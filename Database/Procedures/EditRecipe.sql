@@ -69,18 +69,19 @@ WITH SourceCte(IngredientID, Quantity, UnitID, RecipeID) AS
     FROM Data.Ingredient I
     WHERE I.Name = @ingredientName
 )
-MERGE  Data.RecipeIngredient as Target
+MERGE  Data.RecipeIngredient as T
 USING  SourceCte as Source
-ON Source.IngredientID = Target.IngredientID
-    AND Source.RecipeID = Target.RecipeID
+ON Source.IngredientID = T.IngredientID
+    AND Source.RecipeID = T.RecipeID
 WHEN NOT MATCHED THEN
     INSERT(IngredientID, MeasurementQuantity, MeasurementUnitID, RecipeID)
         VALUES (Source.IngredientID, Source.Quantity, Source.UnitID, Source.RecipeID)
 WHEN MATCHED THEN
     UPDATE SET
-        Target.ModifiedOn = SYSDATETIME(),
-        Target.MeasurementQuantity = Source.Quantity,
-        Target.MeasurementUnitID = Source.UnitID;
-    
+        T.ModifiedOn = SYSDATETIME(),
+        T.MeasurementQuantity = Source.Quantity,
+        T.MeasurementUnitID = Source.UnitID,
+        T.RemovedOn = NULL;
+
 
 END
