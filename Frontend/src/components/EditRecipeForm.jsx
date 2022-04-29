@@ -115,10 +115,9 @@ export default function EditRecipeForm({closeHandler, recipeData}) {
       body: JSON.stringify(data)
     };
     fetch(http_string, requestOptions)
-      .then(response => console.log(response))
-  
-
-    closeHandler()
+      .then(response => closeHandler())
+      
+    
   }
 
 

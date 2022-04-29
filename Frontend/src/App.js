@@ -6,7 +6,6 @@ import './App.css';
 import Test from "./pages/Test";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Recipe from "./pages/Recipe";
 
 export default function App(){
 
@@ -45,7 +44,6 @@ export default function App(){
             <Route path='/login' exact element={<Login userLoggedIn={loginStatus => userLoggedIn(loginStatus)}/>}/>
             <Route path='/' exact element={<Home/>}/>
             <Route path='/test' exact element={<Test/>}/>
-            <Route path='/recipe' exact element={<Recipe/>}/>
 
           </Routes>
           </AnimatePresence>

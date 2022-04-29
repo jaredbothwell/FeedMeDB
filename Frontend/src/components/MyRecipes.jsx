@@ -14,6 +14,7 @@ import CreateRecipeForm from './CreateRecipeForm';
 import EditRecipeForm from './EditRecipeForm';
 
 
+
 export default function MyRecipes({closeForm}) {
 
   const [recipes, setRecipes] = useState([]);
@@ -30,10 +31,13 @@ export default function MyRecipes({closeForm}) {
         "http://localhost:8000/api/recipes/createdby/" + user_id)
         .then((res) => res.json())
         .then((json) => {
-          setRecipes(json);
+          let temp = json;
+          setRecipes(temp);
         })
     }
-  },[uniqueKey])
+  },[uniqueKey,recipeToEdit])
+
+
 
   return (
     <div className='form_container1'>
