@@ -1,7 +1,7 @@
 /*
 This is a component for the navigation bar
 */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import AccountMenu from './AccountMenu';
 import { Button } from './Button';
@@ -9,6 +9,13 @@ import './css_files/Navbar.css';
 
 
 export default function NavBar(props) {
+    const [id, setID] = useState(null);
+    useEffect(()=>
+    {
+        const user_id = localStorage.getItem("user_id")
+        setID(user_id);
+        console.log(user_id);
+    })
 
   
     return (
@@ -32,9 +39,8 @@ export default function NavBar(props) {
                             Search
                         </Link>
                     </li>
-
                 </ul>
-                {!props.loggedIn?
+                {id === null || id === 'null'?
                 <Button buttonStyle='btn--outline' link='login'>Login</Button>:
                 <AccountMenu/>
                 }

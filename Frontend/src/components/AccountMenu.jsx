@@ -49,6 +49,7 @@ export default function AccountMenu() {
         <MenuItem onClick={handleClose}>BookMarked Recipes</MenuItem>
         <MenuItem onClick={()=>{
           localStorage.setItem('user_id',null);
+          window.location.reload(false);
           handleClose();}}>Logout</MenuItem>
       </Menu>
     </div>
