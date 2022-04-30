@@ -29,7 +29,7 @@ export default function NavBar(props) {
                     </li>
                     <li className='nav-item'>
                         <Link to='/test' className='nav-links'>
-                            TestAPI
+                            Search
                         </Link>
                     </li>
 
