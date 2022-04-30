@@ -68,7 +68,7 @@ export default function FilterIngredientsSearch(props) {
     
 
   return (
-    <div className='form_container'>
+    <div className='filter_ingredient_container'>
 
     <h1>Ingredients included in search</h1>
     <List       sx={{

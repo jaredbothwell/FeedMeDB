@@ -1,0 +1,11 @@
+.Card-Container
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.tooltip {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 1;
+}
