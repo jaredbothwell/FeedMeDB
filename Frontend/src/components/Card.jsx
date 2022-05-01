@@ -35,14 +35,14 @@ export default function BasicCard(props) {
           </Backdrop>
         <CardActionArea sx={{ minWidth: 275, maxWidth: 275, maxHeight:250, minHeight:250}} onClick={()=>setShowRecipe(true)}>
             <CardContent sx={{ minWidth: 275, maxWidth: 275, maxHeight:250, minHeight:250, padding:'2%'}} className='Card-Container'>
-            <Typography variant="h6" gutterBottom component="div">
+            <Typography style={{alignSelf: "center"}} variant="h6" gutterBottom component="div">
                 {recipe_data.name}
             </Typography>
             <div>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" >
                 Directions:
             </Typography>
-              <Typography    sx={{
+              <Typography sx={{
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       display: '-webkit-box',
@@ -55,7 +55,7 @@ export default function BasicCard(props) {
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                 Ingredients:
             </Typography>
-            <div style={{ overflow: "auto", maxHeight: 105}}>
+            <div style={{ overflow: "auto", maxHeight: 105}} id="style-1">
               {
                 recipe_data.ingredients.map((ingredient) => (<Chip key={ingredient.id} style={{margin: 2}} label={ingredient.name} color="info" />))
               }

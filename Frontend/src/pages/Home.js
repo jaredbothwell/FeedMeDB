@@ -92,7 +92,7 @@ export default function Home() {
             <FilterIngredientsSearch SendIngredientsToHomePage={closeFilter}/>
         </Backdrop>
 
-    <section className='home--search'>
+    <section className='home--search' >
       <div className='container'>
         <div className='row justify-content-center'>
           <h1 style={{marginTop: '20px'}}  className='label'>Look up a recipe</h1>
