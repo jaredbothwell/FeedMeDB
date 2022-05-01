@@ -9,9 +9,11 @@ export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
     
     const [recipe,setRecipe] = useState(null);
     const [userName,setUserName] = useState(null);
+    const [id, setUserID] = useState(null);
 
     useEffect(()=>
     {
+        setUserID(localStorage.getItem("user_id"))
         if(isClicked)
         {
             fetch(
@@ -119,21 +121,26 @@ export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
 
         }}
         />
-                    <Button sx={{ marginBottom: 1}}  variant="outlined" startIcon={<BookmarkBorderIcon />}>
-        Save
-      </Button>
-            <div className="row">
-                <div style={{padding: 0}} class="col-sm d-flex justify-content-end">
-                    
-                    <Typography sx={{ fontStyle: 'italic' }} className='Display_Recipe_Text'>
-                        Leave a rating?: 
-                    </Typography>
-                </div>
-                <div style={{padding: 0}} class="col-sm d-flex justify-content-start">
-                    <Rating name="no-value" value={null}
-        sx={{color:"#1c93d4"}}/>
-                </div>
-            </div>
+        {
+            id === null || id === 'null'?
+            <Typography sx={{ fontStyle: 'italic' }} className='Display_Recipe_Text'>Login to leave a review or save this recipe to your collection</Typography>:
+            <>    
+            <Button sx={{ marginBottom: 1}}  variant="outlined" startIcon={<BookmarkBorderIcon />}>
+            Save
+          </Button>
+                <div className="row">
+                    <div style={{padding: 0}} class="col-sm d-flex justify-content-end">
+                        <Typography sx={{ fontStyle: 'italic' }} className='Display_Recipe_Text'>
+                            Leave a rating?: 
+                        </Typography>
+                    </div>
+                    <div style={{padding: 0}} class="col-sm d-flex justify-content-start">
+                        <Rating name="no-value" value={null}
+            sx={{color:"#1c93d4"}}/>
+                    </div>
+                </div></>
+        }
+
             <Fab sx={{width:120, backgroundColor: 'gray', alignSelf: 'center', marginTop: 2}} onClick={handleClose}  variant="extended" color="primary" aria-label="add">
                 Close
         </Fab>
