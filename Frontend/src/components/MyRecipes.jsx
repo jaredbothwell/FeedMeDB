@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Backdrop, Fab, IconButton } from '@mui/material';
+import { Backdrop, Fab, IconButton, Typography } from '@mui/material';
 import CreateRecipeForm from './CreateRecipeForm';
 import EditRecipeForm from './EditRecipeForm';
 
@@ -53,9 +53,9 @@ export default function MyRecipes({closeForm}) {
         open={recipeToEdit !== null}>
           <EditRecipeForm key={uniqueKey} closeHandler={()=>{setRecipeToEdit(null); incrementKey(uniqueKey+1);}} recipeData={recipeToEdit}/>
       </Backdrop>
-        <h1>
+      <Typography gutterBottom variant="h4" className='Display_Recipe_Text'>
             My Recipes
-        </h1>
+        </Typography>
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>

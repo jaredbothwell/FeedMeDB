@@ -1,0 +1,20 @@
+.home--recipes
+{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.home--search
+{
+  margin-bottom: 5%;
+}
+
+.label
+{
+  text-align: center;
+  font-family: 'PT Sans', sans-serif;
+  color: white;
+}
+

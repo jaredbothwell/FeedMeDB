@@ -35,7 +35,7 @@ export default function NavBar(props) {
                         </Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to='/test' className='nav-links'>
+                        <Link to='/search' className='nav-links'>
                             Search
                         </Link>
                     </li>
