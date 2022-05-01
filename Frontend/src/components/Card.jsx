@@ -1,12 +1,12 @@
-import * as React from 'react';
+import React,{useState, useEffect} from 'react'
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, Chip } from '@mui/material';
+import { Backdrop, CardActionArea, Chip } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import "./css_files/Card.css"
+import DisplayRecipe from './DisplayRecipe';
 
 const bull = (
   <Box
@@ -22,34 +22,44 @@ export default function BasicCard(props) {
   //TODO - bring data in here json
   const recipe_data = props.data
 
-  function handleCardClick()
-  {
-    navigate("/recipe/?recipeId=" + recipe_data.recipeID + "&name=" + recipe_data.name);
-  }
+  const [showRecipe,setShowRecipe] = useState(false);
+
 
 
   return (
-    <Card sx={{ minWidth: 275, maxWidth: 200, maxHeight:300, margin: 2 }}>
-        <CardActionArea onClick={handleCardClick}>
-            <CardContent>
-            <Typography variant="h6" gutterBottom component="div">
+    <Card sx={{ minWidth: 275, maxWidth: 275, maxHeight:250, minHeight:250, margin: 2 }}>
+              <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={showRecipe}>
+            <DisplayRecipe recipeid={recipe_data.id} isClicked={showRecipe} handleClose={()=>setShowRecipe(false)}/>
+          </Backdrop>
+        <CardActionArea sx={{ minWidth: 275, maxWidth: 275, maxHeight:250, minHeight:250}} onClick={()=>setShowRecipe(true)}>
+            <CardContent sx={{ minWidth: 275, maxWidth: 275, maxHeight:250, minHeight:250, padding:'2%'}} className='Card-Container'>
+            <Typography style={{alignSelf: "center"}} variant="h6" gutterBottom component="div">
                 {recipe_data.name}
             </Typography>
-            <div style={{ overflow: "auto", maxHeight: 75}}>
-              <Typography variant="body1" color="text">
+            <div>
+            <Typography sx={{ fontSize: 14 }} color="text.secondary" >
+                Directions:
+            </Typography>
+              <Typography sx={{
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      display: '-webkit-box',
+      WebkitLineClamp: '2',
+      WebkitBoxOrient: 'vertical',
+   }} variant="body1" color="text">
                 {recipe_data.directions}
               </Typography>
             </div>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Creator: feedmeDB
+                Ingredients:
             </Typography>
-
-            <div style={{ overflow: "auto", maxHeight: 75}}>
+            <div style={{ overflow: "auto", maxHeight: 105}} id="style-1">
               {
-                recipe_data.ingredients.map((ingredient) => (<Chip style={{margin: 2}} label={ingredient.name} color="info" />))
+                recipe_data.ingredients.map((ingredient) => (<Chip key={ingredient.id} style={{margin: 2}} label={ingredient.name} color="info" />))
               }
             </div>
-
             </CardContent>
         </CardActionArea>
     </Card>

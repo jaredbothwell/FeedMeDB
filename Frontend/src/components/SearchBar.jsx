@@ -1,7 +1,8 @@
 import { TextField } from '@mui/material';
 import { withStyles } from '@material-ui/core/styles';
+import { useEffect, useState } from 'react';
 
-export default withStyles({
+const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
       color: '#e1cfa9',
@@ -25,3 +26,23 @@ export default withStyles({
     },
   },
 })(TextField);
+
+
+export default function SearchBar({sendQuery}) {
+
+  const [text,setText] = useState("");
+
+  const onChangeHandler = (e) =>
+  {
+
+  }
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => sendQuery(text), 750);
+    return () => clearTimeout(timeOutId);
+  }, [text]);
+
+  return (
+    <CssTextField onChange={(e) => setText(e.target.value)} label="Search" sx={{ input: { color: 'white' } }}/>
+  )
+}

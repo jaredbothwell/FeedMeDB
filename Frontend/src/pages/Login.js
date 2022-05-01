@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {LoginForm} from '../components/LoginForm'
 import AnimatedPage from "./AnimatedPage";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { CreateAccountForm } from '../components/CreateAccountForm';
 
 
@@ -10,13 +10,20 @@ export default function Login(props) {
   const [loggedIn,setLoggedIn] = useState(false);
   const [newAccount,setNewAccount] = useState(false);
   const [wrong_login_flag,setWrongLogin] = useState(false);
+  const navigate = useNavigate();
+
+
+
+  
   function handleLogin(input)
   {
     //console.log(input)
     if(input[0].id != null)
     {
       props.userLoggedIn(input);
+      localStorage.setItem('user_id',input[0].id);
       setLoggedIn(true);
+      navigate("/");
     }
     else
     {

@@ -1,13 +1,21 @@
 /*
 This is a component for the navigation bar
 */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
+import AccountMenu from './AccountMenu';
 import { Button } from './Button';
 import './css_files/Navbar.css';
 
 
 export default function NavBar(props) {
+    const [id, setID] = useState(null);
+    useEffect(()=>
+    {
+        const user_id = localStorage.getItem("user_id")
+        setID(user_id);
+        console.log(user_id);
+    })
 
   
     return (
@@ -27,20 +35,14 @@ export default function NavBar(props) {
                         </Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to='/test' className='nav-links'>
-                            TestAPI
+                        <Link to='/search' className='nav-links'>
+                            Search
                         </Link>
                     </li>
-                    {props.loggedIn&&
-                    <li className='nav-item'>
-                        <Link to='/account' className='nav-links'>
-                            Account
-                        </Link>
-                    </li>
-                    }
                 </ul>
-                {!props.loggedIn&&
-                <Button buttonStyle='btn--outline' link='login'>Login</Button>
+                {id === null || id === 'null'?
+                <Button buttonStyle='btn--outline' link='login'>Login</Button>:
+                <AccountMenu/>
                 }
             </div>
         </nav>

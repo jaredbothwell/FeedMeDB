@@ -1,13 +1,12 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { AnimatePresence } from "framer-motion";
 import {Route, Routes, useLocation} from 'react-router'
 import Navbar from './components/Navbar';
 import './App.css';
 import Test from "./pages/Test";
-import Home from "./pages/Home";
+import Search from "./pages/Search";
 import Login from "./pages/Login";
-import Account from "./pages/Account";
-import Recipe from "./pages/Recipe";
+import Home from "./pages/Home";
 
 export default function App(){
 
@@ -18,9 +17,23 @@ export default function App(){
   {
     SetUserData(loginStatus[0]);
     SetLoggedIn(loginStatus[1]);
-
-    console.log(user);
   }
+
+  useEffect(()=>
+  {
+    const user_id = localStorage.getItem('user_id')
+    console.log(user_id)
+    if(user_id === 'null')
+    {
+      SetLoggedIn(false);
+    }
+    else
+    {
+      SetLoggedIn(true);
+    }
+
+    console.log(loggedIn);
+  })
 
   const location = useLocation();
   return (
@@ -30,10 +43,9 @@ export default function App(){
         <AnimatePresence exitBeforeEnter>
           <Routes key={location.pathname} location={location}>
             <Route path='/login' exact element={<Login userLoggedIn={loginStatus => userLoggedIn(loginStatus)}/>}/>
+            <Route path='/Search' exact element={<Search/>}/>
             <Route path='/' exact element={<Home/>}/>
             <Route path='/test' exact element={<Test/>}/>
-            <Route path='/account' exact element={<Account user={user}/>}/>
-            <Route path='/recipe' exact element={<Recipe/>}/>
 
           </Routes>
           </AnimatePresence>

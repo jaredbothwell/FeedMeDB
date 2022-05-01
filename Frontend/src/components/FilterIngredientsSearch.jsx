@@ -68,7 +68,7 @@ export default function FilterIngredientsSearch(props) {
     
 
   return (
-    <div className='form_container'>
+    <div className='filter_ingredient_container'>
 
     <h1>Ingredients included in search</h1>
     <List       sx={{
@@ -83,7 +83,7 @@ export default function FilterIngredientsSearch(props) {
       >
           {
             queryIngredients.map((ingredient) => (
-                <ListItem key={ingredient.IngredientID} component="div" disablePadding>
+            <ListItem key={ingredient.id} component="div" disablePadding>
                     <ListItemButton onClick={() => removeFromSearchFilter(ingredient)}>
                         <ListItemText primary={ingredient.name} primaryTypographyProps={{ style: {color:'black'} }} />
                     </ListItemButton>
@@ -123,7 +123,7 @@ export default function FilterIngredientsSearch(props) {
       >
                   {
             filteredIngredients.map((ingredient) => (
-                <ListItem key={ingredient.IngredientID} component="div" disablePadding>
+                <ListItem key={ingredient.id} component="div" disablePadding>
                 <ListItemButton onClick={() => addToSearchFilter(ingredient)}>
                 <ListItemText primary={ingredient.name} primaryTypographyProps={{ style: {color:'black'} }} />
                 </ListItemButton>

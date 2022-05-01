@@ -1,17 +1,34 @@
-.form_container
+.form_container2
 {
     display: flex;
     flex-direction: column;
     
     background-color: white;
     border-radius: 40px;
-    padding: 5%;
+    padding: 2%;
+}
+
+.filter_ingredient_container
+{
+    display: flex;
+    flex-direction: column;
+    
+    background-color: white;
+    border-radius: 40px;
+    padding: 2%;
 }
 
 .input_field
 {
     margin-top: 1em;
     align-self: center;
+    color:black;
+}
+
+.vertical_row
+{
+    display: flex;
+    flex-direction: row;
 }
 
 h1
