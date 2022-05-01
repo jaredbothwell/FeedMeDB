@@ -11,15 +11,11 @@ public class UserRepository : BaseRepository
 {
     public IEnumerable<UserModel> GetAllUsers()
     {
-        // TODO: sql
-        String sql = "select * from Data.[User] U where U.RemovedOn is null";
         using (var connection = new SqlConnection(this.connectionString))
         {
-            using (var command = new SqlCommand(sql, connection))
+            connection.Open();
+            using (var command = new SqlCommand("Data.GetAllUsers", connection))
             {
-                //command.CommandType = CommandType.StoredProcedure;
-                //command.Parameters.AddWithValue();
-                connection.Open();
                 using (var reader = command.ExecuteReader())
                     return TranslateUsers(reader);
             }
@@ -28,14 +24,13 @@ public class UserRepository : BaseRepository
 
     public UserModel? GetUserByName(string userName)
     {
-        // TODO: sql
-        String sql = "select U.UserID, U.UserName, U.PasswordHash, U.CreatedOn, U.ModifiedOn, U.RemovedOn from Data.[User] U where U.UserName = @u";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand(sql, connection))
+            using (SqlCommand command = new SqlCommand("Data.GetUserByName", connection))
             {
-                command.Parameters.AddWithValue("@u", userName);
+                command.Parameters.AddWithValue("@userName", userName);
+                command.CommandType = CommandType.StoredProcedure;
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
@@ -48,13 +43,13 @@ public class UserRepository : BaseRepository
 
     public UserModel? GetUserByID(int id)
     {
-        String sql = "select U.UserID, U.UserName, U.PasswordHash, U.CreatedOn, U.ModifiedOn, U.RemovedOn from Data.[User] U where U.UserID = @id";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand(sql, connection))
+            using (SqlCommand command = new SqlCommand("Data.GetUserByID", connection))
             {
-                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@UserID", id);
+                command.CommandType = CommandType.StoredProcedure;
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
@@ -69,20 +64,22 @@ public class UserRepository : BaseRepository
     {
         if (GetUserByName(userName) is not null)
             return null; // User already exists. Don't create new account
-        String sql = "insert into Data.[User] (UserName, PasswordHash) values (@name, @pass)";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand(sql, connection))
+            using (SqlCommand command = new SqlCommand("Data.CreateUser", connection))
             {
-                command.Parameters.AddWithValue("@name", userName);
-                command.Parameters.AddWithValue("@pass", passwordHash);
-                int numrows = command.ExecuteNonQuery();
-                if (numrows == 1)
-                    return GetUserByName(userName);
-                return null; // user was not inserted correctly
+                command.Parameters.AddWithValue("@userName", userName);
+                command.Parameters.AddWithValue("@passwordHash", passwordHash);
+                command.CommandType = CommandType.StoredProcedure;
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                        return TranslateUser(reader);
+                }
             }
         }
+        return null; // user was not inserted correctly
     }
 
     public bool EditUserName(int userID, string newUserName)
@@ -112,13 +109,13 @@ public class UserRepository : BaseRepository
         UserModel? user = GetUserByID(userID);
         if (user is null)
             return false; // user does not exist
-        String sql = "update Data.[User] set RemovedOn = SYSDATETIMEOFFSET() where UserID = @userID";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand(sql, connection))
+            using (SqlCommand command = new SqlCommand("Data.RemoveUser", connection))
             {
-                command.Parameters.AddWithValue("@userID", userID);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserID", userID);
                 int numrows = command.ExecuteNonQuery();
                 if (numrows == 1)
                     return true;
