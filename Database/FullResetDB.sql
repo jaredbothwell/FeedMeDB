@@ -11,8 +11,8 @@ GO
 CREATE TABLE Data.[User]
 (
     UserID int primary key identity(1,1),
-    UserName varchar(20) not null unique,
-    PasswordHash varchar(256) not null,
+    UserName Nvarchar(20) not null unique,
+    PasswordHash Nvarchar(256) not null,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset,
@@ -26,7 +26,7 @@ GO
 CREATE TABLE Data.MeasurementUnit
 (
     MeasurementUnitID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    [Name] VARCHAR(32) NOT NULL UNIQUE,
+    [Name] NVARCHAR(32) NOT NULL UNIQUE,
 )
 
 GO
@@ -44,10 +44,10 @@ CREATE TABLE Data.Recipe
 (
     RecipeID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     CreatedUserID INT FOREIGN KEY REFERENCES Data.[User](UserID),
-    [Name] VARCHAR(512) NOT NULL,
+    [Name] NVARCHAR(128) NOT NULL,
     PrepTime INT,
     Difficulty INT NOT NULL,
-    Directions VARCHAR(2048) NOT NULL,
+    Directions NVARCHAR(2048) NOT NULL,
     CreatedOn datetimeoffset default SYSDATETIMEOFFSET(),
     ModifiedOn datetimeoffset,
     RemovedOn datetimeoffset

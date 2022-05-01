@@ -1,113 +1,86 @@
-import React,{useState, useEffect} from 'react'
+import React from 'react'
 import AnimatedPage from './AnimatedPage'
-import './css_files/Home.css'
-import RecipeCard from '../components/Card' 
-import { Backdrop, CircularProgress } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import FilterIngredientsSearch from '../components/FilterIngredientsSearch';
-import SearchBar from '../components/SearchBar';
-import DisplayRecipe from '../components/DisplayRecipe';
+import "./css_files/Home.css"
+import Grid from '@mui/material/Grid';
 
 export default function Home() {
-  const [filterBackdrop,setFilterBackdrop] = useState(false);
+
+
   
-  const [recipes, setRecipes] = useState([]);
-
-  const [ingredientsToFilterBy,setIngredientsFilter] = useState('');
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    var lookUpString = '';
-    if(query === '')
-    {
-      lookUpString = '%00'
-    }
-    else
-    {
-      lookUpString = query
-    }
-
-    if(ingredientsToFilterBy !== '')
-    {
-
-      fetch(
-        "http://localhost:8000/api/recipes/search?ingredients=" + ingredientsToFilterBy + "&name=" + lookUpString )
-        .then((res) => res.json())
-        .then((json) => {
-          setRecipes(json);
-        })
-    }
-    else if(query === '')
-    {
-
-      fetch(
-        "http://localhost:8000/api/recipes")
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json[0]);
-          setRecipes(json);
-        })
-    }
-    else
-    {
-
-      fetch(
-        "http://localhost:8000/api/recipes/query/" + query)
-        .then((res) => res.json())
-        .then((json) => {
-          setRecipes(json);
-        })
-    }
-  }, [query,ingredientsToFilterBy]);
-
-  //send filter ingredients to parent
-  const closeFilter = (filteredIngredients) => 
-  {
-    setIngredientsFilter(filteredIngredients)
-    setFilterBackdrop(false);
-  }
-
   return (
-    <AnimatedPage>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={filterBackdrop}>
-            <FilterIngredientsSearch SendIngredientsToHomePage={closeFilter}/>
-        </Backdrop>
+      <AnimatedPage>
+    <div id="parallax-world-of-ugg">
 
-    <section className='home--search' >
-      <div className='container'>
-        <div className='row justify-content-center'>
-          <h1 style={{marginTop: '20px'}}  className='label'>Look up a recipe</h1>
-        </div>
-        <div style={{marginTop: '20px'}} className='row justify-content-center'>
-          <div>
-            <SearchBar
-              sendQuery={(str)=>{setQuery(str)}}
-              />
-            <IconButton onClick={()=>setFilterBackdrop(true)}>
-              <FilterAltIcon fontSize='large' sx={{ color: 'white'}}/>
-            </IconButton>
-          </div>
-        </div >
-        <div className='row justify-content-center'>
-        </div>
-       </div>
-    </section>
 
-    <section>
-      <div className='home--recipes' delay={100}>
-        {recipes.length > 0?
-          recipes.map((recipe) => (
-          <RecipeCard data={recipe} key={recipe.id}/>
-          ))
-          :
-          <CircularProgress size="5rem"/> 
-        }
+
+  <section>
+    <div style={{marginTop: '80px'}}>
+      <h2>Home</h2>
+    </div>
+  </section>
+
+  <section>
+    <div class="block">
+      <div style={{display: "flex", flexDirection:"column"}}>
+
+      <h1 style={{alignSelf:"center", marginTop: "10px"}}>About</h1>
+        <p class="line-break margin-top-10"></p>
+      <p style={{alignSelf:"center"}} class="margin-top-10">
+          FeedMeDB is an opensource cookbook website where users can share their own recipes and loop up other recipes from the community. The project was developed for a Database System Concept class.
+        </p>
+
+        <h1 style={{alignSelf:"center", marginTop: "50px"}}>Share your Recipes</h1>
+        <p class="line-break margin-top-10"></p>
+        <p style={{alignSelf:"center"}} class="margin-top-10">
+          Share recipes that you love and see how other users rate your recipes
+        </p>
+
+        <h1 style={{alignSelf:"center", marginTop: "50px"}}>Find your next meal</h1>
+        <p class="line-break margin-top-10"></p>
+        <p style={{alignSelf:"center"}} class="margin-top-10">
+          Look up your next meal based off a list of ingredients or keywords
+        </p>
+    
       </div>
+</div>
+  </section>
 
-    </section>
-    </AnimatedPage>
+  <section>
+    <div class="parallax-two">
+      <h2>Activity</h2>
+    </div>
+  </section>
+
+  <section>
+    <div class="block">
+      <div style={{display: "flex", flexDirection:"column"}}>
+        <Grid style={{alignSelf:"center", marginTop: "50px"}} container spacing={2}>
+        <Grid item xs={4}>
+        <div style={{display: "flex", flexDirection:"column"}}>
+          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Top Users</h1>
+          <p class="line-break margin-top-10"></p>
+        </div>
+          </Grid>
+          <Grid item xs={4}>
+          <div style={{display: "flex", flexDirection:"column"}}>
+          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Top Recipes</h1>
+          <p class="line-break margin-top-10"></p>
+        </div>
+          </Grid>
+          <Grid item xs={4}>
+          <div style={{display: "flex", flexDirection:"column"}}>
+          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Most Active Users</h1>
+          <p class="line-break margin-top-10"></p>
+        </div>
+          </Grid>
+        </Grid>
+      </div>
+    </div>
+  </section>
+
+
+
+</div>
+</AnimatedPage>
   )
 }

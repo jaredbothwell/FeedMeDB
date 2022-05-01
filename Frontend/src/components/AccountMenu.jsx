@@ -4,6 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Avatar, Backdrop, IconButton } from '@mui/material';
 import MyRecipes from './MyRecipes';
+import SavedRecipes from './SavedRecipes';
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -24,6 +25,11 @@ export default function AccountMenu() {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={myRecipes}>
           <MyRecipes closeForm={()=>{setMyRecipes(false)}}/>
+        </Backdrop>
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={savedRecipes}>
+          <SavedRecipes closeForm={()=>{enableSaved(false)}}/>
         </Backdrop>
 
       <IconButton
@@ -46,7 +52,7 @@ export default function AccountMenu() {
       >
 
         <MenuItem onClick={()=>{setMyRecipes(true);handleClose();}}>My Recipes</MenuItem>
-        <MenuItem onClick={handleClose}>BookMarked Recipes</MenuItem>
+        <MenuItem onClick={()=>{handleClose(); enableSaved(true);}}>BookMarked Recipes</MenuItem>
         <MenuItem onClick={()=>{
           localStorage.setItem('user_id',null);
           window.location.reload(false);
