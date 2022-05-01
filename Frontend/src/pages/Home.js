@@ -18,21 +18,6 @@ export default function Home() {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    const timeOutId = setTimeout(() => sendQuery(), 500);
-    return () => clearTimeout(timeOutId);
-  }, [query,ingredientsToFilterBy]);
-
-  //send filter ingredients to parent
-  const closeFilter = (filteredIngredients) => 
-  {
-    setIngredientsFilter(filteredIngredients)
-    setFilterBackdrop(false);
-  }
-
-
-
-  const sendQuery = () =>
-  {
     var lookUpString = '';
     if(query === '')
     {
@@ -45,6 +30,7 @@ export default function Home() {
 
     if(ingredientsToFilterBy !== '')
     {
+
       fetch(
         "http://localhost:8000/api/recipes/search?ingredients=" + ingredientsToFilterBy + "&name=" + lookUpString )
         .then((res) => res.json())
@@ -54,6 +40,7 @@ export default function Home() {
     }
     else if(query === '')
     {
+
       fetch(
         "http://localhost:8000/api/recipes")
         .then((res) => res.json())
@@ -64,6 +51,7 @@ export default function Home() {
     }
     else
     {
+
       fetch(
         "http://localhost:8000/api/recipes/query/" + query)
         .then((res) => res.json())
@@ -71,18 +59,14 @@ export default function Home() {
           setRecipes(json);
         })
     }
-  }
+  }, [query,ingredientsToFilterBy]);
 
-  useEffect(()=>
+  //send filter ingredients to parent
+  const closeFilter = (filteredIngredients) => 
   {
-    fetch(
-      "http://localhost:8000/api/recipes")
-      .then((res) => res.json())
-      .then((json) => {
-        console.log('loading in home')
-        setRecipes(json);
-      })
-  }, [])
+    setIngredientsFilter(filteredIngredients)
+    setFilterBackdrop(false);
+  }
 
   return (
     <AnimatedPage>
@@ -100,10 +84,8 @@ export default function Home() {
         <div style={{marginTop: '20px'}} className='row justify-content-center'>
           <div>
             <SearchBar
-              inputProps={{ style: { color: "white" } }}
-              label='Search'
-              value={query}
-              onChange={event => setQuery(event.target.value)}/>
+              sendQuery={(str)=>{setQuery(str)}}
+              />
             <IconButton onClick={()=>setFilterBackdrop(true)}>
               <FilterAltIcon fontSize='large' sx={{ color: 'white'}}/>
             </IconButton>
