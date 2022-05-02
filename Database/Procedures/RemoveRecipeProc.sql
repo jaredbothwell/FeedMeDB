@@ -1,21 +1,11 @@
+-- This procedure removes a recipe by taking in the recipe's id and setting RemovedOn to the current system time
+-- This is a soft delete.
 CREATE OR ALTER PROCEDURE Data.RemoveRecipe
-    @RecipeName nvarchar(60), 
-    @UserName nvarchar(60)
+    @id int
 AS
 
 UPDATE Data.Recipe
 SET
 RemovedOn = SYSDATETIMEOFFSET()
-WHERE EXISTS (
-    SELECT R.RecipeID, U.UserID
-    FROM
-        (
-        VALUES
-            (@RecipeName, @UserName)
-        ) Derived([RecipeName], UserName)
-        INNER JOIN Data.Recipe R on R.Name = Derived.RecipeName
-        INNER JOIN Data.[User] U on U.UserName = Derived.UserName 
-)
-
-
+WHERE RecipeID = @id
 GO

@@ -1,3 +1,4 @@
+-- This procedure removes a recipe ingredient from the RecipeIngredient table. This is to disassociate the ingredient from a recipe.
 CREATE OR ALTER PROCEDURE Data.RemoveRecipeIngredient
 @ingredientID int,
 @recipeID int
@@ -13,7 +14,7 @@ WHERE RecipeID = @recipeID and IngredientID = @ingredientID
 END
 
 GO
-
+-- This procedure updates a recipe's information such as the name, prep time, difficulty, and instructions.
 CREATE OR ALTER PROCEDURE Data.UpdateRecipe
 @recipeID int,
 @recipeName NVARCHAR(64),
@@ -36,7 +37,7 @@ WHERE RecipeID = @recipeID
 END
 
 GO
-
+-- This procedure updates a recipe ingredient by changing its measurement unit and quantity.
 CREATE OR ALTER PROCEDURE Data.UpdateRecipeIngredient
 @recipeID int,
 @ingredientName VARCHAR(64),
@@ -84,3 +85,4 @@ WHEN MATCHED THEN
 
 
 END
+GO

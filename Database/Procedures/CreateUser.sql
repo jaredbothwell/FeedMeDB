@@ -1,3 +1,4 @@
+-- This procedure takes in a username and a password and creates a new user in the database. It returns the user's id.
 CREATE OR ALTER PROCEDURE Data.CreateUser
 @userName NVARCHAR(20),
 @passwordHash NVARCHAR(256)
@@ -14,3 +15,4 @@ WHERE U.UserName = @userName
     AND U.RemovedOn IS NULL
 
 END
+GO

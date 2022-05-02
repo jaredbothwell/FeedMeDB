@@ -33,25 +33,54 @@ SELECT I.IngredientID, @quantity, @unitID, @recipeID
 FROM DATA.Ingredient I WHERE I.Name = @ingredientName
 
 
-END 
+END
 GO
+-- This procedure takes in a username and a password and creates a new user in the database. It returns the user's id.
 CREATE OR ALTER PROCEDURE Data.CreateUser
-@username NVARCHAR(20),
+@userName NVARCHAR(20),
 @passwordHash NVARCHAR(256)
 AS
 
 BEGIN
 
 INSERT INTO Data.[User] (UserName, PasswordHash) 
-    VALUES (@username, @passwordHash)
+    VALUES (@userName, @passwordHash)
 
 SELECT U.UserID, U.UserName, U.PasswordHash, U.CreatedOn, U.ModifiedOn, U.RemovedOn 
 FROM Data.[User] U 
-WHERE U.UserName = @username
+WHERE U.UserName = @userName
     AND U.RemovedOn IS NULL
 
 END
 GO
+-- This procedure creates or updates a user rating or bookmark made by a specific user.
+CREATE OR ALTER PROCEDURE Data.CreateOrUpdateUserRecipe
+@UserID int,
+@RecipeID int,
+@IsBookmarked bit,
+@Rating int
+AS
+BEGIN
+
+WITH SourceCTE(UserID, RecipeID, IsBookmarked, Rating) AS
+(
+    SELECT @UserID, @RecipeID, @IsBookmarked, @Rating
+)
+MERGE Data.UserRecipe as UR
+USING SourceCTE as S 
+ON S.UserID = UR.UserID AND S.RecipeID = UR.RecipeID
+WHEN NOT MATCHED THEN
+INSERT (UserID, RecipeID, IsBookmarked, Rating)
+    VALUES (@UserID, @RecipeID, @IsBookmarked, @Rating) 
+WHEN MATCHED THEN 
+UPDATE SET
+    IsBookmarked = @IsBookmarked,
+    Rating = @Rating,
+    ModifiedOn = SYSDATETIMEOFFSET();
+
+END
+GO
+-- This procedure removes a recipe ingredient from the RecipeIngredient table. This is to disassociate the ingredient from a recipe.
 CREATE OR ALTER PROCEDURE Data.RemoveRecipeIngredient
 @ingredientID int,
 @recipeID int
@@ -67,7 +96,7 @@ WHERE RecipeID = @recipeID and IngredientID = @ingredientID
 END
 
 GO
-
+-- This procedure updates a recipe's information such as the name, prep time, difficulty, and instructions.
 CREATE OR ALTER PROCEDURE Data.UpdateRecipe
 @recipeID int,
 @recipeName NVARCHAR(64),
@@ -90,7 +119,7 @@ WHERE RecipeID = @recipeID
 END
 
 GO
-
+-- This procedure updates a recipe ingredient by changing its measurement unit and quantity.
 CREATE OR ALTER PROCEDURE Data.UpdateRecipeIngredient
 @recipeID int,
 @ingredientName VARCHAR(64),
@@ -104,18 +133,17 @@ SELECT @ingredientName
 WHERE NOT EXISTS (
     SELECT * FROM Data.Ingredient I WHERE  I.Name = @ingredientName
 )
+declare @ingredientID int
+select @ingredientID = I.IngredientID
+from Data.Ingredient I
+where I.Name = @ingredientName
 
 UPDATE Data.RecipeIngredient
 SET
     ModifiedOn = SYSDATETIMEOFFSET(),
     MeasurementUnitID = @unitID,
     MeasurementQuantity = @quantity
-WHERE EXISTS (
-    SELECT *
-    FROM Data.RecipeIngredient RI
-        INNER JOIN Data.Ingredient I on I.IngredientID = RI.IngredientID
-    WHERE  I.Name = @ingredientName AND RI.RecipeID = @recipeID
-);
+WHERE IngredientID = @ingredientID and RecipeID = @recipeID;
 
 WITH SourceCte(IngredientID, Quantity, UnitID, RecipeID) AS 
 (
@@ -140,6 +168,7 @@ WHEN MATCHED THEN
 
 END
 GO
+-- This procedure updates the user name for a specific user in our database.
 CREATE OR ALTER PROCEDURE Data.EditUser 
     @UserID INT,
     @NewUserName NVARCHAR(128)
@@ -150,7 +179,7 @@ ModifiedOn = SYSDATETIMEOFFSET(),
 UserName = @NewUserName
 WHERE UserID = @UserID
 GO
-
+-- This procedure gets all ingredients currently active in the database.
 CREATE OR ALTER PROCEDURE Data.GetAllIngredients
 AS
 SELECT 
@@ -158,7 +187,9 @@ SELECT
     I.Name as IngredientName,
     I.CreatedOn
 FROM Data.Ingredient I
+ORDER BY I.Name ASC
 GO
+-- This procedure fetches all active recipes in the database. It is set to page 50 results at a time.
 CREATE OR ALTER PROCEDURE Data.GetAllRecipes
 @page int
 AS
@@ -173,51 +204,100 @@ FETCH NEXT 50 ROWS ONLY
 
 END
 GO
+-- This procedure gets all users currently active in the database.
 CREATE OR ALTER PROCEDURE Data.GetAllUsers
 AS
 SELECT * 
 FROM Data.[User] U
 WHERE U.RemovedOn is NULL
 GO
-
-CREATE OR ALTER PROCEDURE Data.GetAvgRatingByRecipeID
-@RecipeID INT
+-- This procedure gets the top recipes by finding those with the highest average rating. 
+-- It fetches the top 10 specifically and is one of our aggregating queries.
+CREATE OR ALTER PROCEDURE Data.GetTopRecipes
 AS
-SELECT R.RecipeID, R.Name, AVG(Rating) as AverageRating
+BEGIN
+SELECT R.RecipeID, R.Name, AVG(Rating) as AverageRating, U.UserName
 FROM Data.UserRecipe UR
 INNER JOIN Data.Recipe R ON R.RecipeID = UR.RecipeID
-WHERE UR.RecipeID = @RecipeID
-GROUP BY R.RecipeID, R.Name
+INNER JOIN Data.[User] U on R.CreatedUserID = U.UserID
+GROUP BY R.RecipeID, R.Name, U.UserName
+ORDER BY AverageRating DESC, R.Name ASC
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
+
+END
+
 GO
-CREATE OR ALTER PROCEDURE Data.GetAvgRatingsByUserID
-@UserID INT
+-- This procedure gets the average rating by a recipe ID. This is an aggregating query and groups by the recipeID, recipe name, and username.
+CREATE OR ALTER PROCEDURE Data.GetAvgRatingByRecipeID
+@RecipeID int
 AS
-SELECT R.CreatedUserID,R.Name,AVG(Rating) as AverageRating, COUNT(Rating) as TotalRatings
+BEGIN
+SELECT R.RecipeID, R.Name, AVG(Rating) as AverageRating, U.UserName
 FROM Data.UserRecipe UR
-INNER JOIN Data.Recipe R on UR.RecipeID = R.RecipeID
-WHERE R.CreatedUserID = @UserID AND UR.Rating IS NOT NULL
-GROUP BY R.CreatedUserID, R.Name
-HAVING COUNT(R.RecipeID) >= 5
+    INNER JOIN Data.Recipe R ON R.RecipeID = UR.RecipeID
+    INNER JOIN Data.[User] U on R.CreatedUserID = U.UserID
+WHERE UR.RecipeID = @RecipeID
+GROUP BY R.RecipeID, R.Name, U.UserName
+
+END
 GO
+-- This procedure gets the average ratings by a created user ID. This is an aggregating query. It groups by the created userID and their username.
+CREATE OR ALTER PROCEDURE Data.GetAvgRatingsByUserID AS
+BEGIN
+SELECT U.UserName, AVG(Rating) as AverageRating, COUNT(Rating) as TotalRatings
+FROM Data.UserRecipe UR
+    INNER JOIN Data.Recipe R on UR.RecipeID = R.RecipeID
+    INNER JOIN Data.[User] U on U.UserID = R.CreatedUserID
+WHERE UR.Rating IS NOT NULL
+GROUP BY R.CreatedUserID, U.UserName
+HAVING COUNT(R.RecipeID) >= 3
+END
+GO
+-- This query is one of our aggregating queries that gets the most active users by their total interactions (bookmarks and ratings).
+CREATE OR ALTER PROCEDURE Data.GetMostActiveUsers
+AS
+BEGIN
+
+SELECT U.UserName, COUNT(*) as CountRecipesInteractedWith
+FROM Data.UserRecipe UR
+    INNER JOIN Data.[User] U on U.UserID = UR.UserID
+WHERE UR.RemovedOn is NULL
+    AND U.RemovedOn is NULL
+GROUP BY U.UserName
+ORDER BY CountRecipesInteractedWith DESC
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
+
+END
+GO
+-- This procedure gets all non-removed recipes by a specific UserID who created them.
 CREATE OR ALTER PROCEDURE Data.GetRecipeByCreatedUserID
 @UserID INT
 AS
+BEGIN
 SELECT R.RecipeID, R.CreatedUserID, R.Name, R.PrepTime, R.Difficulty, R.Directions, R.CreatedOn, R.ModifiedOn, R.RemovedOn
 FROM Data.Recipe R
 WHERE R.CreatedUserID = @UserID AND R.RemovedOn IS NULL
+END
 GO
+-- This procedure gets recipes specifically by content typed into the search box on our website. 
+-- It is called when there is not a list of preferred ingredients.
 CREATE OR ALTER PROCEDURE Data.GetRecipeByNameQuery
 @UserQuery NVARCHAR(256)
 AS
+BEGIN
 SELECT *
 FROM Data.Recipe R
 WHERE R.Name LIKE '%' + @UserQuery + '%'
 ORDER BY R.Name ASC
+END
 GO
+-- This procedure gets a recipe by a query on the search page as well as a list of ingredients. 
+-- It parses both the list of ingredients and keywords from the query to produce results related to them.
 CREATE OR ALTER PROCEDURE GetRecipeByQueryAndIngredient
 @IngredientList NVARCHAR(2048),
 @UserQuery NVARCHAR(256)
 AS
+BEGIN
 SELECT R.RecipeID, R.Name, R.PrepTime, R.Directions, R.Difficulty, R.CreatedUserID, R.CreatedOn, R.ModifiedOn, R.RemovedOn 
 FROM Data.Recipe R
     INNER JOIN
@@ -239,7 +319,9 @@ FROM Data.Recipe R
     ) AS D (RecipeID) on D.RecipeID = R.RecipeID
 WHERE R.Name LIKE '%' + @UserQuery + '%'
 ORDER BY R.Name ASC
+END
 GO
+-- This procedure gets the ingredients related to a recipe in the Data.RecipeIngredient table.
 CREATE OR ALTER PROCEDURE Data.GetRecipeIngredients
 @RecipeID int
 AS
@@ -259,7 +341,8 @@ BEGIN
 
 END
 GO
-CREATE OR ALTER PROCEDURE Data.GetSavedRecipes
+-- This query gets the recipes that a specific user has bookmarked.
+CREATE OR ALTER PROCEDURE Data.GetBookmarkedRecipes
 @UserID INT
 AS
 BEGIN
@@ -268,19 +351,20 @@ SELECT
     UR.UserRecipeID,
     UR.UserID,
     UR.RecipeID,
-    UR.IsBookmarked,
     UR.Rating,
+    UR.IsBookmarked,
     UR.CreatedOn,
     UR.ModifiedOn,
     UR.RemovedOn
 FROM Data.UserRecipe UR
     INNER JOIN Data.Recipe R on R.RecipeID = UR.RecipeID
-WHERE UR.UserID = @UserID and R.RemovedOn IS NULL and UR.RemovedOn IS NULL
+WHERE UR.UserID = @UserID 
+    and R.RemovedOn IS NULL 
+    and UR.RemovedOn IS NULL
 ORDER BY R.CreatedOn ASC
-
-
 END
 GO
+-- This procedure gets the total bookmarks for a recipe created by a specific user. This is an aggregating query. It groups by the created userID.
 CREATE OR ALTER PROCEDURE Data.GetTotalBookmarksByCreatedUser
 @UserID INT
 AS
@@ -290,7 +374,7 @@ INNER JOIN Data.Recipe R on R.RecipeID = UR.RecipeID
 WHERE R.CreatedUserID = @UserID AND UR.IsBookmarked = 1
 GROUP BY R.CreatedUserID
 GO
-
+-- This procedure returns the total bookmarks for a RecipeID and groups by their RecipeID & Name. This is an aggregating query.
 CREATE OR ALTER PROCEDURE Data.GetTotalBookmarksForRecipe
 @RecipeID INT
 AS
@@ -300,6 +384,7 @@ INNER JOIN Data.Recipe R on R.RecipeID = UR.RecipeID
 WHERE R.RecipeID = @RecipeID AND UR.IsBookmarked = 1
 GROUP BY R.RecipeID, R.Name
 GO
+-- This procedure gets a user by their unique ID and returns all information related to that user.
 CREATE OR ALTER PROCEDURE Data.GetUserByID
 @UserID INT
 AS
@@ -307,6 +392,7 @@ SELECT *
 FROM Data.[User]
 WHERE UserID = @UserID AND RemovedOn IS NULL
 GO
+-- This procedure gets a user by their username and returns all information related to that user.
 CREATE OR ALTER PROCEDURE Data.GetUserByName
 @userName NVARCHAR(20)
 AS
@@ -320,6 +406,8 @@ WHERE U.UserName = @userName
 
 END
 GO
+-- This procedure is similar to InsertRecipeIngredientWithID, however, it takes in a RecipeName instead of Recipe ID.
+-- It will search for a recipe Name and insert the related recipe ingredient into the RecipeIngredient table.
 CREATE OR ALTER PROCEDURE Data.InsertRecipeIngredient 
     @RecipeName nvarchar(30), 
     @IngredientName nvarchar(60), 
@@ -339,12 +427,8 @@ FROM
     INNER JOIN Data.MeasurementUnit M on M.Name = Derived.MeasurementUnitName
 
 GO
-
---INSERT INTO Data.[User](UserName,PasswordHash)
---VALUES('System',HASHBYTES('SHA2_256','test'))
-
---INSERT INTO Data.Recipe (Name, CreatedUserID,PrepTime,Difficulty,Directions)
---VALUES('No-Bake Nut Cookies',0,20,5,'In a heavy 2-quart saucepan, mix brown sugar, nuts, evaporated milk and butter or margarine.\n Stir over medium heat until mixture bubbles all over top.\n Boil and stir 5 minutes more. Take off heat.\n Stir in vanilla and cereal; mix well.\n Using 2 teaspoons, drop and shape into 30 clusters on wax paper.\n Let stand until firm, about 30 minutes.')
+-- This procedure inserts a recipe ingredient into the Data.RecipeIngredient table so that it will be attached to the recipe ID. 
+-- It takes in a RecipeID, Ingredientname, MeasurementUnitName, and MeasurementQuantity to attach to the recipe.
 CREATE OR ALTER PROCEDURE Data.InsertRecipeIngredientWithID
     @RecipeID INT, 
     @IngredientName nvarchar(60), 
@@ -363,13 +447,13 @@ FROM
     INNER JOIN Data.MeasurementUnit M on M.Name = Derived.MeasurementUnitName
 
 GO
-DROP PROCEDURE IF EXISTS Data.ModifyRecipeIngredientMeasurements 
-GO
-CREATE PROCEDURE Data.ModifyRecipeIngredientMeasurements
+-- This procedure takes in the recipe ingredient ID as well as a new Measurement Unit and Quantity so that a recipe's ingredients can be updated.
+CREATE OR ALTER PROCEDURE Data.ModifyRecipeIngredientMeasurements
 @RecipeIngredientID INT,
 @MeasurementUnitName NVARCHAR(20),
 @MeasurementQuantity INT
 AS
+BEGIN
 UPDATE Data.RecipeIngredient
 SET
 MeasurementUnitID = (
@@ -379,31 +463,21 @@ MeasurementUnitID = (
 MeasurementQuantity = @MeasurementQuantity,
 ModifiedOn = SYSDATETIMEOFFSET()
 WHERE RecipeIngredientID = @RecipeIngredientID
-GO
 
-
+END
 GO
+-- This procedure removes a recipe by taking in the recipe's id and setting RemovedOn to the current system time
+-- This is a soft delete.
 CREATE OR ALTER PROCEDURE Data.RemoveRecipe
-    @RecipeName nvarchar(60), 
-    @UserName nvarchar(60)
+    @id int
 AS
 
 UPDATE Data.Recipe
 SET
 RemovedOn = SYSDATETIMEOFFSET()
-WHERE EXISTS (
-    SELECT R.RecipeID, U.UserID
-    FROM
-        (
-        VALUES
-            (@RecipeName, @UserName)
-        ) Derived([RecipeName], UserName)
-        INNER JOIN Data.Recipe R on R.Name = Derived.RecipeName
-        INNER JOIN Data.[User] U on U.UserName = Derived.UserName 
-)
-
-
+WHERE RecipeID = @id
 GO
+-- This procedure removes a user from the database and takes in the user's id.
 CREATE OR ALTER PROCEDURE Data.RemoveUser 
     @UserID INT
 AS
@@ -412,5 +486,3 @@ SET
 RemovedOn = SYSDATETIMEOFFSET()
 WHERE UserID = @UserID
 GO
-
---EXECUTE Data.RemoveUser 1

@@ -1,3 +1,5 @@
+-- This procedure is similar to InsertRecipeIngredientWithID, however, it takes in a RecipeName instead of Recipe ID.
+-- It will search for a recipe Name and insert the related recipe ingredient into the RecipeIngredient table.
 CREATE OR ALTER PROCEDURE Data.InsertRecipeIngredient 
     @RecipeName nvarchar(30), 
     @IngredientName nvarchar(60), 
@@ -17,9 +19,3 @@ FROM
     INNER JOIN Data.MeasurementUnit M on M.Name = Derived.MeasurementUnitName
 
 GO
-
---INSERT INTO Data.[User](UserName,PasswordHash)
---VALUES('System',HASHBYTES('SHA2_256','test'))
-
---INSERT INTO Data.Recipe (Name, CreatedUserID,PrepTime,Difficulty,Directions)
---VALUES('No-Bake Nut Cookies',0,20,5,'In a heavy 2-quart saucepan, mix brown sugar, nuts, evaporated milk and butter or margarine.\n Stir over medium heat until mixture bubbles all over top.\n Boil and stir 5 minutes more. Take off heat.\n Stir in vanilla and cereal; mix well.\n Using 2 teaspoons, drop and shape into 30 clusters on wax paper.\n Let stand until firm, about 30 minutes.')

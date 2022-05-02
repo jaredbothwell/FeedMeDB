@@ -193,12 +193,21 @@ public class RecipeRepository : BaseRepository
 
             transaction.Commit();
         }
-
-
-
-
-
         return true;
+    }
+
+    public void RemoveRecipe(int id)
+    {
+        using (var connection = new SqlConnection(this.connectionString))
+        {
+            using (var command = new SqlCommand("Data.RemoveRecipe", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+            }
+        }
     }
 
     public RecipeModel TranslateRecipe(SqlDataReader reader)
