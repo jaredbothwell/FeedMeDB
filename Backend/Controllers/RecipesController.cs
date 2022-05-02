@@ -90,12 +90,20 @@ public class RecipesController : ControllerBase
         var repo = new RecipeRepository();
 
         Dictionary<string, JsonElement> dict = body.Deserialize<Dictionary<string, JsonElement>>() ?? new Dictionary<string, JsonElement>();
-        
-        RecipeModel? newRecipe = JsonSerializer.Deserialize<RecipeModel>(dict["recipe"], options:null);
+
+        RecipeModel? newRecipe = JsonSerializer.Deserialize<RecipeModel>(dict["recipe"], options: null);
         List<int>? oldIngredientIDs = JsonSerializer.Deserialize<List<int>>(dict["ingredientIDs"]);
 
         repo.EditRecipe(newRecipe, oldIngredientIDs);
-    }   
+    }
+
+    [Route("remove")]
+    [HttpPut]
+    public void Remove(int id)
+    {
+        var repo = new RecipeRepository();
+        repo.RemoveRecipe(id);
+    }
 
 
 }
