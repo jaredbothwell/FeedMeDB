@@ -1,3 +1,5 @@
+-- This procedure gets a recipe by a query on the search page as well as a list of ingredients. 
+-- It parses both the list of ingredients and keywords from the query to produce results related to them.
 CREATE OR ALTER PROCEDURE GetRecipeByQueryAndIngredient
 @IngredientList NVARCHAR(2048),
 @UserQuery NVARCHAR(256)
@@ -23,3 +25,5 @@ FROM Data.Recipe R
     ) AS D (RecipeID) on D.RecipeID = R.RecipeID
 WHERE R.Name LIKE '%' + @UserQuery + '%'
 ORDER BY R.Name ASC
+END
+GO

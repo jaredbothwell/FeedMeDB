@@ -1,3 +1,4 @@
+-- This procedure gets a user by their username and returns all information related to that user.
 CREATE OR ALTER PROCEDURE Data.GetUserByName
 @userName NVARCHAR(20)
 AS
@@ -10,3 +11,4 @@ WHERE U.UserName = @userName
 
 
 END
+GO

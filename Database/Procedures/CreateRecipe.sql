@@ -34,3 +34,4 @@ FROM DATA.Ingredient I WHERE I.Name = @ingredientName
 
 
 END
+GO

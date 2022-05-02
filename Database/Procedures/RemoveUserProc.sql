@@ -1,3 +1,4 @@
+-- This procedure removes a user from the database and takes in the user's id.
 CREATE OR ALTER PROCEDURE Data.RemoveUser 
     @UserID INT
 AS
@@ -6,5 +7,3 @@ SET
 RemovedOn = SYSDATETIMEOFFSET()
 WHERE UserID = @UserID
 GO
-
---EXECUTE Data.RemoveUser 1

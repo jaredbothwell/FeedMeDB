@@ -1,3 +1,4 @@
+-- This procedure gets the ingredients related to a recipe in the Data.RecipeIngredient table.
 CREATE OR ALTER PROCEDURE Data.GetRecipeIngredients
 @RecipeID int
 AS
@@ -16,3 +17,4 @@ BEGIN
         and RI.RemovedOn is NULL
 
 END
+GO

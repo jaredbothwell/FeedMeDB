@@ -1,3 +1,4 @@
+-- This procedure gets the average ratings by a created user ID. This is an aggregating query. It groups by the created userID and their username.
 CREATE OR ALTER PROCEDURE Data.GetAvgRatingsByUserID AS
 SELECT U.UserName, AVG(Rating) as AverageRating, COUNT(Rating) as TotalRatings
 FROM Data.UserRecipe UR
@@ -6,5 +7,5 @@ FROM Data.UserRecipe UR
 WHERE UR.Rating IS NOT NULL
 GROUP BY R.CreatedUserID, U.UserName
 HAVING COUNT(R.RecipeID) >= 3
-
-EXECUTE Data.GetAvgRatingsByUserID
+END
+GO

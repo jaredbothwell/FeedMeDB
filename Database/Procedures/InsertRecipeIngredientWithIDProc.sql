@@ -1,3 +1,5 @@
+-- This procedure inserts a recipe ingredient into the Data.RecipeIngredient table so that it will be attached to the recipe ID. 
+-- It takes in a RecipeID, Ingredientname, MeasurementUnitName, and MeasurementQuantity to attach to the recipe.
 CREATE OR ALTER PROCEDURE Data.InsertRecipeIngredientWithID
     @RecipeID INT, 
     @IngredientName nvarchar(60), 

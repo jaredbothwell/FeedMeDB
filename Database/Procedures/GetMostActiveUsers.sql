@@ -1,3 +1,4 @@
+-- This query is one of our aggregating queries that gets the most active users by their total interactions (bookmarks and ratings).
 CREATE OR ALTER PROCEDURE Data.GetMostActiveUsers
 AS
 BEGIN
@@ -12,3 +13,4 @@ ORDER BY CountRecipesInteractedWith DESC
 OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
 
 END
+GO

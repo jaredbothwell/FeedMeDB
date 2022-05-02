@@ -1,3 +1,4 @@
+-- This procedure takes in an ingredient name and removes it from the Ingredients table. 
 CREATE PROCEDURE Data.RemoveIngredient 
     @IngredientName nvarchar(128)
 AS
@@ -14,5 +15,3 @@ FROM
     INNER JOIN Data.Ingredient I on I.Name = Derived.IngredientName
 )
 GO
-
---EXECUTE Data.RemoveIngredient 'packed brown sugar'

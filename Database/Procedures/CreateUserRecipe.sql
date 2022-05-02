@@ -1,3 +1,4 @@
+-- This procedure creates or updates a user rating or bookmark made by a specific user.
 CREATE OR ALTER PROCEDURE Data.CreateOrUpdateUserRecipe
 @UserID int,
 @RecipeID int,
@@ -23,4 +24,4 @@ UPDATE SET
     ModifiedOn = SYSDATETIMEOFFSET();
 
 END
-
+GO

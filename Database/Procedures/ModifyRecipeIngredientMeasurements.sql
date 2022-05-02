@@ -1,6 +1,5 @@
-DROP PROCEDURE IF EXISTS Data.ModifyRecipeIngredientMeasurements 
-GO
-CREATE PROCEDURE Data.ModifyRecipeIngredientMeasurements
+-- This procedure takes in the recipe ingredient ID as well as a new Measurement Unit and Quantity so that a recipe's ingredients can be updated.
+CREATE OR ALTER PROCEDURE Data.ModifyRecipeIngredientMeasurements
 @RecipeIngredientID INT,
 @MeasurementUnitName NVARCHAR(20),
 @MeasurementQuantity INT
@@ -15,5 +14,5 @@ MeasurementQuantity = @MeasurementQuantity,
 ModifiedOn = SYSDATETIMEOFFSET()
 WHERE RecipeIngredientID = @RecipeIngredientID
 
-
---EXECUTE Data.ModifyRecipeIngredientMeasurements 1,N'oz.',4
+END
+GO

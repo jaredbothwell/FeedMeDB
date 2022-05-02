@@ -1,3 +1,4 @@
+-- This procedure gets all ingredients currently active in the database.
 CREATE OR ALTER PROCEDURE Data.GetAllIngredients
 AS
 SELECT 
@@ -7,4 +8,3 @@ SELECT
 FROM Data.Ingredient I
 ORDER BY I.Name ASC
 GO
---Execute Data.GetAllIngredients

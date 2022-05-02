@@ -1,3 +1,4 @@
+-- This query gets the recipes that a specific user has bookmarked.
 CREATE OR ALTER PROCEDURE Data.GetBookmarkedRecipes
 @UserID INT
 AS
@@ -18,6 +19,5 @@ WHERE UR.UserID = @UserID
     and R.RemovedOn IS NULL 
     and UR.RemovedOn IS NULL
 ORDER BY R.CreatedOn ASC
-
-
 END
+GO
