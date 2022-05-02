@@ -14,7 +14,7 @@ public class UserRecipeRepository : BaseRepository
     {
         using (var connection = new SqlConnection(this.connectionString))
         {
-            using (var command = new SqlCommand("Data.GetSavedRecipes", connection))
+            using (var command = new SqlCommand("Data.GetBookmarkedRecipes", connection))
             {
                 connection.Open();
                 command.CommandType = CommandType.StoredProcedure;
