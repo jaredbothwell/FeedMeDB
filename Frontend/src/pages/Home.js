@@ -25,8 +25,8 @@ export default function Home() {
 
       <h1 style={{alignSelf:"center", marginTop: "10px"}}>About</h1>
         <p class="line-break margin-top-10"></p>
-      <p style={{alignSelf:"center"}} class="margin-top-10">
-          FeedMeDB is an opensource cookbook website where users can share their own recipes and loop up other recipes from the community. The project was developed for a Database System Concept class.
+      <p style={{alignSelf:"center", textAlign:"center"}} class="margin-top-10">
+      FeedMeDB is a modern, clean, and simple recipe lookup system that is meant to make meals easy. Users are able to create an account to be able to create, save, and modify their recipes. Once created, these recipes are available for other users to view, rate, and save for later use. The site also allows for filtering of recipes by ingredient, so that users can find recipes that contain ingredients they already have. FeedMeDB is meant for users of all ages, from college students to families. 
         </p>
 
         <h1 style={{alignSelf:"center", marginTop: "50px"}}>Share your Recipes</h1>
@@ -57,7 +57,7 @@ export default function Home() {
         <Grid style={{alignSelf:"center", marginTop: "50px"}} container spacing={2}>
         <Grid item xs={4}>
         <div style={{display: "flex", flexDirection:"column"}}>
-          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Top Users</h1>
+          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Top Chefs</h1>
           <p class="line-break margin-top-10"></p>
         </div>
           </Grid>
@@ -69,7 +69,7 @@ export default function Home() {
           </Grid>
           <Grid item xs={4}>
           <div style={{display: "flex", flexDirection:"column"}}>
-          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Most Active Users</h1>
+          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Top Critics</h1>
           <p class="line-break margin-top-10"></p>
         </div>
           </Grid>

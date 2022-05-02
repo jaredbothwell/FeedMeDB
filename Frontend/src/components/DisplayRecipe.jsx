@@ -3,7 +3,7 @@ import './css_files/Display_Recipe.css'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import { Button, Chip, CircularProgress, Fab, IconButton, Rating, Typography } from '@mui/material';
-import styled from '@emotion/styled';
+import IngredientsMTable from './IngredientsMTable';
 
 export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
     
@@ -106,11 +106,7 @@ export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
             <Typography  variant="overline" className='Display_Recipe_Text'>
             Ingredients
             </Typography>
-            <div style={{ overflow: "auto", maxHeight: 105, display: "flex",  flexWrap: "wrap", justifyContent: "center"}} id="style-1">
-              {
-                recipe.ingredients.map((ingredient) => (<Chip key={ingredient.id} style={{margin: 2 }} label={ingredient.name} color="info" />))
-              }
-            </div>
+            <IngredientsMTable ingredientsList={recipe.ingredients}/>
             <hr
         style={{
             color: 'lightgray',
