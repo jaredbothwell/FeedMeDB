@@ -35,7 +35,10 @@ public class UserRecipeRepository : BaseRepository
                 command.Parameters.AddWithValue("@UserID", userRecipe.UserID);
                 command.Parameters.AddWithValue("@RecipeID", userRecipe.Recipe.ID);
                 command.Parameters.AddWithValue("@IsBookmarked", userRecipe.IsBookmarked);
-                command.Parameters.AddWithValue("@Rating", userRecipe.Rating);
+                if (userRecipe.Rating is null)
+                    command.Parameters.AddWithValue("@Rating", DBNull.Value);
+                else
+                    command.Parameters.AddWithValue("@Rating", userRecipe.Rating);
                 connection.Open();
                 command.ExecuteNonQuery();
             }
