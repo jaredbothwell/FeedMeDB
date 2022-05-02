@@ -42,6 +42,13 @@ public class AggregateController : ControllerBase
         return repo.GetRecipeAverageRating(id);
     }
 
+    [Route("most-common-ingredients")]
+    [HttpGet]
+    public IEnumerable<object> GetMostCommonIngredients()
+    {
+        var repo = new AggregateRepository();
+        return repo.GetMostCommonIngredients();
+    }
 
 
 

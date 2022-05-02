@@ -583,3 +583,13 @@ WHERE UserID = @UserID
 GO
 ----------------------------------------------------------------------------------------------------------------------
 
+-- This procedure is an aggregate query to find the most common ingredients
+CREATE OR ALTER PROCEDURE Data.MostCommonIngredients
+AS
+SELECT I.[Name], COUNT(*) as IngredientCount
+FROM Data.RecipeIngredient RI
+    INNER JOIN Data.Ingredient I on RI.IngredientID = I.IngredientID
+WHERE RI.RemovedOn IS NULL
+GROUP BY I.[Name]
+ORDER BY IngredientCount DESC
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
