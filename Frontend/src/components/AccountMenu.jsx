@@ -29,7 +29,7 @@ export default function AccountMenu() {
         <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={savedRecipes}>
-          <SavedRecipes closeForm={()=>{enableSaved(false)}}/>
+          <SavedRecipes isDisplayed={savedRecipes} closeForm={()=>{enableSaved(false)}}/>
         </Backdrop>
 
       <IconButton

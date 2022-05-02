@@ -18,8 +18,7 @@ const bull = (
 );
 
 export default function BasicCard(props) {
-  const navigate = useNavigate();
-  //TODO - bring data in here json
+
   const recipe_data = props.data
 
   const [showRecipe,setShowRecipe] = useState(false);

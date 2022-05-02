@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './css_files/Display_Recipe.css'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
-import { Button, Chip, CircularProgress, Fab, IconButton, Rating, Typography } from '@mui/material';
+import { Button,  CircularProgress, Fab, Rating, Typography } from '@mui/material';
 import IngredientsMTable from './IngredientsMTable';
 
 export default function DisplayRecipe({recipe, isClicked, handleClose}) {
@@ -12,7 +12,7 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
     const [userRecipe,setUserRecipe] = useState([]);
 
     const [isBookMarked, setIsBookMarked] = useState(false);
-    const [rating, setRating] = useState(null);
+    const [localRating, setRating] = useState(null);
 
     const [avgRating, setAvgRating] = useState(null);
 
@@ -30,7 +30,6 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
                 .then((res) => res.json())
                 .then((json) => {
                     setUserName(json.name);
-                    console.log(json);
                 })
 
             fetch(
@@ -44,8 +43,9 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
                         {
                             if(json[i].recipe.id === recipe.id)
                             {
+                                console.log(json[i]);
                                 setUserRecipe(json[i]);
-                                setIsBookMarked(json[i].isBookMarked);
+                                setIsBookMarked(json[i].isBookmarked);
                                 setRating(json[i].rating);
                             }
                         }
@@ -88,8 +88,26 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
             .then(response => console.log(response))
     }
 
-    const handleBookMark = () =>
+    const handleBookMark = (saveValue) =>
     {
+
+        let data = {
+            userID: LoggedInid,
+            recipe: {
+              id: recipe.id
+            },
+            rating: localRating,
+            isBookmarked: saveValue
+          }
+          // sending null ratings will break
+          let http_string = "http://localhost:8000/api/user-recipes/add-edit"
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          };
+          fetch(http_string, requestOptions)
+            .then(response => console.log(response))
 
     }
   return (
@@ -188,8 +206,8 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
             LoggedInid === null || LoggedInid === 'null'?
             <Typography sx={{ fontStyle: 'italic' }} className='Display_Recipe_Text'>Login to leave a review or save this recipe to your collection</Typography>:
             <>    
-            <Button sx={{ marginBottom: 1}}  variant="outlined" startIcon={<BookmarkBorderIcon />}>
-            Save
+            <Button sx={{ marginBottom: 1}} onClick={()=>{handleBookMark(!isBookMarked)}}  variant={isBookMarked? "contained":"outlined"} startIcon={<BookmarkBorderIcon />}>
+            {isBookMarked? "Unsave":"Save" }
           </Button>
                 <div className="row">
                     <div style={{padding: 0}} class="col-sm d-flex justify-content-end">
@@ -198,7 +216,7 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
                         </Typography>
                     </div>
                     <div style={{padding: 0}} class="col-sm d-flex justify-content-start">
-                        <Rating name="no-value" value={rating} onChange={(e)=>{handleRating(e.target.value)}}
+                        <Rating name="no-value" value={localRating} onChange={(e)=>{handleRating(e.target.value)}}
             sx={{color:"#1c93d4"}}/>
                     </div>
                 </div></>
