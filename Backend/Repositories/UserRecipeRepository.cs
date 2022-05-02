@@ -60,7 +60,7 @@ public class UserRecipeRepository : BaseRepository
             UserRecipeID = reader.GetInt32(userRecipeOrdinal),
             UserID = reader.GetInt32(userIDOrdinal),
             Recipe = recipeRepo.GetRecipeByID(reader.GetInt32(recipeIDOrdinal)),
-            Rating = reader.GetInt32(ratingOrdinal),
+            Rating = reader.IsDBNull(ratingOrdinal) ? null : reader.GetInt32(ratingOrdinal),
             IsBookmarked = reader.GetBoolean(isbookmarkedOrdinal),
             CreatedOn = reader.IsDBNull(createdOnOrdinal) ? null : reader.GetDateTimeOffset(createdOnOrdinal),
             ModifiedOn = reader.IsDBNull(modifiedOnOrdinal) ? null : reader.GetDateTimeOffset(modifiedOnOrdinal),

@@ -6,7 +6,7 @@ public class UserRecipeModel
     public int UserRecipeID { get; set; }
     public int UserID { get; set; }
     public RecipeModel? Recipe { get; set; }
-    public int Rating { get; set; }
+    public int? Rating { get; set; }
     public bool IsBookmarked { get; set; }
     public DateTimeOffset? CreatedOn { get; set; }
     public DateTimeOffset? ModifiedOn { get; set; }
