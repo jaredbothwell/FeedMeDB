@@ -132,6 +132,9 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
                 </div>
  
             <div style={{padding: 0}} class="col-sm d-flex justify-content-start">
+                {
+                    avgRating!==null?
+                
             <Rating
         value={avgRating}
         precision={1}
@@ -139,8 +142,11 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
         emptyIcon={<FastfoodIcon fontSize="inherit" />}
         readOnly
         sx={{color:"#1c93d4"}}
-      />
-      
+      />:
+      <Typography  className='Display_Recipe_Text'>
+     &nbsp;&nbsp;---
+  </Typography>
+    }
             </div>
             
             </div>
