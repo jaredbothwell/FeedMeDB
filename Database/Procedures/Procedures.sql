@@ -593,3 +593,13 @@ WHERE RI.RemovedOn IS NULL
 GROUP BY I.[Name]
 ORDER BY IngredientCount DESC
 OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
+
+GO
+----------------------------------------------------------------------------------------------------------------------
+
+-- This procedure gets all measurement units
+CREATE OR ALTER Procedure Data.GetUnits
+AS
+SELECT MU.MeasurementUnitID, MU.Name
+FROM Data.MeasurementUnit MU
+ORDER BY MU.Name ASC

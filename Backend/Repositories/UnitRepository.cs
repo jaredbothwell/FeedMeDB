@@ -12,12 +12,12 @@ public class UnitRepository : BaseRepository
 
     public IEnumerable<MeasurementUnitModel> GetAllUnits()
     {
-        String sql = "select * from Data.MeasurementUnit";
         using (var connection = new SqlConnection(this.connectionString))
         {
-            using (var command = new SqlCommand(sql, connection))
+            using (var command = new SqlCommand("Data.GetUnits", connection))
             {
                 connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
                 using (var reader = command.ExecuteReader())
                     return TranslateUnits(reader);
             }
