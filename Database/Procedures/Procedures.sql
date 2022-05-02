@@ -263,13 +263,15 @@ CREATE OR ALTER PROCEDURE Data.GetAvgRatingByRecipeID
 @RecipeID int
 AS
 BEGIN
-SELECT R.RecipeID, R.Name, AVG(Rating) as AverageRating, U.UserName
+SELECT R.RecipeID, R.Name, AVG(Rating) as AverageRating, U.UserName as CreatedByUserName
 FROM Data.UserRecipe UR
     INNER JOIN Data.Recipe R ON R.RecipeID = UR.RecipeID
     INNER JOIN Data.[User] U on R.CreatedUserID = U.UserID
 WHERE UR.RecipeID = @RecipeID
     AND UR.RemovedOn IS NULL
 GROUP BY R.RecipeID, R.Name, U.UserName
+ORDER BY AverageRating DESC
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
 END
 
 GO
@@ -286,6 +288,8 @@ WHERE UR.Rating IS NOT NULL
     AND UR.RemovedOn IS NULL
 GROUP BY R.CreatedUserID, U.UserName
 HAVING COUNT(R.RecipeID) >= 3
+ORDER BY AverageRating DESC
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
 END
 
 GO
