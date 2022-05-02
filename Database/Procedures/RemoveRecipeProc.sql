@@ -1,6 +1,4 @@
-DROP PROCEDURE IF EXISTS Data.RemoveRecipe;
-GO
-CREATE PROCEDURE Data.RemoveRecipe
+CREATE OR ALTER PROCEDURE Data.RemoveRecipe
     @RecipeName nvarchar(60), 
     @UserName nvarchar(60)
 AS

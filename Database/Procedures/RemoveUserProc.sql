@@ -1,4 +1,4 @@
-CREATE PROCEDURE Data.RemoveUser 
+CREATE OR ALTER PROCEDURE Data.RemoveUser 
     @UserID INT
 AS
 UPDATE Data.[User] 
