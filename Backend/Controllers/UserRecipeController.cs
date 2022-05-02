@@ -18,4 +18,12 @@ public class UserRecipesController : ControllerBase
         return repo.GetSavedRecipes(userID);
     }
 
+
+    [Route("add-edit")]
+    [HttpPost]
+    public void Post([FromBody] UserRecipeModel userRecipe)
+    {
+        var repo = new UserRecipeRepository();
+        repo.CreateOrUpdateUserRecipe(userRecipe);
+    }
 }

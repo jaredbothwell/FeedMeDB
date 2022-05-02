@@ -50,18 +50,17 @@ SELECT @ingredientName
 WHERE NOT EXISTS (
     SELECT * FROM Data.Ingredient I WHERE  I.Name = @ingredientName
 )
+declare @ingredientID int
+select @ingredientID = I.IngredientID
+from Data.Ingredient I
+where I.Name = @ingredientName
 
 UPDATE Data.RecipeIngredient
 SET
     ModifiedOn = SYSDATETIMEOFFSET(),
     MeasurementUnitID = @unitID,
     MeasurementQuantity = @quantity
-WHERE EXISTS (
-    SELECT *
-    FROM Data.RecipeIngredient RI
-        INNER JOIN Data.Ingredient I on I.IngredientID = RI.IngredientID
-    WHERE  I.Name = @ingredientName AND RI.RecipeID = @recipeID
-);
+WHERE IngredientID = @ingredientID and RecipeID = @recipeID;
 
 WITH SourceCte(IngredientID, Quantity, UnitID, RecipeID) AS 
 (
