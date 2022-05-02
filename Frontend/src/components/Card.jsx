@@ -31,7 +31,7 @@ export default function BasicCard(props) {
               <Backdrop
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={showRecipe}>
-            <DisplayRecipe recipeid={recipe_data.id} isClicked={showRecipe} handleClose={()=>setShowRecipe(false)}/>
+            <DisplayRecipe recipe={recipe_data} isClicked={showRecipe} handleClose={()=>setShowRecipe(false)}/>
           </Backdrop>
         <CardActionArea sx={{ minWidth: 275, maxWidth: 275, maxHeight:250, minHeight:250}} onClick={()=>setShowRecipe(true)}>
             <CardContent sx={{ minWidth: 275, maxWidth: 275, maxHeight:250, minHeight:250, padding:'2%'}} className='Card-Container'>
