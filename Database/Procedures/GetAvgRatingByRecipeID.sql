@@ -1,10 +1,27 @@
-CREATE OR ALTER PROCEDURE Data.GetAvgRatingByRecipeID
-@RecipeID INT
+CREATE OR ALTER PROCEDURE Data.GetTopRecipes
 AS
-SELECT R.RecipeID, R.Name, AVG(Rating) as AverageRating
+BEGIN
+SELECT R.RecipeID, R.Name, AVG(Rating) as AverageRating, U.UserName
 FROM Data.UserRecipe UR
 INNER JOIN Data.Recipe R ON R.RecipeID = UR.RecipeID
-WHERE UR.RecipeID = @RecipeID
-GROUP BY R.RecipeID, R.Name
+INNER JOIN Data.[User] U on R.CreatedUserID = U.UserID
+GROUP BY R.RecipeID, R.Name, U.UserName
+ORDER BY AverageRating DESC, R.Name ASC
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
 
---EXECUTE Data.GetAvgRatingByRecipeID 1
+END
+
+GO
+
+CREATE OR ALTER PROCEDURE Data.GetAvgRatingByRecipeID
+@RecipeID int
+AS
+BEGIN
+SELECT R.RecipeID, R.Name, AVG(Rating) as AverageRating, U.UserName
+FROM Data.UserRecipe UR
+    INNER JOIN Data.Recipe R ON R.RecipeID = UR.RecipeID
+    INNER JOIN Data.[User] U on R.CreatedUserID = U.UserID
+WHERE UR.RecipeID = @RecipeID
+GROUP BY R.RecipeID, R.Name, U.UserName
+
+END
