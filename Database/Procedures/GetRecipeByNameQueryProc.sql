@@ -3,6 +3,7 @@
 CREATE OR ALTER PROCEDURE Data.GetRecipeByNameQuery
 @UserQuery NVARCHAR(256)
 AS
+BEGIN
 SELECT *
 FROM Data.Recipe R
 WHERE R.Name LIKE '%' + @UserQuery + '%'

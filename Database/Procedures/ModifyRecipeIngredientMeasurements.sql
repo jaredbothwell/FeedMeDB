@@ -4,6 +4,7 @@ CREATE OR ALTER PROCEDURE Data.ModifyRecipeIngredientMeasurements
 @MeasurementUnitName NVARCHAR(20),
 @MeasurementQuantity INT
 AS
+BEGIN
 UPDATE Data.RecipeIngredient
 SET
 MeasurementUnitID = (
