@@ -8,6 +8,7 @@ SELECT
     UR.UserID,
     UR.RecipeID,
     UR.Rating,
+    UR.IsBookmarked,
     UR.CreatedOn,
     UR.ModifiedOn,
     UR.RemovedOn
@@ -16,7 +17,6 @@ FROM Data.UserRecipe UR
 WHERE UR.UserID = @UserID 
     and R.RemovedOn IS NULL 
     and UR.RemovedOn IS NULL
-    and UR.IsBookmarked = 1
 ORDER BY R.CreatedOn ASC
 
 
