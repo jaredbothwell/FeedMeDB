@@ -3,44 +3,83 @@ import './css_files/Display_Recipe.css'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import { Button, Chip, CircularProgress, Fab, IconButton, Rating, Typography } from '@mui/material';
-import styled from '@emotion/styled';
+import IngredientsMTable from './IngredientsMTable';
 
-export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
+export default function DisplayRecipe({recipe, isClicked, handleClose}) {
     
-    const [recipe,setRecipe] = useState(null);
-    const [userName,setUserName] = useState(null);
-    const [id, setUserID] = useState(null);
+    const [createdByUser,setUserName] = useState(null);
+    const [LoggedInid, setUserID] = useState(null);
+    const [userRecipe,setUserRecipe] = useState([]);
+
+    const [isBookMarked, setIsBookMarked] = useState(false);
+    const [rating, setRating] = useState(null);
+
+    useEffect(()=>{console.log(userRecipe)},[userRecipe])
+
 
     useEffect(()=>
     {
-        setUserID(localStorage.getItem("user_id"))
+        var temp_id = localStorage.getItem("user_id");
+        setUserID(temp_id)
         if(isClicked)
         {
             fetch(
-                "http://localhost:8000/api/recipes/" + recipeid)
+                "http://localhost:8000/api/users/" + recipe.createdByID)
                 .then((res) => res.json())
                 .then((json) => {
-                    setRecipe(json);
-                    fetch(
-                        "http://localhost:8000/api/users/" + json.createdByID)
-                        .then((res) => res.json())
-                        .then((json) => {
-                            setUserName(json.name);
-                        })
-                    
+                    setUserName(json.name);
+                    console.log(json);
+                })
+
+            fetch(
+                "http://localhost:8000/api/user-recipes/" + temp_id)
+                .then((res) => res.json())
+                .then((json) => {
+                    setUserRecipe(json);
+                    if(json.length > 0)
+                    {
+                        setIsBookMarked(json[0].isBookMarked);
+                        setRating(json[0].rating);
+                    }
                 })
         }
     }, [isClicked])
+
+    const handleRating = (rating) =>
+    {
+        let data = {
+            userID: LoggedInid,
+            recipe: {
+              id: recipe.id
+            },
+            rating: rating,
+            isBookmarked: isBookMarked
+          }
+        
+          let http_string = "http://localhost:8000/api/user-recipes/add-edit"
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          };
+          fetch(http_string, requestOptions)
+            .then(response => console.log(response))
+    }
+
+    const handleBookMark = () =>
+    {
+
+    }
   return (
       <>
-      {recipe != null && userName != null?
+      {recipe != null && createdByUser != null?
         <div className='Display_Recipe_Container'>
             
             <Typography  variant="h4" className='Display_Recipe_Text'>
             {recipe.name}
             </Typography>
             <Typography className='Display_Recipe_Text' sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Creator: {userName}
+                Creator: {createdByUser}
             </Typography>
 
             <hr
@@ -103,14 +142,10 @@ export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
             </Typography>
             </div>
 
-            <Typography  variant="overline" className='Display_Recipe_Text'>
+            <Typography variant="overline" className='Display_Recipe_Text'>
             Ingredients
             </Typography>
-            <div style={{ overflow: "auto", maxHeight: 105, display: "flex",  flexWrap: "wrap", justifyContent: "center"}} id="style-1">
-              {
-                recipe.ingredients.map((ingredient) => (<Chip key={ingredient.id} style={{margin: 2 }} label={ingredient.name} color="info" />))
-              }
-            </div>
+            <IngredientsMTable ingredientsList={recipe.ingredients}/>
             <hr
         style={{
             color: 'lightgray',
@@ -122,7 +157,7 @@ export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
         }}
         />
         {
-            id === null || id === 'null'?
+            LoggedInid === null || LoggedInid === 'null'?
             <Typography sx={{ fontStyle: 'italic' }} className='Display_Recipe_Text'>Login to leave a review or save this recipe to your collection</Typography>:
             <>    
             <Button sx={{ marginBottom: 1}}  variant="outlined" startIcon={<BookmarkBorderIcon />}>
@@ -135,7 +170,7 @@ export default function DisplayRecipe({recipeid, isClicked, handleClose}) {
                         </Typography>
                     </div>
                     <div style={{padding: 0}} class="col-sm d-flex justify-content-start">
-                        <Rating name="no-value" value={null}
+                        <Rating name="no-value" value={rating} onChange={(e)=>{handleRating(e.target.value)}}
             sx={{color:"#1c93d4"}}/>
                     </div>
                 </div></>
