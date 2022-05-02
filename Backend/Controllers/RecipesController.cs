@@ -40,15 +40,6 @@ public class RecipesController : ControllerBase
         return new OkObjectResult(repo.GetRecipeByID(id));
     }
 
-
-    [Route("user/{id:int}")]
-    [HttpGet]
-    public IEnumerable<RecipeModel> GetUserRecipes(int id)
-    {
-        var repo = new RecipeRepository();
-        return repo.GetAllUserRecipes(id);
-    }
-
     [Route("createdby/{id:int}")]
     [HttpGet]
     public IEnumerable<RecipeModel> GetRecipesCreatedBy(int id)

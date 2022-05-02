@@ -24,21 +24,6 @@ public class RecipeRepository : BaseRepository
         }
     }
 
-    public IEnumerable<RecipeModel> GetAllUserRecipes(int userID)
-    {
-        String sql = "select * from Data.Recipe R where R.CreatedUserID = @userID UNION select * from Data.Recipe R inner join Data.UserRecipe UR on R.RecipeID = UR.RecipeID and UR.UserID = @userID";
-        using (var connection = new SqlConnection(this.connectionString))
-        {
-            using (var command = new SqlCommand(sql, connection))
-            {
-                command.Parameters.AddWithValue("@userID", userID);
-                connection.Open();
-                using (var reader = command.ExecuteReader())
-                    return TranslateRecipes(reader);
-            }
-        }
-    }
-
     public RecipeModel? GetRecipeByID(int id)
     {
         String sql = "select * from Data.Recipe R where R.RecipeID = @id";
