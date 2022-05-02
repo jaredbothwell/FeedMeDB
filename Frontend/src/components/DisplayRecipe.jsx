@@ -14,7 +14,9 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
     const [isBookMarked, setIsBookMarked] = useState(false);
     const [rating, setRating] = useState(null);
 
-    useEffect(()=>{console.log(userRecipe)},[userRecipe])
+    const [avgRating, setAvgRating] = useState(null);
+
+    //useEffect(()=>{console.log(userRecipe)},[userRecipe])
 
 
     useEffect(()=>
@@ -35,13 +37,33 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
                 "http://localhost:8000/api/user-recipes/" + temp_id)
                 .then((res) => res.json())
                 .then((json) => {
-                    setUserRecipe(json);
+                    
                     if(json.length > 0)
                     {
-                        setIsBookMarked(json[0].isBookMarked);
-                        setRating(json[0].rating);
+                        for(var i = 0; i < json.length; i++)
+                        {
+                            if(json[i].recipe.id === recipe.id)
+                            {
+                                setUserRecipe(json[i]);
+                                setIsBookMarked(json[i].isBookMarked);
+                                setRating(json[i].rating);
+                            }
+                        }
+
                     }
                 })
+
+            fetch(
+                "http://localhost:8000/api/aggregate/recipe-average-rating/" + recipe.id)
+                .then((res) => res.json())
+                .then((json) => {
+                    if(json !== undefined)
+                    {
+                        setAvgRating(json.AverageRating);
+                    }
+                })
+
+            
         }
     }, [isClicked])
 
@@ -111,7 +133,7 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
  
             <div style={{padding: 0}} class="col-sm d-flex justify-content-start">
             <Rating
-        defaultValue={2}
+        value={avgRating}
         precision={1}
         icon={<FastfoodIcon fontSize="inherit" />}
         emptyIcon={<FastfoodIcon fontSize="inherit" />}
