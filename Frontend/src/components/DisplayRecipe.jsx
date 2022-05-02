@@ -43,7 +43,6 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
                         {
                             if(json[i].recipe.id === recipe.id)
                             {
-                                console.log(json[i]);
                                 setUserRecipe(json[i]);
                                 setIsBookMarked(json[i].isBookmarked);
                                 setRating(json[i].rating);
@@ -57,7 +56,7 @@ export default function DisplayRecipe({recipe, isClicked, handleClose}) {
                 "http://localhost:8000/api/aggregate/recipe-average-rating/" + recipe.id)
                 .then((res) => res.json())
                 .then((json) => {
-                    if(json !== undefined)
+                    if(json !== undefined && typeof(json.AverageRating) === "number")
                     {
                         setAvgRating(json.AverageRating);
                     }
