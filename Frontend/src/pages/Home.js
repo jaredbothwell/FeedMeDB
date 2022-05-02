@@ -2,6 +2,7 @@ import React from 'react'
 import AnimatedPage from './AnimatedPage'
 import "./css_files/Home.css"
 import Grid from '@mui/material/Grid';
+import ActivityTabs from '../components/ActivityTabs';
 
 export default function Home() {
 
@@ -53,28 +54,13 @@ export default function Home() {
 
   <section>
     <div class="block">
-      <div style={{display: "flex", flexDirection:"column"}}>
-        <Grid style={{alignSelf:"center", marginTop: "50px"}} container spacing={2}>
-        <Grid item xs={4}>
-        <div style={{display: "flex", flexDirection:"column"}}>
-          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Top Chefs</h1>
-          <p class="line-break margin-top-10"></p>
-        </div>
-          </Grid>
-          <Grid item xs={4}>
-          <div style={{display: "flex", flexDirection:"column"}}>
-          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Top Recipes</h1>
-          <p class="line-break margin-top-10"></p>
-        </div>
-          </Grid>
-          <Grid item xs={4}>
-          <div style={{display: "flex", flexDirection:"column"}}>
-          <h1 style={{alignSelf:"center", marginTop: "50px"}}>Top Critics</h1>
-          <p class="line-break margin-top-10"></p>
-        </div>
-          </Grid>
-        </Grid>
+    <div style={{display: "flex", flexDirection:"column"}}>
+      <div style={{alignSelf:"center"}}>
+        <ActivityTabs />
       </div>
+    
+    </div>
+    
     </div>
   </section>
 
