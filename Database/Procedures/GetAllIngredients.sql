@@ -5,5 +5,6 @@ SELECT
     I.Name as IngredientName,
     I.CreatedOn
 FROM Data.Ingredient I
+ORDER BY I.Name ASC
 GO
 --Execute Data.GetAllIngredients
