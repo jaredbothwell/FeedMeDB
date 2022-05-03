@@ -183,6 +183,59 @@ function MostActivePanel(props) {
   );
 }
 
+function TopIngredients(props) {
+  const { children, value, index, data, ...other } = props;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && data !== null ? (
+        <Box sx={{ p: 3, display: "flex", justifyContent: "center" }}>
+          <TableContainer
+            component={Paper}
+            sx={{ maxHeight: 300, maxWidth: "50%" }}
+            id="style-2"
+          >
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Ingredient</TableCell>
+                  <TableCell align="center"># Of Recipes Used In</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.Name}
+                    </TableCell>
+                    <TableCell align="center">{row.IngredientCount}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      ) : (
+        <>
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 40 }}
+          >
+            <CircularProgress size="5rem" />{" "}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 TopContrPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
@@ -194,6 +247,11 @@ TopRecipePanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 MostActivePanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+TopIngredients.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
@@ -210,9 +268,9 @@ export default function BasicTabs() {
   const [topContributers, setTopContributers] = useState(null);
   const [topRecipes, setTopRecipes] = useState(null);
   const [mostActive, setMostActive] = useState(null);
+  const [topIngredients, setTopIngredients] = useState(null);
 
   React.useEffect(() => {
-    console.log("REEEEEEEEEEEEEEEEEEE");
     fetch("http://localhost:8000/api/aggregate/top-users")
       .then((res) => res.json())
       .then((json) => {
@@ -229,6 +287,13 @@ export default function BasicTabs() {
       .then((res) => res.json())
       .then((json) => {
         if (json.length > 0) setMostActive(json);
+      });
+
+    fetch("http://localhost:8000/api/aggregate/most-common-ingredients")
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        if (json.length > 0) setTopIngredients(json);
       });
   }, []);
 
@@ -268,6 +333,14 @@ export default function BasicTabs() {
             }
             {...a11yProps(2)}
           />
+          <Tab
+            label={
+              <span style={{ color: "white", fontSize: 20 }}>
+                Most Common Ingredients
+              </span>
+            }
+            {...a11yProps(3)}
+          />
         </Tabs>
       </Box>
       <TopContrPanel
@@ -285,6 +358,12 @@ export default function BasicTabs() {
         value={value}
         index={2}
       ></MostActivePanel>
+
+      <TopIngredients
+        data={topIngredients}
+        value={value}
+        index={3}
+      ></TopIngredients>
     </Box>
   );
 }
