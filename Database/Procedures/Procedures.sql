@@ -606,3 +606,24 @@ AS
 SELECT MU.MeasurementUnitID, MU.Name
 FROM Data.MeasurementUnit MU
 ORDER BY MU.Name ASC
+
+GO
+----------------------------------------------------------------------------------------------------------------------
+
+CREATE OR ALTER Procedure Data.GetRecipeByID
+@id int
+AS
+SELECT 
+    R.RecipeID,
+    R.Name,
+    R.CreatedUserID,
+    R.Directions,
+    R.Difficulty,
+    R.PrepTime,
+    R.CreatedOn,
+    R.ModifiedOn,
+    R.RemovedOn
+FROM Data.Recipe R
+WHERE R.RecipeID = @id
+    AND R.RemovedOn IS NULL
+

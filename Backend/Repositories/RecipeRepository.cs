@@ -26,12 +26,12 @@ public class RecipeRepository : BaseRepository
 
     public RecipeModel? GetRecipeByID(int id)
     {
-        String sql = "select * from Data.Recipe R where R.RecipeID = @id";
         using (var connection = new SqlConnection(this.connectionString))
         {
-            using (var command = new SqlCommand(sql, connection))
+            using (var command = new SqlCommand("Data.GetRecipeByID", connection))
             {
                 command.Parameters.AddWithValue("@id", id);
+                command.CommandType = CommandType.StoredProcedure;
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
