@@ -21,7 +21,10 @@ export default function Login(props) {
     if(input[0].id != null)
     {
       props.userLoggedIn(input);
+      console.log(input[0])
       localStorage.setItem('user_id',input[0].id);
+      localStorage.setItem('user_name',input[0].name);
+
       setLoggedIn(true);
       navigate("/");
     }
