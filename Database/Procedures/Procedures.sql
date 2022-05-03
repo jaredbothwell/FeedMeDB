@@ -319,7 +319,8 @@ AS
 BEGIN
 SELECT R.RecipeID, R.CreatedUserID, R.Name, R.PrepTime, R.Difficulty, R.Directions, R.CreatedOn, R.ModifiedOn, R.RemovedOn
 FROM Data.Recipe R
-WHERE R.CreatedUserID = @UserID AND R.RemovedOn IS NULL
+WHERE R.CreatedUserID = @UserID 
+    AND R.RemovedOn IS NULL
 END
 
 GO
@@ -343,6 +344,7 @@ SELECT
     R.RemovedOn
 FROM Data.Recipe R
 WHERE R.Name LIKE '%' + @UserQuery + '%'
+    AND R.RemovedOn IS NULL
 ORDER BY R.Name ASC
 END
 
@@ -376,6 +378,7 @@ FROM Data.Recipe R
         )
     ) AS D (RecipeID) on D.RecipeID = R.RecipeID
 WHERE R.Name LIKE '%' + @UserQuery + '%'
+    AND R.RemovedOn IS NULL
 ORDER BY R.Name ASC
 END
 
