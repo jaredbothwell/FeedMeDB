@@ -3,13 +3,7 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import {
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  List,
-  CircularProgress,
-} from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -280,7 +274,12 @@ export default function BasicTabs() {
     fetch("http://localhost:8000/api/aggregate/top-recipes")
       .then((res) => res.json())
       .then((json) => {
-        if (json.length > 0) setTopRecipes(json);
+        if (json.length > 0) {
+          console.log("hi jared");
+          console.log(json);
+          setTopRecipes(json);
+          console.log("bye jared jared");
+        }
       });
 
     fetch("http://localhost:8000/api/aggregate/most-active-users")
