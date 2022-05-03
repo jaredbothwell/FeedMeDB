@@ -13,7 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 function TopContrPanel(props) {
-  const { children, value, index, data, ...other } = props;
+  const { value, index, data, ...other } = props;
   return (
     <div
       role="tabpanel"
@@ -68,7 +68,7 @@ function TopContrPanel(props) {
 }
 
 function TopRecipePanel(props) {
-  const { children, value, index, data, ...other } = props;
+  const { value, index, data, ...other } = props;
   return (
     <div
       role="tabpanel"
@@ -123,7 +123,7 @@ function TopRecipePanel(props) {
 }
 
 function MostActivePanel(props) {
-  const { children, value, index, data, ...other } = props;
+  const { value, index, data, ...other } = props;
   return (
     <div
       role="tabpanel"
@@ -178,7 +178,7 @@ function MostActivePanel(props) {
 }
 
 function TopIngredients(props) {
-  const { children, value, index, data, ...other } = props;
+  const { value, index, data, ...other } = props;
   return (
     <div
       role="tabpanel"
@@ -231,22 +231,18 @@ function TopIngredients(props) {
 }
 
 TopContrPanel.propTypes = {
-  children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
 TopRecipePanel.propTypes = {
-  children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
 MostActivePanel.propTypes = {
-  children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
 TopIngredients.propTypes = {
-  children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
@@ -342,27 +338,10 @@ export default function BasicTabs() {
           />
         </Tabs>
       </Box>
-      <TopContrPanel
-        data={topContributers}
-        value={value}
-        index={0}
-      ></TopContrPanel>
-      <TopRecipePanel
-        data={topRecipes}
-        value={value}
-        index={1}
-      ></TopRecipePanel>
-      <MostActivePanel
-        data={mostActive}
-        value={value}
-        index={2}
-      ></MostActivePanel>
-
-      <TopIngredients
-        data={topIngredients}
-        value={value}
-        index={3}
-      ></TopIngredients>
+      <TopContrPanel data={topContributers} value={value} index={0} />
+      <TopRecipePanel data={topRecipes} value={value} index={1} />
+      <MostActivePanel data={mostActive} value={value} index={2} />
+      <TopIngredients data={topIngredients} value={value} index={3} />
     </Box>
   );
 }
